@@ -747,8 +747,21 @@ sap.ui.define([
                 },
                 error: function (oError) {
                     var sMsg = "전표 생성 중 오류가 발생했습니다.";
-                    try { sMsg = JSON.parse(oError.responseText).error.message.value || sMsg; } catch (e) {}
-                    MessageBox.error(sMsg, { title: "저장 오류" });
+                    try {
+                        var sBody = oError.responseText || "";
+                        if (sBody.indexOf("{") === 0 || sBody.indexOf("{") > -1) {
+                            // JSON 응답 파싱 시도
+                            var oJson = JSON.parse(sBody);
+                            sMsg = (oJson.error && oJson.error.message && oJson.error.message.value) || sMsg;
+                        } else if (sBody.indexOf("<") > -1) {
+                            // XML 응답(SAP ABAP 에러)에서 message 추출
+                            var oMatch = sBody.match(/<message[^>]*>([^<]+)<\/message>/i)
+                                      || sBody.match(/<[Mm]essage>([^<]+)<\/[Mm]essage>/);
+                            if (oMatch) { sMsg = oMatch[1]; }
+                        }
+                    } catch (e) { /* 파싱 실패 시 기본 메시지 사용 */ }
+                    console.error("[GL 전표] 저장 오류:", oError.statusCode, oError.statusText, oError.responseText);
+                    MessageBox.error(sMsg, { title: "저장 오류 (HTTP " + (oError.statusCode || "?") + ")" });
                 }
             });
         },
