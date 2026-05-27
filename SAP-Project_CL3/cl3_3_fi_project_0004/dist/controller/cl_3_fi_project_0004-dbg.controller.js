@@ -694,8 +694,8 @@ sap.ui.define([
                 Waers:  sWaers,
                 Gjahr:  oModel.getProperty("/gjahr"),
                 Monat:  oModel.getProperty("/monat"),
-                Zstat:  "01",
-                Ernam:  oModel.getProperty("/userId") || ""   // ← 전표 시작자(작성자) SAP 로그인 ID
+                Zstat:  "01"
+                // Ernam: ABAP이 sy-uname으로 자동 설정 — 프론트에서 보내면 DPC 충돌 가능
             };
 
             var aPayload = aItems.map(function (item) {
@@ -729,7 +729,9 @@ sap.ui.define([
 
             var that = this;
             // OData v2 deep insert: navigation property는 { results: [...] } 형식 필수
-            oODataModel.create("/VoucherHeaderSet", Object.assign({}, oHeader, { VoucherItemSet: { results: aPayload } }), {
+            var oPayload = Object.assign({}, oHeader, { VoucherItemSet: { results: aPayload } });
+            console.log("[GL 전표] CREATE 페이로드:", JSON.stringify(oPayload, null, 2));
+            oODataModel.create("/VoucherHeaderSet", oPayload, {
                 success: function (oData) {
                     var sBelnr = oData.Belnr || "";
                     var sGjahr = oData.Gjahr || "";
