@@ -1,0 +1,638 @@
+/* ================================================================
+ * 전표 상세조회 — Custom CSS
+ * 프로그램 : cl3_3_fi_project_0002
+ * 화면     : 전표 상세조회 (Document Detail) 화면
+ * 디자인   : 0001 재무상태표와 동일한 디자인 시스템 사용
+ * 수정 시  : 아래 섹션 번호를 참고하여 해당 구역만 수정하세요.
+ * ================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [1] 페이지 헤더
+ *     - SAP UI5 기본 Page 헤더를 그대로 표시
+ *     - View XML의 Page에 showHeader="true", title 속성으로 제목 지정
+ *     ※ 헤더를 다시 숨기려면 아래 두 줄의 주석을 해제하고
+ *       Page 태그에 class="fiPageNoHeader" 를 추가하세요.
+ * ══════════════════════════════════════════════════════════════ */
+/* .fiPageNoHeader.sapMPage > .sapMPageHeader { display:none !important; } */
+/* .fiPageNoHeader.sapMPage > .sapMPageScroll { top:0 !important; } */
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [0] 공용 그라디언트 헤더 (0001~0004 공통)
+ * ══════════════════════════════════════════════════════════════ */
+.fiPage > .sapMPageHeader { overflow: visible !important; }
+.fiPage .sapMIBar-CTX     { overflow: visible !important; }
+.fiAppHeader.sapMBar {
+  background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 12px rgba(0, 64, 139, 0.35);
+  height: 56px !important;
+  min-height: 56px !important;
+  overflow: visible !important;
+  box-sizing: border-box;
+}
+.fiAppHeader.sapMBar .sapMBarSection,
+.fiAppHeader.sapMBar .sapMBarPH {
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.fiAppHeader.sapMBar .sapMBarLeft.sapMBarSection { max-width: 70% !important; }
+.headerAppIcon.sapUiIcon {
+  font-size: 1.25rem;
+  color: #7ec8ff;
+  margin: 0 8px 0 4px;
+  flex-shrink: 0;
+}
+.headerTitleBox.sapMHBox {
+  min-width: 0;
+  overflow: hidden;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+  top: 6px;
+}
+.headerAppTitle.sapMTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.headerAppTitle.sapMTitle .sapMTitleText { color: #ffffff; }
+.headerAppSub.sapMText {
+  font-size: 0.6875rem;
+  color: #93b8e0;
+  white-space: nowrap;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.headerBackBtn.sapMBtn .sapMBtnInner {
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.18);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+.headerBackBtn.sapMBtn .sapMBtnIcon { color: #ffffff !important; }
+.headerBackBtn.sapMBtn .sapMBtnInner:hover {
+  background: rgba(255,255,255,0.32);
+  border-color: rgba(255,255,255,0.8);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [2] 페이지 전체 레이아웃
+ *     - .bsPage      : 최외곽 VBox (배경색, 패딩)
+ *     - .bsPageTitle : 제목 영역 하단 구분선
+ *     - .bsTitleText : 메인 제목 글꼴 크기/두께
+ *     - .bsSubText   : 부제목 (회사코드·회사명) 스타일
+ *     ※ 0001과 동일한 클래스명을 공유합니다.
+ * ══════════════════════════════════════════════════════════════ */
+.bsPage        { background:#F7F7F7; padding:16px; }
+.bsPageTitle   { padding-bottom:12px; border-bottom:1px solid #D9D9D9; margin-bottom:12px; }
+.bsTitleText   { font-size:30px !important; font-weight:300 !important; color:#32363A !important; }
+.bsSubText     { font-size:15px !important; color:#6A6D70 !important; margin-top:2px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [3] 필터 바
+ *     - .bsFilterBar     : 메인 필터 바 (흰 배경, 테두리, 패딩)
+ *     - .bsFi            : 개별 필터 필드 간격
+ *     - .bsFl            : 필드 라벨 스타일
+ *     - .bsFin           : 입력 필드 내부 글꼴 크기
+ *     - .bsMlAuto        : 우측 버튼 그룹 (인쇄/내보내기)
+ *     - .bsFilterBarFlat : 탐색도움말 Dialog 내부 필터 바
+ *       (상단 테두리·좌우 테두리 제거 — Dialog 내벽에 딱 붙음)
+ *     ※ 필터 필드 추가: View XML의 HBox class="bsFilterBar" 안에
+ *       VBox class="bsFi" 블록을 복사하세요.
+ * ══════════════════════════════════════════════════════════════ */
+.bsFilterBar   { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 padding:10px 14px; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.bsFi          { margin-right:4px; }
+.bsFl          { font-size:11px !important; color:#6A6D70 !important; margin-bottom:3px; }
+.bsFin.sapMInputBase .sapMInputBaseInner { font-size:13px; }
+.bsMlAuto      { margin-left:auto; gap:4px; }
+/* Dialog 내부 필터 바: 테두리를 최소화해 콘텐츠 영역에 자연스럽게 연결 */
+.bsFilterBarFlat { border-radius:0 !important; margin-bottom:0 !important;
+                   border-left:none !important; border-right:none !important;
+                   border-top:none !important; gap:8px !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [4] KPI 카드 (전표 유형, 전기일, 차변/대변, 균형 상태)
+ *     - .bsKpiRow    : 카드 전체 HBox
+ *     - .bsKpi       : 개별 카드 공통 (흰 배경, 테두리, flex:1)
+ *     - .bsKpiAccent : 파란 왼쪽 테두리 (전표유형, 전기일, 차변 카드)
+ *     - .bsKpiWarn   : 빨간 왼쪽 테두리 (대변 카드)
+ *     - .bsKpiOk     : 초록 왼쪽 테두리 (균형 카드)
+ *     - .bsKpiLabel  : 카드 소제목 글꼴
+ *     - .bsKpiVal    : 카드 값 글꼴 (모노스페이스 굵게)
+ *     - .bsKpiBlue/Red/Green : 값 색상
+ *     ※ KPI 카드는 viewModel>/hasData 가 true 일 때만 표시됩니다.
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiRow      { gap:10px; margin-bottom:12px; }
+.bsKpi         { background:#FFFFFF; border:1px solid #d9dce0; border-radius:6px;
+                 padding:12px 16px; flex:1; min-width:0;
+                 box-shadow:0 1px 4px rgba(0,0,0,.07); }
+.bsKpiAccent   { border-left:3px solid #0064d9 !important; }
+.bsKpiWarn     { border-left:3px solid #bb0000 !important; }
+.bsKpiOk       { border-left:3px solid #107e3e !important; }
+
+.bsKpiLabel,
+.bsKpiLabel .sapMText,
+.bsKpiLabel span { font-size:11px !important; font-weight:600 !important;
+                   color:#556b82 !important; margin-bottom:6px; }
+
+.bsKpiVal,
+.bsKpiVal .sapMText,
+.bsKpiVal span   { font-size:1.1rem !important; font-weight:700 !important;
+                   font-family:Consolas,"Lucida Console","Courier New",monospace !important;
+                   white-space:nowrap !important; }
+
+/* KPI 색상 */
+.bsKpiBlue,
+.bsKpiBlue .sapMText,
+.bsKpiBlue span  { color:#0064d9 !important; }
+.bsKpiRed,
+.bsKpiRed .sapMText,
+.bsKpiRed span   { color:#BB0000 !important; }
+.bsKpiGreen,
+.bsKpiGreen .sapMText,
+.bsKpiGreen span { color:#107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [5] 카드 외곽 래퍼 + 파란 섹션 헤더
+ *     - .bsWrap     : 각 섹션 카드 공통 외곽 (흰 배경, 테두리, 둥근 모서리)
+ *     - .bsHead     : 파란 배경 섹션 헤더 바
+ *     - .bsHeadText : 헤더 왼쪽 제목 텍스트 (흰색)
+ *     - .bsHeadNum  : 헤더 오른쪽 숫자 (흰색, 모노스페이스)
+ *     ※ 새로운 섹션 카드를 추가하려면:
+ *       <VBox class="bsWrap"> <HBox class="bsHead">...</HBox> ... </VBox>
+ * ══════════════════════════════════════════════════════════════ */
+.bsWrap        { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 overflow:hidden; margin-bottom:12px; }
+
+/* 파란 섹션 헤더 */
+.bsHead        { background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%);
+                 padding:8px 14px;
+                 box-shadow: 0 2px 6px rgba(0, 80, 179, 0.28); }
+.bsHeadText,
+.bsHeadText .sapMText,
+.bsHeadText span { font-size:12px !important; font-weight:600 !important; color:#FFFFFF !important; }
+.bsHeadNum,
+.bsHeadNum .sapMText,
+.bsHeadNum span  { font-size:12px !important; font-weight:600 !important; color:#FFFFFF !important;
+                   font-family:Consolas,"Lucida Console",monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [6] 전표 헤더 — 문서번호 + 상태 배지
+ *     - .fiDocNum   : 전표번호 큰 텍스트 (흰색 굵게)
+ *     - .fiBadge    : 상태 뱃지 공통 (작은 알약 형태)
+ *     - .fiB-ok     : "전기완료" 배지 (반투명 흰색)
+ *     - .fiB-cl     : "반제완료" 배지 (파란 계열)
+ *     - .fiB-pk     : "가전기"   배지 (노란 계열)
+ *     - .fiB-rv     : "역전표"   배지 (빨간 계열)
+ *     - .fiBlartText: 전표유형 설명 텍스트 (반투명 흰색, 작게)
+ *     - .fiLastChanged: 최종변경 정보 (우측, 더 작고 투명하게)
+ *     ※ 상태 배지 표시 조건은 View XML의 expression binding으로 제어합니다.
+ *       예: visible="{= ${viewModel>/header/status} === 'ok' }"
+ * ══════════════════════════════════════════════════════════════ */
+.fiDocNum,
+.fiDocNum .sapMText,
+.fiDocNum span   { font-size:15px !important; font-weight:600 !important; color:#FFFFFF !important; }
+
+.fiBadge        { font-size:11px; padding:2px 8px; border-radius:3px; font-weight:600;
+                  display:inline-block; margin-left:8px; }
+.fiB-ok         { background:rgba(255,255,255,0.25); color:#FFFFFF; border:1px solid rgba(255,255,255,0.5); }
+.fiB-cl         { background:#E3F2FD; color:#1565C0; }
+.fiB-pk         { background:#FFF8E1; color:#F57F17; }
+.fiB-rv         { background:#FFEBEE; color:#B71C1C; }
+
+.fiBlartText,
+.fiBlartText .sapMText,
+.fiBlartText span { font-size:12px !important; color:rgba(255,255,255,0.75) !important; margin-left:10px; }
+
+.fiLastChanged,
+.fiLastChanged .sapMText,
+.fiLastChanged span { font-size:11px !important; color:rgba(255,255,255,0.65) !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [7] 전표 헤더 그리드 (메타데이터 4열 배치)
+ *     - .fiHdrGrid : 8개 필드를 4열×2행으로 배치하는 FlexBox
+ *     - .fiHc      : 개별 필드 셀 (25% 너비, 테두리, 패딩)
+ *       - :nth-child(4n)        : 4번째 열 오른쪽 테두리 제거
+ *       - :nth-last-child(-n+4) : 마지막 행 하단 테두리 제거
+ *       - :nth-child(-n+4)      : 첫 번째 행 배경 약간 파랗게
+ *     - .fiLbl : 필드 라벨 (전기일, 증빙일 등) — 작고 회색
+ *     - .fiVal : 필드 값 — 보통 크기, 진한 회색
+ *     - .fiMuted : 비활성 값 (반제전표 없을 때 "—" 등) — 밝은 회색
+ *     - .fiBlue  : 강조 값 (통화/금액) — 파란색 모노스페이스
+ *     ※ 필드를 추가하려면 VBox class="fiHc" 블록을 복사하고
+ *       FlexBox class="fiHdrGrid" 안에 배치하세요.
+ *       열이 4의 배수가 되도록 유지하면 정렬이 깔끔합니다.
+ * ══════════════════════════════════════════════════════════════ */
+.fiHdrGrid.sapMFlexBox { flex-wrap:wrap; width:100%; }
+
+.fiHc.sapMFlexBox {
+    width:25%; min-width:160px;
+    padding:10px 14px;
+    border-right:1px solid #F0F0F0;
+    border-bottom:1px solid #F0F0F0;
+    box-sizing:border-box;
+    background:#FFFFFF;
+}
+.fiHc.sapMFlexBox:nth-child(4n)        { border-right:none; }
+.fiHc.sapMFlexBox:nth-last-child(-n+4) { border-bottom:none; }
+.fiHc.sapMFlexBox:nth-child(-n+4)      { background:#FAFBFF; }
+
+.fiLbl,
+.fiLbl .sapMText,
+.fiLbl span     { font-size:11px !important; color:#6A6D70 !important; margin-bottom:3px; }
+.fiVal,
+.fiVal .sapMText,
+.fiVal span     { font-size:13px !important; font-weight:500 !important; color:#32363A !important; }
+.fiMuted,
+.fiMuted .sapMText,
+.fiMuted span   { color:#AEAEAE !important; font-weight:400 !important; }
+.fiBlue,
+.fiBlue .sapMText,
+.fiBlue span    { color:#0070D2 !important; font-weight:600 !important;
+                  font-family:Consolas,"Lucida Console",monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [8] 라인 아이템 섹션 헤더 — 우측 차변/대변 pill + 균형 칩
+ *     - .fiHdRight   : 우측 정보 그룹 HBox
+ *     - .fiHdPill    : 차변 pill (오른쪽 흰색 구분선 있음)
+ *     - .fiHdPillLast: 대변 pill (구분선 없음)
+ *     - .fiHdBal     : "균형" 칩 (반투명 흰 배경, 체크 아이콘)
+ *     - .fiHdBalIcon : 균형 아이콘 색상
+ *     - .fiHdBalTxt  : "균형" 텍스트
+ *     - .fiHdTag     : 세금계산서 헤더 우측 "DR 전용" 태그
+ *     ※ 균형 칩은 viewModel>/isBalanced 가 true 일 때만 표시됩니다.
+ * ══════════════════════════════════════════════════════════════ */
+.fiHdRight      { gap:0; }
+
+/* 차변 pill */
+.fiHdPill       { padding-right:12px; margin-right:12px;
+                  border-right:1px solid rgba(255,255,255,0.35); }
+.fiHdPill,
+.fiHdPill .sapMText,
+.fiHdPill span  { font-size:13px !important; font-weight:700 !important;
+                  color:rgba(255,255,255,0.92) !important;
+                  font-family:Consolas,"Lucida Console",monospace !important;
+                  white-space:nowrap !important; }
+
+/* 대변 pill (마지막) */
+.fiHdPillLast   { margin-right:10px; }
+.fiHdPillLast,
+.fiHdPillLast .sapMText,
+.fiHdPillLast span { font-size:13px !important; font-weight:700 !important;
+                     color:rgba(255,255,255,0.92) !important;
+                     font-family:Consolas,"Lucida Console",monospace !important;
+                     white-space:nowrap !important; }
+
+/* 균형 칩 */
+.fiHdBal        { gap:5px; padding:3px 9px;
+                  background:rgba(255,255,255,0.18);
+                  border:1px solid rgba(255,255,255,0.4);
+                  border-radius:3px; }
+.fiHdBalIcon    { color:rgba(255,255,255,0.95) !important; font-size:12px !important; }
+.fiHdBalTxt,
+.fiHdBalTxt .sapMText,
+.fiHdBalTxt span { font-size:11px !important; font-weight:700 !important;
+                   color:rgba(255,255,255,0.95) !important; }
+
+/* 세금계산서 헤더 우측 태그 */
+.fiHdTag        { padding:2px 9px;
+                  background:rgba(255,255,255,0.14);
+                  border:1px solid rgba(255,255,255,0.35);
+                  border-radius:3px; }
+.fiHdTag,
+.fiHdTag .sapMText,
+.fiHdTag span   { font-size:11px !important; font-weight:600 !important;
+                  color:rgba(255,255,255,0.82) !important;
+                  white-space:nowrap !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [9] 라인 아이템 테이블 (.fiDocTable)
+ *     - 헤더 셀  : 파란 하단 테두리 + 연파랑 배경
+ *     - 셀 패딩  : 기본 패딩 제거 후 직접 지정
+ *     - 짝수 행  : 약간 파랑 배경 (#FAFBFF)
+ *     - 마지막 행: 하단 테두리 제거
+ *     - hover    : 파란 배경 하이라이트
+ *     - .fiAcctNum  : 계정번호 (모노스페이스, 회색)
+ *     - .fiChipS    : "S 차변" 칩 (파란 알약)
+ *     - .fiChipH    : "H 대변" 칩 (빨간 알약)
+ *     - .fiAmtPos   : 차변 금액 — 파란색 굵게
+ *     - .fiAmtNeg   : 대변 금액 — 빨간색 굵게
+ *     - .fiSgtxt    : 적요 텍스트 — 작고 회색
+ *     ※ 열 순서 변경은 View XML의 <columns> 블록에서 Column 위치를 바꾸세요.
+ * ══════════════════════════════════════════════════════════════ */
+.fiDocTable.sapMList { border:none; }
+
+.fiDocTable .sapMListTblHeaderCell {
+    background:#F0F4F8 !important;
+    border-bottom:2px solid #0070D2 !important;
+    padding:7px 10px !important;
+}
+.fiDocTable .sapMListTblHeaderCell .sapMLabel,
+.fiDocTable .sapMListTblHeaderCell .sapMText,
+.fiDocTable .sapMListTblHeaderCell span {
+    font-size:11px !important; font-weight:700 !important;
+    color:#32363A !important; text-transform:uppercase; letter-spacing:0.5px;
+}
+.fiDocTable .sapMLIBContent { padding:0 !important; }
+.fiDocTable td.sapMListTblCell {
+    padding:7px 10px !important; vertical-align:middle !important;
+    border-bottom:1px solid #F0F0F0 !important;
+}
+/* 짝수 행 배경 */
+.fiDocTable .sapMListTblRow:nth-child(even) td { background:#FAFBFF; }
+/* 마지막 행 하단 테두리 제거 */
+.fiDocTable .sapMLIB:last-child td             { border-bottom:none !important; }
+/* hover 하이라이트 */
+.fiDocTable .sapMLIB:hover td,
+.fiDocTable .sapMLIB.sapMLIBHovered td         { background:#F0F6FF !important; transition:background .12s; }
+
+/* 계정번호 */
+.fiAcctNum,
+.fiAcctNum .sapMText,
+.fiAcctNum span {
+    font-family:Consolas,"Lucida Console","Courier New",monospace !important;
+    font-size:12px !important; color:#5c5353 !important;
+}
+
+/* 차변/대변 칩 */
+.fiChipS,
+.fiChipS .sapMText,
+.fiChipS span { font-size:10px !important; padding:2px 7px; border-radius:10px;
+                background:#E3F2FD; color:#1565C0 !important; font-weight:600 !important; white-space:nowrap; }
+.fiChipH,
+.fiChipH .sapMText,
+.fiChipH span { font-size:10px !important; padding:2px 7px; border-radius:10px;
+                background:#FCE4EC; color:#B71C1C !important; font-weight:600 !important; white-space:nowrap; }
+
+/* 금액 색상 */
+.fiAmtPos,
+.fiAmtPos .sapMText,
+.fiAmtPos span { color:#0070D2 !important; font-weight:700 !important;
+                 font-family:Consolas,"Lucida Console",monospace !important;
+                 font-size:13px !important; white-space:nowrap !important; }
+.fiAmtNeg,
+.fiAmtNeg .sapMText,
+.fiAmtNeg span { color:#BB0000 !important; font-weight:700 !important;
+                 font-family:Consolas,"Lucida Console",monospace !important;
+                 font-size:13px !important; white-space:nowrap !important; }
+
+/* 적요 */
+.fiSgtxt,
+.fiSgtxt .sapMText,
+.fiSgtxt span { font-size:12px !important; color:#6A6D70 !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [10] 테이블 합계 행 (라인 수 + 총 금액)
+ *     - .fiTblTotals   : 합계 행 전체 HBox (연회색 배경)
+ *     - .fiTotalsCount : "N 라인" 텍스트
+ *     - .fiTotalsAmt   : 합계 금액 (네이비 굵게)
+ * ══════════════════════════════════════════════════════════════ */
+.fiTblTotals.sapMFlexBox { padding:7px 10px; background:#F0F4F8; border-top:2px solid #D9D9D9; }
+.fiTotalsCount,
+.fiTotalsCount .sapMText,
+.fiTotalsCount span { font-size:12px !important; color:#32363A !important; font-weight:600 !important; }
+.fiTotalsAmt,
+.fiTotalsAmt .sapMText,
+.fiTotalsAmt span   { font-family:Consolas,"Lucida Console",monospace !important;
+                      font-size:13px !important; font-weight:700 !important; color:#00177C !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [11] 세금계산서 섹션 (DR 전표 전용)
+ *     - .fiTypeHint   : 안내 힌트 바 (파란 아이콘 + 안내 텍스트)
+ *     - .fiHintIcon   : 정보 아이콘 색상
+ *     - .fiHintText   : 안내 텍스트 스타일
+ *     - .fiTaxCard    : 세금계산서 5개 필드 수평 배치 HBox
+ *     - .fiTcF        : 개별 필드 셀 (flex:1, 우측 테두리)
+ *     ※ 세금계산서 섹션 표시 조건: viewModel>/showTax (DR 전표 시 true)
+ *        컨트롤러 _processData() 에서 o.Blart === "DR" 일 때 true 설정
+ * ══════════════════════════════════════════════════════════════ */
+.fiTypeHint.sapMFlexBox {
+    padding:7px 14px; background:#E8F4FD; border-bottom:1px solid #C5DCF0; gap:6px;
+}
+.fiHintIcon   { color:#1565C0 !important; font-size:12px !important; }
+.fiHintText,
+.fiHintText .sapMText,
+.fiHintText span { font-size:11px !important; color:#1565C0 !important; }
+
+.fiTaxCard.sapMFlexBox { flex-wrap:wrap; }
+.fiTcF.sapMFlexBox {
+    padding:12px 18px; border-right:1px solid #F0F0F0;
+    flex:1; min-width:120px; box-sizing:border-box;
+}
+.fiTcF.sapMFlexBox:last-child { border-right:none; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [12] 숫자 우측 정렬 (0001 공통 스타일 동일 사용)
+ *     - .bsNumRight : 금액 텍스트 우측 정렬 + 모노스페이스
+ * ══════════════════════════════════════════════════════════════ */
+.bsNumRight,
+.bsNumRight .sapMText,
+.bsNumRight span {
+    font-family:Consolas,"Lucida Console",monospace !important;
+    font-size:13px !important; font-weight:600 !important; color:#32363A !important;
+    white-space:nowrap !important; display:block !important; text-align:right !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [13] 탐색도움말 Dialog (.bsDrillDialog)
+ *     - 외형        : 테두리 없음, 둥근 모서리, 진한 그림자
+ *     - 헤더 배경   : 파란색 (#0070D2) — .bsHead 와 동일
+ *     - 타이틀 텍스트: 흰색 굵게
+ *     - 스크롤 영역 : 패딩 제거 + overflow-y:auto 명시 → row 잘림 방지
+ *     - 푸터        : 흰 배경, 상단 구분선
+ *
+ *     ※ overflow:hidden 을 Dialog 루트에 두면 내부 스크롤 컨테이너가
+ *       작동하지 않아 row 잘림 / 더보기 차단이 발생합니다.
+ *       border-radius 코너 클리핑은 헤더·푸터에 개별 적용합니다.
+ *     ※ 팝업을 여는 컨트롤러 메서드: onVHOpen()
+ * ══════════════════════════════════════════════════════════════ */
+
+/* Dialog 루트: overflow:visible → 내부 스크롤 컨테이너가 제대로 동작하도록 */
+.bsDrillDialog.sapMDialog {
+    border:none !important; border-radius:6px !important;
+    box-shadow:0 12px 40px rgba(0,23,60,.22),0 2px 8px rgba(0,0,0,.12) !important;
+    overflow:visible !important;
+}
+
+/* 헤더: 상단 두 모서리 라운딩 + overflow:hidden 으로 코너 클리핑 유지 */
+.bsDrillDialog .sapMDialogHeader {
+    background:linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important; border-bottom:none !important; min-height:44px !important;
+    border-radius:6px 6px 0 0 !important; overflow:hidden !important;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBar { background:transparent !important; border:none !important; }
+.bsDrillDialog .sapMDialogTitle .sapMTitle,
+.bsDrillDialog .sapMDialogTitle .sapMTitle .sapMTitleDomRef {
+    color:#fff !important; font-size:16px !important; font-weight:600 !important;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBarLeft .sapUiIcon,
+.bsDrillDialog .sapMDialogHeader .sapMBarRight .sapUiIcon { color:rgba(255,255,255,.9) !important; }
+
+/* 스크롤 컨테이너: 세로 스크롤 명시 → row 잘림 방지, 더보기 버튼 접근 가능
+ * padding-bottom:8px — 마지막 행이 컨테이너 경계에 딱 붙어 잘려 보이는 현상 방지 */
+.bsDrillDialog .sapMDialogScrollCont {
+    padding:0 !important;
+    padding-bottom:8px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    box-sizing:border-box;
+}
+
+/* 풋터: 하단 두 모서리 라운딩 + overflow:hidden 으로 코너 클리핑 유지 */
+.bsDrillDialog .sapMDialogFooter {
+    border-top:1px solid #D9D9D9 !important; background:#fff !important; padding:8px 14px !important;
+    border-radius:0 0 6px 6px !important; overflow:hidden !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [14] 탐색도움말 전표 목록 테이블 (.fiVhTable)
+ *     - 헤더 : 연파랑 배경 + 파란 하단 테두리
+ *     - 셀   : 패딩 통일
+ *     - 짝수 행 : 약간 파랑 배경
+ *     - hover : 파란 하이라이트
+ *     - .fiVhBelnr : 전표번호 — 파란 굵은 모노스페이스
+ *     - .fiVhDate  : 전기일 — 모노스페이스
+ *     - .fiVhAmt   : 금액 — 우측 정렬 굵게
+ *     - .fiVhSgtxt : 헤더텍스트 — 1줄 말줄임 (최대 260px)
+ *     ※ 전표 선택 시 컨트롤러 onVHItemSelect() 실행
+ * ══════════════════════════════════════════════════════════════ */
+.fiVhTable.sapMList { border:none; }
+.fiVhTable .sapMListTblHeaderCell {
+    background:#F0F4F8 !important; border-bottom:2px solid #0070D2 !important; padding:7px 10px !important;
+}
+.fiVhTable .sapMListTblHeaderCell .sapMText,
+.fiVhTable .sapMListTblHeaderCell span {
+    font-size:11px !important; font-weight:700 !important; color:#32363A !important;
+    text-transform:uppercase; letter-spacing:0.5px;
+}
+.fiVhTable .sapMLIBContent { padding:0 !important; }
+.fiVhTable td.sapMListTblCell { padding:7px 10px !important; border-bottom:1px solid #F0F0F0 !important; }
+.fiVhTable .sapMListTblRow:nth-child(even) td { background:#FAFBFF; }
+.fiVhTable .sapMLIB:hover td { background:#F0F6FF !important; }
+
+/* 전표번호 (파란 모노스페이스, 클릭 느낌) */
+.fiVhBelnr,
+.fiVhBelnr .sapMText,
+.fiVhBelnr span {
+    font-size:13px !important; font-weight:700 !important; color:#0070D2 !important;
+    font-family:Consolas,monospace !important; cursor:pointer;
+}
+/* 전기일 */
+.fiVhDate,
+.fiVhDate .sapMText,
+.fiVhDate span {
+    font-family:Consolas,"Lucida Console",monospace !important;
+    font-size:12px !important; color:#32363A !important;
+}
+/* 금액 (우측 정렬) */
+.fiVhAmt,
+.fiVhAmt .sapMText,
+.fiVhAmt span {
+    font-family:Consolas,"Lucida Console",monospace !important;
+    font-size:13px !important; font-weight:700 !important; color:#00177C !important;
+    text-align:right !important; display:block !important; white-space:nowrap !important;
+}
+/* 헤더텍스트 (말줄임) */
+.fiVhSgtxt,
+.fiVhSgtxt .sapMText,
+.fiVhSgtxt span {
+    font-size:13px !important; color:#32363A !important;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:260px; display:block;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [15] 페이지 Footer
+ *     - .bsFooter  : 페이지 최하단 우측 정렬 HBox
+ *     - .bsInfoBox : OData 연결 정보 안내 박스
+ * ══════════════════════════════════════════════════════════════ */
+.bsFooter      { padding:4px 0 8px; }
+.bsInfoBox,
+.bsInfoBox .sapMText,
+.bsInfoBox span { font-size:11px !important; color:#6A6D70 !important;
+                  padding:4px 10px; background:#F7F7F7; border:1px solid #D9D9D9; border-radius:3px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [16] 전표유형 탐색도움말 리스트 (dlgBlartVH)
+ *     - .fiBlartRow  : 각 전표유형 행 HBox (패딩, hover 효과)
+ *     - .fiBlartCode : 전표유형 코드 (DR, KR 등) — 파란 모노스페이스, 고정 32px
+ *     - .fiBlartDesc : 전표유형 설명 (일반 텍스트)
+ *     ※ 전표유형 선택 시 onBlartVHItemSelect() 실행 → 필터 바에 코드 입력
+ * ══════════════════════════════════════════════════════════════ */
+.fiBlartRow.sapMFlexBox { padding:9px 16px; gap:16px; }
+.fiBlartRow.sapMFlexBox:hover { background:#F0F6FF; }
+.fiBlartCode,
+.fiBlartCode .sapMText,
+.fiBlartCode span {
+    font-family:Consolas,"Lucida Console",monospace !important;
+    font-size:13px !important; font-weight:700 !important;
+    color:#0070D2 !important; min-width:32px;
+}
+.fiBlartDesc,
+.fiBlartDesc .sapMText,
+.fiBlartDesc span {
+    font-size:13px !important; color:#32363A !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [17] 인쇄 미디어 쿼리
+ *     - 필터 바와 타이틀 숨김
+ *     - 페이지 패딩 제거
+ *     ※ 인쇄 레이아웃 수정 시 이 블록에서 추가 hide/show 처리
+ * ══════════════════════════════════════════════════════════════ */
+@media print {
+    .bsFilterBar, .bsPageTitle { display:none; }
+    .bsPage { padding:0; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * 공통 유리글래스 액션 버튼 — PDF · EXCEL · PRINT · SAVE
+ * 0005 승인/반려 버튼 스타일 기반, 전 프로그램 공통 적용
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 필터바용 : 파란 유리글래스 (밝은 배경 위에서도 가시성 보장) */
+.btnGlass.sapMBtn .sapMBtnInner {
+    background: linear-gradient(135deg, rgba(0,64,139,0.88) 0%, rgba(0,100,217,0.90) 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,64,139,0.30);
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+}
+.btnGlass.sapMBtn .sapMBtnInner:hover {
+    background: linear-gradient(135deg, rgba(0,50,110,0.96) 0%, rgba(0,80,179,0.96) 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,64,139,0.42);
+}
+.btnGlass.sapMBtn .sapMBtnIcon,
+.btnGlass.sapMBtn .sapMBtnText { color: #ffffff !important; }

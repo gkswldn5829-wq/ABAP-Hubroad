@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZCDS_C3_FI_0002_CDS" xml:lang="en" sap:schema-version="1"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+
+            <EntityType Name="ISdataSetType" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bukrs"/>
+                    <PropertyRef Name="Gjahr"/>
+                    <PropertyRef Name="Monat"/>
+                    <PropertyRef Name="Belnr"/>
+                    <PropertyRef Name="Buzei"/>
+                </Key>
+                <Property Name="Bukrs"      Type="Edm.String"  Nullable="false" MaxLength="4"  sap:display-format="UpperCase"    sap:label="Company Code"/>
+                <Property Name="Gjahr"      Type="Edm.String"  Nullable="false" MaxLength="4"  sap:display-format="NonNegative"  sap:label="Fiscal Year"/>
+                <Property Name="Monat"      Type="Edm.String"  Nullable="false" MaxLength="2"  sap:display-format="NonNegative"  sap:label="Fiscal Period"/>
+                <Property Name="Belnr"      Type="Edm.String"  Nullable="false" MaxLength="10" sap:display-format="UpperCase"    sap:label="Document Number"/>
+                <Property Name="Buzei"      Type="Edm.String"  Nullable="false" MaxLength="3"  sap:display-format="NonNegative"  sap:label="Line Item"/>
+                <Property Name="Saknr"      Type="Edm.String"  MaxLength="10"  sap:display-format="UpperCase"  sap:label="G/L Account"/>
+                <Property Name="SaknrTxt20" Type="Edm.String"  MaxLength="20"  sap:label="Account Name (Short)"/>
+                <Property Name="SaknrTxt50" Type="Edm.String"  MaxLength="50"  sap:label="Account Name (Long)"/>
+                <Property Name="FsType"     Type="Edm.String"  MaxLength="10"  sap:label="FS Type"/>
+                <Property Name="FsLvl1"     Type="Edm.String"  MaxLength="40"  sap:label="FS Level 1 (대분류)"/>
+                <Property Name="FsLvl2"     Type="Edm.String"  MaxLength="40"  sap:label="FS Level 2 (중분류)"/>
+                <Property Name="FsSeq"      Type="Edm.String"  MaxLength="6"   sap:label="FS Sequence"/>
+                <Property Name="FsSign"     Type="Edm.String"  MaxLength="1"   sap:label="FS Sign (+/-)"/>
+                <Property Name="Prctr"      Type="Edm.String"  MaxLength="10"  sap:display-format="UpperCase"  sap:label="Profit Center"/>
+                <Property Name="Budat"      Type="Edm.DateTime" Precision="0"  sap:display-format="Date"       sap:label="Posting Date"/>
+                <Property Name="Amount"     Type="Edm.Decimal" Precision="24"  Scale="3" sap:unit="Waers"      sap:label="Amount (Sign-adjusted)"/>
+                <Property Name="Waers"      Type="Edm.String"  MaxLength="5"   sap:display-format="UpperCase"  sap:label="Currency" sap:semantics="currency-code"/>
+            </EntityType>
+
+            <EntityContainer Name="ZCDS_C3_FI_0002_CDS_Entities"
+                m:IsDefaultEntityContainer="true"
+                sap:supported-formats="atom json">
+                <EntitySet Name="ISdataSet"
+                    EntityType="ZCDS_C3_FI_0002_CDS.ISdataSetType"
+                    sap:creatable="false"
+                    sap:updatable="false"
+                    sap:deletable="false"
+                    sap:content-version="1"/>
+            </EntityContainer>
+
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/test/Opa5","./arrangements/Startup","./NavigationJourney"],function(e,a){"use strict";e.extendConfig({arrangements:new a,viewNamespace:"zc33approval.cl33fiproject0005.view.",autoWait:true})});
+//# sourceMappingURL=AllJourneys.js.map

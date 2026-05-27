@@ -1,0 +1,125 @@
+{
+	"_version": "1.60.0",
+	"sap.app": {
+		"id": "zc3fijiwoohan.cl3fiproject0004",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				""
+			]
+		},
+		"applicationVersion": {
+			"version": "0.0.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "@sap/generator-fiori:basic",
+			"version": "1.19.6",
+			"toolsId": "033bb423-236d-4407-aa3b-40b5f840875c"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZGWC3FI0001_SRV/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"localUri": "localService/mainService/metadata.xml",
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": false,
+		"dependencies": {
+			"minUI5Version": "1.120.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {},
+				"sap.ui.table": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "zc3fijiwoohan.cl3fiproject0004.i18n.i18n",
+					"supportedLocales": [
+						""
+					]
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"transition": "slide",
+				"type": "View",
+				"viewType": "XML",
+				"path": "zc3fijiwoohan.cl3fiproject0004.view",
+				"async": true,
+				"viewPath": "zc3fijiwoohan.cl3fiproject0004.view"
+			},
+			"routes": [
+				{
+					"name": "Routecl_3_fi_project_0004",
+					"pattern": ":?query:",
+					"target": [
+						"Targetcl_3_fi_project_0004"
+					]
+				}
+			],
+			"targets": {
+				"Targetcl_3_fi_project_0004": {
+					"id": "cl_3_fi_project_0004",
+					"name": "cl_3_fi_project_0004"
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "zc3fijiwoohan.cl3fiproject0004.view.App",
+			"type": "XML",
+			"id": "App",
+			"async": true
+		},
+		"flexBundle": false
+	}
+}

@@ -1,0 +1,2 @@
+sap.ui.define(["fiisdata/cl33fiproject0001/controller/CL3_Fiori_FI_Project_0001.controller"],function(o){"use strict";QUnit.module("CL3_Fiori_FI_Project_0001 Controller");QUnit.test("I should test the CL3_Fiori_FI_Project_0001 controller",function(t){var i=new o;i.onInit();t.ok(i)})});
+//# sourceMappingURL=CL3_Fiori_FI_Project_0001.controller.js.map

@@ -1,0 +1,1202 @@
+/* ================================================================
+ * 손익계산서 IS — Custom CSS v1
+ * 프로그램 : cl3_3_fi_project_0003
+ * 화면     : 손익계산서 (Income Statement) 조회 화면
+ * 수정 시  : 아래 섹션 번호를 참고하여 해당 구역만 수정하세요.
+ * [1~17]  : 0001 재무상태표와 공용 — 변경 금지
+ * [18~]   : IS 전용 추가 스타일
+ * ================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [0] 공용 그라디언트 헤더 (0001~0004 공통)
+ * ══════════════════════════════════════════════════════════════ */
+.fiPage > .sapMPageHeader { overflow: visible !important; }
+.fiPage .sapMIBar-CTX     { overflow: visible !important; }
+.fiAppHeader.sapMBar {
+  background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 12px rgba(0, 64, 139, 0.35);
+  height: 56px !important;
+  min-height: 56px !important;
+  overflow: visible !important;
+  box-sizing: border-box;
+}
+.fiAppHeader.sapMBar .sapMBarSection,
+.fiAppHeader.sapMBar .sapMBarPH {
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.fiAppHeader.sapMBar .sapMBarLeft.sapMBarSection { max-width: 70% !important; }
+.headerAppIcon.sapUiIcon {
+  font-size: 1.25rem;
+  color: #7ec8ff;
+  margin: 0 8px 0 4px;
+  flex-shrink: 0;
+}
+.headerTitleBox.sapMHBox {
+  min-width: 0;
+  overflow: hidden;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+  top: 6px;
+}
+.headerAppTitle.sapMTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.headerAppTitle.sapMTitle .sapMTitleText { color: #ffffff; }
+.headerAppSub.sapMText {
+  font-size: 0.6875rem;
+  color: #93b8e0;
+  white-space: nowrap;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.headerBackBtn.sapMBtn .sapMBtnInner {
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.18);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+.headerBackBtn.sapMBtn .sapMBtnIcon { color: #ffffff !important; }
+.headerBackBtn.sapMBtn .sapMBtnInner:hover {
+  background: rgba(255,255,255,0.32);
+  border-color: rgba(255,255,255,0.8);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [1] 페이지 전체 레이아웃
+ * ══════════════════════════════════════════════════════════════ */
+.bsPage        { background:#F7F7F7; padding:16px; }
+.bsPageTitle   { padding-bottom:12px; border-bottom:1px solid #D9D9D9; margin-bottom:12px; }
+.bsTitleText   { font-size:30px !important; font-weight:300 !important; color:#32363A !important; }
+.bsSubText     { font-size:15px !important; color:#6A6D70 !important; margin-top:2px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [2] 필터 바
+ * ══════════════════════════════════════════════════════════════ */
+.bsFilterBar   { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 padding:10px 14px; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.bsFi          { margin-right:8px; }
+.bsFl          { font-size:11px !important; color:#6A6D70 !important; margin-bottom:3px; }
+.bsMlAuto      { margin-left:auto; gap:4px; }
+.bsBalanceBadge{ margin-right:8px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [3] KPI 카드 행
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiRow      { gap:10px; margin-bottom:12px; }
+.bsKpi         { background:#FFFFFF; border:1px solid #d9dce0; border-radius:6px;
+                 padding:12px 16px; flex:1; min-width:0;
+                 box-shadow:0 1px 4px rgba(0,0,0,.07); }
+.bsKpiAccent   { border-left:3px solid #0064d9 !important; }
+.bsKpiWarn     { border-left:3px solid #bb0000 !important; }
+.bsKpiOk       { border-left:3px solid #107e3e !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [4] KPI 카드 텍스트 스타일
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiLabel,
+.bsKpiLabel .sapMText,
+.bsKpiLabel span { font-size:11px !important; font-weight:600 !important; color:#556b82 !important; margin-bottom:6px; }
+
+.bsKpiVal,
+.bsKpiVal .sapMText,
+.bsKpiVal span   { font-size:1.15rem !important; font-weight:700 !important;
+                   font-family: Consolas, "Courier New", monospace !important;
+                   -webkit-font-smoothing: antialiased !important;
+                   -moz-osx-font-smoothing: grayscale !important; }
+
+.bsKpiSub,
+.bsKpiSub .sapMText,
+.bsKpiSub span   { font-size:11px !important; color:#6A6D70 !important; margin-top:3px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [5] KPI 색상 클래스
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiBlue .sapMText,
+.bsKpiBlue span,
+.bsKpiBlue       { color:#0064d9 !important; }
+
+.bsKpiRed .sapMText,
+.bsKpiRed span,
+.bsKpiRed        { color:#BB0000 !important; }
+
+.bsKpiGreen .sapMText,
+.bsKpiGreen span,
+.bsKpiGreen      { color:#107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [6] 차트 영역 (공용)
+ * ══════════════════════════════════════════════════════════════ */
+.bsChartWrap   { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 padding:14px; margin-bottom:12px; gap:20px; }
+.bsChartBox    { flex:1; min-width:0; }
+
+.bsChartTitleRow { margin-bottom:8px; align-items:baseline; }
+.bsChartTitle  { font-size:12px !important; font-weight:600 !important; color:#32363A !important; }
+
+.bsChartPeriod,
+.bsChartPeriod .sapMText,
+.bsChartPeriod span {
+    font-size:11px !important;
+    color:#FFFFFF !important;
+    background:#5B7FA6;
+    border-radius:3px;
+    padding:1px 7px;
+    font-weight:500 !important;
+    white-space:nowrap !important;
+}
+
+.bsMt          { margin-top:14px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [7] 바 차트 List 아이템
+ * ══════════════════════════════════════════════════════════════ */
+.bsBarList .sapMLIBContent { padding:0 !important; }
+.bsBarList .sapMLIB        { padding:0 !important; border-bottom:none !important; background:transparent !important; }
+
+.bsBarRow      { gap:8px; width:100%; padding:4px 0; }
+.bsBarLabel,
+.bsBarLabel .sapMText,
+.bsBarLabel span { font-size:13px !important; color:#32363A !important;
+                   font-weight:500 !important;
+                   min-width:80px; max-width:80px; flex-shrink:0; }
+.bsBarBg       { flex:1; height:10px; background:#EEEEEE; border-radius:5px; overflow:hidden; }
+.bsBarFill     { height:100%; border-radius:5px; transition:width .5s ease; }
+.bsBarPct,
+.bsBarPct .sapMText,
+.bsBarPct span { font-size:13px !important; font-weight:700 !important; color:#32363A !important;
+                 min-width:35px; text-align:right; flex-shrink:0; }
+.bsBarAmt,
+.bsBarAmt .sapMText,
+.bsBarAmt span { font-size:13px !important; color:#32363A !important;
+                 font-family: Consolas, "Lucida Console", monospace !important;
+                 font-weight:600 !important;
+                 -webkit-font-smoothing: antialiased !important;
+                 -moz-osx-font-smoothing: grayscale !important;
+                 min-width:90px; text-align:right; flex-shrink:0; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [8] 전기비교 테이블
+ * ══════════════════════════════════════════════════════════════ */
+.bsCompareTable { font-size:14px !important; }
+
+.bsCompareTable td.sapMListTblCell {
+    padding: 10px 14px !important;
+    vertical-align: middle !important;
+}
+.bsCompareTable .sapMListTblHeaderCell {
+    padding: 8px 14px !important;
+    vertical-align: middle !important;
+}
+.bsCompareTable td.sapMListTblCell:first-child,
+.bsCompareTable .sapMListTblHeaderCell:first-child {
+    padding-right: 20px !important;
+}
+.bsCompareTable td.sapMListTblCell:nth-child(2),
+.bsCompareTable td.sapMListTblCell:nth-child(3),
+.bsCompareTable .sapMListTblHeaderCell:nth-child(2),
+.bsCompareTable .sapMListTblHeaderCell:nth-child(3) {
+    padding-left: 20px !important;
+}
+.bsNumRight,
+.bsNumRight .sapMText,
+.bsNumRight span {
+    font-family: Consolas, "Lucida Console", monospace !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #32363A !important;
+    white-space: nowrap !important;
+    display: block !important;
+    text-align: right !important;
+}
+.bsCompareGrp   { background:#E8F0FF !important; }
+.bsCompareLabelGrp,
+.bsCompareLabelGrp .sapMText,
+.bsCompareLabelGrp span { font-weight:600 !important; color:#00177C !important; font-size:14px !important; }
+.bsCompareLabel,
+.bsCompareLabel .sapMText,
+.bsCompareLabel span     { font-size:14px !important; color:#6A6D70 !important; padding-left:8px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [9] BS 대조표 외곽 래퍼
+ * ══════════════════════════════════════════════════════════════ */
+.bsWrap        { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 overflow:hidden; margin-bottom:12px; }
+.bsSideLeft    { border-right:2px solid #0070D2 !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [10] 섹션 헤더 (파란 배경 헤더 바)
+ * ══════════════════════════════════════════════════════════════ */
+.bsHead        { background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%);
+                 padding:8px 12px;
+                 box-shadow: 0 2px 6px rgba(0, 80, 179, 0.28); }
+.bsHeadText,
+.bsHeadText .sapMText,
+.bsHeadText span { font-size:12px !important; font-weight:600 !important; color:#FFFFFF !important; }
+.bsHeadNum,
+.bsHeadNum .sapMText,
+.bsHeadNum span  { font-size:12px !important; font-weight:600 !important; color:#FFFFFF !important;
+                   font-family:monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [11] 트리 List
+ * ══════════════════════════════════════════════════════════════ */
+.bsTreeList .sapMLIBContent { padding:0 !important; }
+.bsTreeList .sapMLIB        { padding:0 !important; border-bottom:none !important; }
+
+.bsLvl1Row     { background:#E8F0FF; border-bottom:1px solid #C0D0F0;
+                 border-top:1px solid #C0D0F0; padding:6px 12px; width:100%; }
+.bsLvl1Row .bsRowLabel,
+.bsLvl1Row .bsRowLabel .sapMText,
+.bsLvl1Row .bsRowLabel span { font-size:12px !important; font-weight:600 !important; color:#00177C !important; }
+.bsLvl1Row .bsRowNum,
+.bsLvl1Row .bsRowNum .sapMText,
+.bsLvl1Row .bsRowNum span   { font-size:12px !important; font-weight:600 !important;
+                               color:#00177C !important; font-family:monospace !important; }
+
+.bsLvl2Row     { background:#FFFFFF; border-bottom:1px solid #F0F0F0;
+                 padding:5px 12px 5px 24px; width:100%; }
+.bsLvl2Row .bsRowLabel,
+.bsLvl2Row .bsRowLabel .sapMText,
+.bsLvl2Row .bsRowLabel span { font-size:12px !important; font-weight:500 !important; color:#32363A !important; }
+.bsLvl2Row .bsRowNum,
+.bsLvl2Row .bsRowNum .sapMText,
+.bsLvl2Row .bsRowNum span   { font-size:12px !important; color:#32363A !important; font-family:monospace !important; }
+
+.bsLvl3Row     { background:#FFFFFF; border-bottom:1px solid #F5F5F5;
+                 padding:4px 12px 4px 42px; width:100%; cursor:pointer; }
+.bsLvl3Row .bsRowLabel,
+.bsLvl3Row .bsRowLabel .sapMText,
+.bsLvl3Row .bsRowLabel span { font-size:12px !important; color:#6A6D70 !important; }
+.bsLvl3Row .bsRowNum,
+.bsLvl3Row .bsRowNum .sapMText,
+.bsLvl3Row .bsRowNum span   { font-size:12px !important; color:#6A6D70 !important; font-family:monospace !important; }
+.bsLvl3Row:hover             { background:#F0F6FF !important; }
+.bsLvl3Row:hover .bsRowLabel .sapMText,
+.bsLvl3Row:hover .bsRowLabel span { color:#0070D2 !important; text-decoration:underline; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [12] 소계 / 1단계 합계 / 총계 행
+ * ══════════════════════════════════════════════════════════════ */
+.bsSubtotalRow  { background:#F7F7F7; border-top:1px solid #D9D9D9;
+                  border-bottom:1px solid #D9D9D9; padding:5px 12px 5px 24px; width:100%; }
+.bsSubtotalLabel,
+.bsSubtotalLabel .sapMText,
+.bsSubtotalLabel span { font-size:12px !important; font-weight:600 !important; color:#32363A !important; }
+.bsSubtotalNum,
+.bsSubtotalNum .sapMText,
+.bsSubtotalNum span   { font-size:12px !important; font-weight:600 !important; color:#32363A !important;
+                        font-family:monospace !important; }
+
+.bsL1TotalRow   { background:#F0F4F8; border-top:1px solid #C0D0F0;
+                  border-bottom:1px solid #C0D0F0; padding:5px 12px; width:100%; }
+.bsL1TotalLabel,
+.bsL1TotalLabel .sapMText,
+.bsL1TotalLabel span { font-size:12px !important; font-weight:700 !important; color:#00177C !important; padding-left:4px; }
+.bsL1TotalNum,
+.bsL1TotalNum .sapMText,
+.bsL1TotalNum span   { font-size:13px !important; font-weight:700 !important; color:#0070D2 !important;
+                       font-family:monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [13] 숫자 색상 (양수/음수 구분)
+ * ══════════════════════════════════════════════════════════════ */
+.bsNumNeg,
+.bsNumNeg .sapMText,
+.bsNumNeg span { color:#BB0000 !important; }
+.bsNumPos,
+.bsNumPos .sapMText,
+.bsNumPos span { color:#32363A !important; }
+
+.bsSpacer      { height:8px; background:#F7F7F7; width:100%; }
+
+.bsTotalRow    { background:#00177C; padding:8px 12px; }
+.bsTotalLabel,
+.bsTotalLabel .sapMText,
+.bsTotalLabel span { font-size:13px !important; font-weight:600 !important; color:#FFFFFF !important; }
+.bsTotalNum,
+.bsTotalNum .sapMText,
+.bsTotalNum span   { font-size:13px !important; font-weight:600 !important; color:#FFFFFF !important;
+                     font-family:monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [14] 페이지 Footer
+ * ══════════════════════════════════════════════════════════════ */
+.bsFooter      { padding:4px 0 8px; }
+.bsInfoBox,
+.bsInfoBox .sapMText,
+.bsInfoBox span { font-size:11px !important; color:#6A6D70 !important;
+                  padding:4px 10px; background:#F7F7F7; border:1px solid #D9D9D9; border-radius:3px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [15] KPI 카드 금액 글꼴 재정의
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiVal {
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0px !important;
+    white-space: nowrap !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 3px 0;
+}
+
+.bsKpiBlue  { color: #0064d9 !important; }
+.bsKpiRed   { color: #BB0000 !important; }
+.bsKpiGreen { color: #107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [16] KPI 카드 소제목
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiBlue + .bsKpiSub  { color: #0070D2 !important; font-weight: 600 !important; }
+.bsKpiRed + .bsKpiSub   { color: #BB0000 !important; font-weight: 600 !important; }
+.bsKpiGreen + .bsKpiSub { color: #107E3E !important; font-weight: 600 !important; }
+
+.bsKpiSubWrap {
+    margin-top: 6px !important;
+    gap: 5px;
+    display: flex !important;
+    align-items: baseline !important;
+}
+
+.bsKpiSubTxt {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: #555555 !important;
+    line-height: 1 !important;
+}
+
+.bsKpiSubNum {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+}
+
+.bsKpiBlueSub  { color: #0064d9 !important; }
+.bsKpiRedSub   { color: #BB0000 !important; }
+.bsKpiGreenSub { color: #107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [17] 드릴다운 팝업 (Dialog)
+ * ══════════════════════════════════════════════════════════════ */
+.bsDrillDialog.sapMDialog {
+    border: none !important;
+    border-radius: 6px !important;
+    box-shadow: 0 12px 40px rgba(0,23,60,0.22), 0 2px 8px rgba(0,0,0,0.12) !important;
+}
+
+.bsDrillDialog .sapMDialogHeader {
+    background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important;
+    border-bottom: none !important;
+    min-height: 44px !important;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBar {
+    background: transparent !important;
+    border: none !important;
+}
+.bsDrillDialog .sapMDialogTitle .sapMTitle,
+.bsDrillDialog .sapMDialogTitle .sapMTitle .sapMTitleDomRef {
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBarLeft .sapUiIcon,
+.bsDrillDialog .sapMDialogHeader .sapMBarRight .sapUiIcon {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+.bsDrillDialog .sapMDialogScrollCont {
+    padding: 0 0 16px 0 !important;
+}
+
+.bsDrillInfoBar {
+    background: #E8F0FF;
+    border-bottom: 1px solid #C0D0F0;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bsDrillSaknrCode,
+.bsDrillSaknrCode .sapMText,
+.bsDrillSaknrCode span {
+    display: inline-block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: 'Courier New', monospace !important;
+    color: #ffffff !important;
+    background: #0070D2;
+    border-radius: 3px;
+    padding: 2px 9px;
+    white-space: nowrap !important;
+    flex-shrink: 0;
+}
+
+.bsDrillSaknrName,
+.bsDrillSaknrName .sapMText,
+.bsDrillSaknrName span {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #00177C !important;
+    margin-left: 10px !important;
+}
+
+.bsDrillBalBox { text-align: right; }
+
+.bsDrillBalLabel,
+.bsDrillBalLabel .sapMText,
+.bsDrillBalLabel span {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #6A6D70 !important;
+    letter-spacing: 0.2px;
+    text-align: right !important;
+    display: block !important;
+}
+
+.bsDrillBalAmt,
+.bsDrillBalAmt .sapMText,
+.bsDrillBalAmt span {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-family: "72", "72full", "Segoe UI", Arial, sans-serif !important;
+    color: #0070D2 !important;
+    letter-spacing: 0.5px;
+    text-align: right !important;
+    display: block !important;
+}
+
+.bsDrillTable .sapMListTblHeaderCell {
+    background: #F0F4F8 !important;
+    border-bottom: 2px solid #0070D2 !important;
+    padding: 7px 10px !important;
+}
+.bsDrillTable .sapMListTblHeaderCell .sapMLabel,
+.bsDrillTable .sapMListTblHeaderCell .sapMText,
+.bsDrillTable .sapMListTblHeaderCell span {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #32363A !important;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.bsDrillTable .sapMLIBContent { padding: 0 !important; }
+.bsDrillTable td.sapMListTblCell {
+    padding: 7px 10px !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #F0F0F0 !important;
+}
+
+.bsDrillTable .sapMListTblRow:nth-child(even) td { background: #FAFBFF; }
+
+.bsDrillTable .sapMLIB:hover td,
+.bsDrillTable .sapMLIB.sapMLIBHovered td {
+    background: #F0F6FF !important;
+    transition: background 0.12s;
+}
+
+.bsDrillBelnr.sapMLnk,
+.bsDrillBelnr.sapMLnk span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #0070D2 !important;
+    text-decoration: none !important;
+}
+.bsDrillBelnr.sapMLnk:hover,
+.bsDrillBelnr.sapMLnk:hover span {
+    color: #00177C !important;
+    text-decoration: underline !important;
+}
+
+.bsDrillDate,
+.bsDrillDate .sapMText,
+.bsDrillDate span {
+    font-family: Consolas, "Lucida Console", "Courier New", monospace !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #32363A !important;
+    letter-spacing: 0.3px;
+}
+
+.bsDrillShkzg .sapMObjStatusText {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px;
+}
+
+.bsDrillAmt,
+.bsDrillAmt .sapMText,
+.bsDrillAmt span {
+    display: block !important;
+    text-align: right !important;
+    font-family: Consolas, "Lucida Console", "Courier New", monospace !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #00177C !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.3px;
+}
+
+.bsDrillSgtxt,
+.bsDrillSgtxt .sapMText,
+.bsDrillSgtxt span {
+    font-size: 13px !important;
+    color: #32363A !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 200px !important;
+    display: block !important;
+}
+
+.bsDrillDialog .sapMDialogFooter {
+    border-top: 1px solid #D9D9D9 !important;
+    background: #FFFFFF !important;
+    padding: 8px 14px !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [18] IS 메인 레이아웃 — 좌(트리)/우(차트) 패널 분할
+ *      - .bsIsMainWrap   : 좌우 패널 감싸는 HBox (흰 배경, 테두리, 하단 마진)
+ *      - .bsIsLeftPanel  : 좌측 50% — IS 트리 리스트 영역
+ *      - .bsIsRightPanel : 우측 50% — 차트 카드 영역 (좌측 구분선)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsMainWrap {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    align-items: stretch;
+}
+
+.bsIsLeftPanel {
+    flex: 1;
+    min-width: 0;
+    border-right: 1px solid #D9D9D9;
+}
+
+.bsIsRightPanel {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    gap: 12px;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [19] IS 차트 카드 (우측 패널 안)
+ *      - .bsIsChartCard      : 개별 차트 카드 (흰 배경, 테두리, 패딩)
+ *      - .bsIsChartCardHead  : 차트 카드 헤더 행 (제목 + 배지)
+ *      - .bsIsChartCardTitle : 차트 카드 제목 텍스트
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsChartCard {
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 4px;
+    padding: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.bsIsChartCardHead {
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.bsIsChartCardTitle,
+.bsIsChartCardTitle .sapMText,
+.bsIsChartCardTitle span {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #32363A !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [20] IS 캔버스 래퍼 — Chart.js canvas 크기 제어
+ *      - .bsIsCanvasWrap   : 기본 높이 220px (월별 추이 차트 등)
+ *      - .bsIsCanvasWrapLg : 큰 캔버스 (180px)
+ *      - .bsIsCanvasWrapSm : 작은 캔버스 (160px)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsCanvasWrap {
+    position: relative;
+    width: 100%;
+    height: 220px;
+}
+
+.bsIsCanvasWrapLg {
+    position: relative;
+    width: 100%;
+    height: 180px;
+}
+
+.bsIsCanvasWrapSm {
+    position: relative;
+    width: 100%;
+    height: 160px;
+}
+
+.bsIsCanvasWrap canvas,
+.bsIsCanvasWrapLg canvas,
+.bsIsCanvasWrapSm canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [21] IS 3단 차트 행 (하단 3개 카드)
+ *      - .bsIsChart3Row  : 3개 카드를 담는 HBox (gap, 하단 마진)
+ *      - .bsIsChart3Card : 각 카드 (flex:1, 흰 배경, 테두리)
+ *      - .bsIsChart3Mid  : 가운데 카드 (좌우 구분선)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsChart3Row {
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: stretch;
+}
+
+.bsIsChart3Card {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 12px;
+    flex: 1;
+    min-width: 0;
+    gap: 8px;
+}
+
+.bsIsChart3Mid {
+    border-left: 1px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [22] IS 결과 행 (매출총이익 / 영업이익 / 당기순이익)
+ *      - .bsIsResultRow  : 결과 행 전체
+ *      - .bsIsResultLabel: 항목명
+ *      - .bsIsResultNum  : 금액
+ *      - .bsIsResultPos  : 양수 결과 (초록 배경)
+ *      - .bsIsResultNeg  : 음수 결과 (빨간 배경)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsResultRow {
+    border-top: 2px solid #00177C;
+    border-bottom: 2px solid #00177C;
+    padding: 7px 12px;
+    width: 100%;
+}
+
+.bsIsResultRow.bsIsResultPos {
+    background: #E6F2EC;
+    border-top-color: #107E3E;
+    border-bottom-color: #107E3E;
+}
+
+.bsIsResultRow.bsIsResultNeg {
+    background: #FAEAEA;
+    border-top-color: #BB0000;
+    border-bottom-color: #BB0000;
+}
+
+.bsIsResultLabel,
+.bsIsResultLabel .sapMText,
+.bsIsResultLabel span {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #00177C !important;
+}
+
+.bsIsResultRow.bsIsResultNeg .bsIsResultLabel,
+.bsIsResultRow.bsIsResultNeg .bsIsResultLabel .sapMText,
+.bsIsResultRow.bsIsResultNeg .bsIsResultLabel span {
+    color: #BB0000 !important;
+}
+
+.bsIsResultNum,
+.bsIsResultNum .sapMText,
+.bsIsResultNum span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: monospace !important;
+    color: #107E3E !important;
+}
+
+.bsIsResultRow.bsIsResultNeg .bsIsResultNum,
+.bsIsResultRow.bsIsResultNeg .bsIsResultNum .sapMText,
+.bsIsResultRow.bsIsResultNeg .bsIsResultNum span {
+    color: #BB0000 !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [23] IS 마진 바 차트 (수익률 비교 — List 기반)
+ *      - .bsIsMarginList  : 마진 바를 담는 sap.m.List
+ *      - .bsIsMarginRow   : 각 행 (레이블 + 배경 바 + 수치)
+ *      - .bsIsMarginLbl   : 항목명 — 고정 너비
+ *      - .bsIsMarginBg    : 회색 바 배경
+ *      - .bsIsMarginFill  : 채움 바 (JS에서 width % 및 color 주입)
+ *      - .bsIsMarginNum   : 퍼센트 수치 텍스트
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsMarginList .sapMLIBContent { padding: 0 !important; }
+.bsIsMarginList .sapMLIB        { padding: 0 !important; border-bottom: none !important; background: transparent !important; }
+
+.bsIsMarginRow  { gap: 6px; width: 100%; padding: 4px 0; align-items: center; }
+
+.bsIsMarginLbl,
+.bsIsMarginLbl .sapMText,
+.bsIsMarginLbl span {
+    font-size: 11px !important;
+    color: #6A6D70 !important;
+    font-weight: 500 !important;
+    min-width: 72px;
+    max-width: 72px;
+    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bsIsMarginBg   { flex: 1; height: 8px; background: #EEEEEE; border-radius: 4px; overflow: hidden; }
+.bsIsMarginFill { height: 100%; border-radius: 4px; transition: width .5s ease; }
+
+.bsIsMarginNum,
+.bsIsMarginNum .sapMText,
+.bsIsMarginNum span {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #32363A !important;
+    min-width: 38px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [24] IS 마진 추세 레이블
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsMarginTrendLbl,
+.bsIsMarginTrendLbl .sapMText,
+.bsIsMarginTrendLbl span {
+    font-size: 11px !important;
+    color: #6A6D70 !important;
+    font-style: italic;
+    margin-bottom: 4px;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [25] IS 헤더 보조 주석 텍스트 / IS 전용 상단 여백
+ *      - .bsHeadAnnot : 헤더 바 안 우측 소형 주석
+ *      - .bsIsMt      : IS 전용 margin-top 12px
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsHeadAnnot,
+.bsHeadAnnot .sapMText,
+.bsHeadAnnot span {
+    font-size: 10px !important;
+    color: rgba(255,255,255,0.75) !important;
+    font-weight: 400 !important;
+    font-style: italic;
+    margin-left: auto;
+}
+
+.bsIsMt { margin-top: 12px; }
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [26] IS 상태 뱃지 (isStatusText) — 필터 바 우측
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsStatusBadge,
+.bsIsStatusBadge .sapMText,
+.bsIsStatusBadge span {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background: #E8E8E8;
+    color: #6A6D70 !important;
+    white-space: nowrap !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [27] IS 당기순이익 최하단 총계 행
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsTotalRow {
+    background: #00177C;
+    padding: 8px 12px;
+    border-top: 2px solid #FFFFFF;
+}
+
+.bsIsTotalLabel,
+.bsIsTotalLabel .sapMText,
+.bsIsTotalLabel span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    letter-spacing: 0.3px;
+}
+
+.bsIsTotalNum,
+.bsIsTotalNum .sapMText,
+.bsIsTotalNum span {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #7FFFBA !important;
+    font-family: monospace !important;
+    letter-spacing: 0.5px;
+}
+
+.bsIsTotalNum.bsIsTotalNeg,
+.bsIsTotalNum.bsIsTotalNeg .sapMText,
+.bsIsTotalNum.bsIsTotalNeg span {
+    color: #FF9999 !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [28] 반응형 보정 — 화면 너비가 좁을 때 좌우 패널을 세로로 쌓음
+ * ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .bsIsMainWrap { flex-direction: column !important; }
+    .bsIsLeftPanel { border-right: none; border-bottom: 1px solid #D9D9D9; }
+    .bsIsChart3Row { flex-direction: column !important; }
+    .bsIsChart3Card { flex: unset; width: 100%; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [29] 기간 조회 인라인 입력 (조회 기간 한 줄 표시)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsPeriodWrap {
+    background: #FFFFFF;
+    border: 1px solid #BFBFBF;
+    border-radius: 4px;
+    padding: 0 6px;
+    height: 30px;
+    gap: 2px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.bsPeriodWrap .sapMInputBase {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+.bsPeriodWrap:focus-within {
+    border-color: #0070D2 !important;
+    box-shadow: 0 0 0 2px rgba(0,112,210,0.15);
+}
+
+.bsPeriodSep,
+.bsPeriodSep .sapMText,
+.bsPeriodSep span {
+    font-size: 12px !important;
+    color: #6A6D70 !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    padding: 0 2px;
+}
+
+.bsPeriodInput.sapMInputBase {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [30] IS 대분류 행 카테고리별 색상
+ *      - .bsIsLvl1Rev   : 매출 (파랑 좌측 선)
+ *      - .bsIsLvl1Cost  : 원가/판관비 (주황 좌측 선)
+ *      - .bsIsLvl1NonOp : 영업외/법인세 (보라 좌측 선)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsLvl1Rev {
+    border-left: 4px solid #0070D2 !important;
+    background: #EEF5FF !important;
+}
+.bsIsLvl1Rev .bsRowLabel,
+.bsIsLvl1Rev .bsRowLabel .sapMText,
+.bsIsLvl1Rev .bsRowLabel span { color: #003D82 !important; }
+.bsIsLvl1Rev .bsRowNum,
+.bsIsLvl1Rev .bsRowNum .sapMText,
+.bsIsLvl1Rev .bsRowNum span   { color: #0070D2 !important; }
+
+.bsIsLvl1Cost {
+    border-left: 4px solid #BA7517 !important;
+    background: #FEF7EC !important;
+}
+.bsIsLvl1Cost .bsRowLabel,
+.bsIsLvl1Cost .bsRowLabel .sapMText,
+.bsIsLvl1Cost .bsRowLabel span { color: #7A4C0F !important; }
+.bsIsLvl1Cost .bsRowNum,
+.bsIsLvl1Cost .bsRowNum .sapMText,
+.bsIsLvl1Cost .bsRowNum span   { color: #BA7517 !important; }
+
+.bsIsLvl1NonOp {
+    border-left: 4px solid #7A5DAA !important;
+    background: #F5F0FA !important;
+}
+.bsIsLvl1NonOp .bsRowLabel,
+.bsIsLvl1NonOp .bsRowLabel .sapMText,
+.bsIsLvl1NonOp .bsRowLabel span { color: #4A2A7A !important; }
+.bsIsLvl1NonOp .bsRowNum,
+.bsIsLvl1NonOp .bsRowNum .sapMText,
+.bsIsLvl1NonOp .bsRowNum span   { color: #7A5DAA !important; }
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [31] IS 결과 행 강조 (양수 = 진한 초록 배경 + 흰 텍스트)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsResultRow.bsIsResultPos {
+    background: #107E3E !important;
+    border-top-color: #0A5E2E !important;
+    border-bottom-color: #0A5E2E !important;
+}
+
+.bsIsResultRow.bsIsResultPos .bsIsResultLabel,
+.bsIsResultRow.bsIsResultPos .bsIsResultLabel .sapMText,
+.bsIsResultRow.bsIsResultPos .bsIsResultLabel span {
+    color: #FFFFFF !important;
+}
+
+.bsIsResultRow.bsIsResultPos .bsIsResultNum,
+.bsIsResultRow.bsIsResultPos .bsIsResultNum .sapMText,
+.bsIsResultRow.bsIsResultPos .bsIsResultNum span {
+    color: #AFFFCF !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [33] IS 트리 전체너비 패널 + 상단 2열 차트 행
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsFullPanel {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+/* 트리 행 레이블 — 넘칠 경우 말줄임 */
+.bsLvl1Row,
+.bsLvl2Row,
+.bsLvl3Row {
+    min-width: 0;
+}
+.bsLvl1Row .bsRowLabel .sapMText,
+.bsLvl2Row .bsRowLabel .sapMText,
+.bsLvl3Row .bsRowLabel .sapMText {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: calc(100% - 120px) !important;
+    display: block !important;
+}
+.bsLvl3Row .bsRowLabel .sapMText { max-width: calc(100% - 130px) !important; }
+
+.bsIsChart2Row {
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: stretch;
+}
+
+.bsIsChart2Card {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 12px;
+    flex: 1;
+    min-width: 0;
+    gap: 8px;
+}
+
+.bsIsChart2Right {
+    border-left: 1px solid #D9D9D9;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [32] 차트 카드 내부 보조 주석 — 흰 배경 위에서 가시성 보정
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsChartCardHead .bsHeadAnnot,
+.bsIsChartCardHead .bsHeadAnnot .sapMText,
+.bsIsChartCardHead .bsHeadAnnot span {
+    color: #8A8A8A !important;
+    background: transparent !important;
+    font-size: 10px !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [34] IS 트리 2컬럼 레이아웃
+ *      - .bsIsTreeCols    : 좌/우 컬럼을 담는 HBox 행 (border-top 구분선)
+ *      - .bsIsTreeCol     : 각 컬럼 — overflow 방지
+ *      - .bsIsTreeColLeft : 좌측 컬럼 (우측 구분선)
+ *      - .bsIsColHeader   : 컬럼 제목 행 (수익 / 비용·손익)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsIsTreeCols {
+    border-top: 1px solid #D9D9D9;
+    align-items: stretch;
+}
+
+.bsIsTreeCol {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.bsIsTreeColLeft {
+    border-right: 2px solid #0070D2;
+}
+
+.bsIsColHeader,
+.bsIsColHeader .sapMText,
+.bsIsColHeader span {
+    display: block !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    background: #5B7FA6;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap !important;
+}
+
+.bsIsTreeColLeft .bsIsColHeader,
+.bsIsTreeColLeft .bsIsColHeader .sapMText,
+.bsIsTreeColLeft .bsIsColHeader span {
+    background: #0070D2;
+}
+
+.bsIsTreeColRight .bsIsColHeader,
+.bsIsTreeColRight .bsIsColHeader .sapMText,
+.bsIsTreeColRight .bsIsColHeader span {
+    background: #BA7517;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [35] 조회 기간 Select 드롭다운 (월 선택)
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsPeriodSelBox {
+    gap: 4px;
+    align-items: center;
+}
+
+.bsPeriodSel.sapMSlt {
+    min-width: 88px !important;
+    max-width: 98px !important;
+    height: 30px !important;
+}
+
+.bsPeriodSel .sapMSltLabel {
+    font-size: 13px !important;
+    color: #32363A !important;
+}
+
+.bsPeriodSep,
+.bsPeriodSep .sapMText,
+.bsPeriodSep span {
+    font-size: 12px !important;
+    color: #6A6D70 !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    padding: 0 2px;
+}
+
+.bsFin.sapMInput {
+    height: 30px !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════
+ * [36] GP/OP/NP 용어 안내 레전드 바
+ * ════════════════════════════════════════════════════════════════════════ */
+.bsKpiLegend {
+    background: #F7F7F7;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    padding: 4px 12px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.bsKpiLegendTxt,
+.bsKpiLegendTxt .sapMText,
+.bsKpiLegendTxt span {
+    font-size: 11px !important;
+    color: #888888 !important;
+    font-style: italic;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * 공통 유리글래스 액션 버튼 — PDF · EXCEL · PRINT · SAVE
+ * 0005 승인/반려 버튼 스타일 기반, 전 프로그램 공통 적용
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 필터바용 : 파란 유리글래스 (밝은 배경 위에서도 가시성 보장) */
+.btnGlass.sapMBtn .sapMBtnInner {
+    background: linear-gradient(135deg, rgba(0,64,139,0.88) 0%, rgba(0,100,217,0.90) 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,64,139,0.30);
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+}
+.btnGlass.sapMBtn .sapMBtnInner:hover {
+    background: linear-gradient(135deg, rgba(0,50,110,0.96) 0%, rgba(0,80,179,0.96) 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,64,139,0.42);
+}
+.btnGlass.sapMBtn .sapMBtnIcon,
+.btnGlass.sapMBtn .sapMBtnText { color: #ffffff !important; }
