@@ -684,24 +684,28 @@ sap.ui.define([
             }
 
             var sWaers = oModel.getProperty("/waers");
+            var sStodt = oModel.getProperty("/stodt") || "";
             var oHeader = {
                 Bukrs:  "8282",
                 Blart:  oModel.getProperty("/blart") || "SA",
                 Budat:  sBudat,
                 Bldat:  sBldat,
-                Bktxt:  oModel.getProperty("/bktxt"),
-                Stodt:  oModel.getProperty("/stodt") || "",
+                Bktxt:  oModel.getProperty("/bktxt") || "",
                 Waers:  sWaers,
                 Gjahr:  oModel.getProperty("/gjahr"),
                 Monat:  oModel.getProperty("/monat"),
                 Zstat:  "01"
                 // Ernam: ABAP이 sy-uname으로 자동 설정 — 프론트에서 보내면 DPC 충돌 가능
+                // Stodt: 값이 있을 때만 아래서 추가 (빈 문자열 → ABAP 날짜 변환 오류 방지)
             };
+            if (sStodt) { oHeader.Stodt = sStodt; }
 
-            var aPayload = aItems.map(function (item) {
+            var aPayload = aItems.map(function (item, idx) {
                 var nAmt = parseFloat((item.wrbtrInput || "").replace(/,/g, "")) || 0;
                 var nTax = item.wmwst || 0;
                 return {
+                    Bukrs:   "8282",                              // Deep insert: ABAP DPC가 헤더-아이템 매핑에 필요
+                    Buzei:   String(idx + 1).padStart(3, "0"),   // Key 필드(Nullable=false): "001","002"… DPC가 auto-generate하지 않으면 500
                     Saknr:   item.saknr,
                     Shkzg:   item.shkzg,
                     Bschl:   item.bschl,
