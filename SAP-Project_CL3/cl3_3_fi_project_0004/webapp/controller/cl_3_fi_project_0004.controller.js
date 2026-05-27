@@ -194,6 +194,7 @@ sap.ui.define([
                 balIcon:        "sap-icon://information",
                 tableRowCount:  2,
                 items:          [],
+                userId:         "",
                 userName:       "",
                 userPernr:      "",
                 attachments:    [],
@@ -354,12 +355,15 @@ sap.ui.define([
             if (!oCtx) return;
             var oModel  = this.getView().getModel("viewModel");
             var sPath   = oCtx.getPath();
-            var nAmt    = parseFloat(oEvent.getParameter("value").replace(/,/g, "")) || 0;
+            var sVal    = oEvent.getParameter("value") || "";
+            var nAmt    = parseFloat(sVal.replace(/,/g, "")) || 0;
             var sMwskz  = oModel.getProperty(sPath + "/mwskz") || "";
             var nTax    = Math.round(nAmt * (TAX_RATE[sMwskz] || 0) / 100);
-            oModel.setProperty(sPath + "/wrbtr",     nAmt);
-            oModel.setProperty(sPath + "/wmwst",     nTax);
-            oModel.setProperty(sPath + "/wmwstText", this._fmt(nTax));
+            // liveChange는 JSONModel two-way binding이 model 반영 전 발생 → 명시적으로 동기화
+            oModel.setProperty(sPath + "/wrbtrInput", sVal);
+            oModel.setProperty(sPath + "/wrbtr",      nAmt);
+            oModel.setProperty(sPath + "/wmwst",      nTax);
+            oModel.setProperty(sPath + "/wmwstText",  this._fmt(nTax));
             this._calcBalance();
         },
 
@@ -682,7 +686,7 @@ sap.ui.define([
             var sWaers = oModel.getProperty("/waers");
             var oHeader = {
                 Bukrs:  "8282",
-                Blart:  "SA",
+                Blart:  oModel.getProperty("/blart") || "SA",
                 Budat:  sBudat,
                 Bldat:  sBldat,
                 Bktxt:  oModel.getProperty("/bktxt"),
@@ -690,7 +694,8 @@ sap.ui.define([
                 Waers:  sWaers,
                 Gjahr:  oModel.getProperty("/gjahr"),
                 Monat:  oModel.getProperty("/monat"),
-                Zstat:  "01"
+                Zstat:  "01",
+                Ernam:  oModel.getProperty("/userId") || ""   // ← 전표 시작자(작성자) SAP 로그인 ID
             };
 
             var aPayload = aItems.map(function (item) {
@@ -723,7 +728,8 @@ sap.ui.define([
             }
 
             var that = this;
-            oODataModel.create("/VoucherHeaderSet", Object.assign({}, oHeader, { VoucherItemSet: aPayload }), {
+            // OData v2 deep insert: navigation property는 { results: [...] } 형식 필수
+            oODataModel.create("/VoucherHeaderSet", Object.assign({}, oHeader, { VoucherItemSet: { results: aPayload } }), {
                 success: function (oData) {
                     var sBelnr = oData.Belnr || "";
                     var sGjahr = oData.Gjahr || "";
@@ -733,11 +739,11 @@ sap.ui.define([
                         that._uploadAttachments(sBelnr, sGjahr);
                     }
 
+                    // _resetForm을 onClose 콜백 안에서 호출 → 비동기 첨부 업로드와 충돌 방지 + 전표번호 확인 후 폼 초기화
                     MessageBox.success(
                         "전표가 생성되었습니다.\n전표번호: " + (sBelnr || "—") + "  회계연도: " + (sGjahr || "—"),
-                        { title: "전표 생성 완료" }
+                        { title: "전표 생성 완료", onClose: function () { that._resetForm(); } }
                     );
-                    that._resetForm();
                 },
                 error: function (oError) {
                     var sMsg = "전표 생성 중 오류가 발생했습니다.";
@@ -759,6 +765,7 @@ sap.ui.define([
             // DEFAULT_USER = mock ushell → 실제 사용자 ID 아님
             if (sUname && sUname !== "DEFAULT_USER") {
                 console.log("[HR] ushell Uname →", sUname);
+                oModel.setProperty("/userId", sUname);   // ← 시작자 ID 저장 (Ernam 페이로드용)
                 that._callHROData(sUname, oModel);
                 return;
             }
@@ -771,6 +778,7 @@ sap.ui.define([
                     sUname = (data.id || "").toUpperCase();
                     console.log("[HR] start_up Uname →", sUname);
                     if (sUname) {
+                        oModel.setProperty("/userId", sUname);   // ← 시작자 ID 저장 (Ernam 페이로드용)
                         that._callHROData(sUname, oModel);
                     } else {
                         oModel.setProperty("/userName", "—");
@@ -789,11 +797,13 @@ sap.ui.define([
                 success: function (o) {
                     console.log("[HR] 응답 →", o);
                     var sParts = [o.Empnm, o.Dept, o.Zposition].filter(Boolean);
+                    oModel.setProperty("/userId",    sUname);                                     // ← SAP 로그인 ID 확정 저장
                     oModel.setProperty("/userName",  sParts.length ? sParts.join(" · ") : sUname);
                     oModel.setProperty("/userPernr", o.Empno || "");
                 },
                 error: function (oErr) {
                     console.error("[HR] OData 오류 →", oErr);
+                    oModel.setProperty("/userId",   sUname);   // ← 오류 시에도 로그인 ID 유지
                     oModel.setProperty("/userName", sUname);
                 }
             });
