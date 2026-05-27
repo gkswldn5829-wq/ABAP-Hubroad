@@ -753,12 +753,15 @@ sap.ui.define([
                 },
                 error: function (oError) {
                     var sMsg = "전표 생성 중 오류가 발생했습니다.";
+                    var sTxId = "";
                     try {
                         var sBody = oError.responseText || "";
                         if (sBody.indexOf("{") === 0 || sBody.indexOf("{") > -1) {
                             // JSON 응답 파싱 시도
                             var oJson = JSON.parse(sBody);
                             sMsg = (oJson.error && oJson.error.message && oJson.error.message.value) || sMsg;
+                            // SAP Gateway 내부 에러는 innererror.transactionid로 /IWFND/ERROR_LOG에서 조회 가능
+                            sTxId = (oJson.error && oJson.error.innererror && oJson.error.innererror.transactionid) || "";
                         } else if (sBody.indexOf("<") > -1) {
                             // XML 응답(SAP ABAP 에러)에서 message 추출
                             var oMatch = sBody.match(/<message[^>]*>([^<]+)<\/message>/i)
@@ -766,8 +769,11 @@ sap.ui.define([
                             if (oMatch) { sMsg = oMatch[1]; }
                         }
                     } catch (e) { /* 파싱 실패 시 기본 메시지 사용 */ }
+                    // ABAP 500 "unknown internal server error" → ZFC3FI0002 타입 충돌 등 ABAP 예외가 원인
+                    // → /IWFND/ERROR_LOG 트랜잭션에서 아래 TransactionID로 정확한 ABAP 예외 확인 가능
+                    var sDetail = sTxId ? "\n\n[ABAP 에러 조회] /IWFND/ERROR_LOG\nTransactionID: " + sTxId : "";
                     console.error("[GL 전표] 저장 오류:", oError.statusCode, oError.statusText, oError.responseText);
-                    MessageBox.error(sMsg, { title: "저장 오류 (HTTP " + (oError.statusCode || "?") + ")" });
+                    MessageBox.error(sMsg + sDetail, { title: "저장 오류 (HTTP " + (oError.statusCode || "?") + ")" });
                 }
             });
         },
