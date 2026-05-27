@@ -1,0 +1,140 @@
+<mvc:View controllerName="zcl327.zafter06.controller.SplitView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified"
+    >
+    <Page id="page" title="{i18n>title}">
+        
+        <SplitContainer id = "splitContainer" 
+                        initialMaster="Master"
+                        initialDetail="Detail"
+                        mode="ShowHideMode">
+            <masterPages>
+                <Page id="Master" title="Airline master" backgroundDesign="List" >
+                    <List items ="{/AirlineSet}">
+                        <StandardListItem   icon="sap-icon://flight" 
+                                            title="{Carrname}" 
+                                            description="{Carrid}"
+                                            type="Navigation" 
+                                            press="onPress" />
+                    </List>
+                </Page>
+            </masterPages>
+
+            <detailPages>
+                <Page id="Detail" 
+                      title="{i18n>detailTitle}"
+                      backgroundDesign="Solid">
+                    
+                    <!--SPFLI Table-->
+                    <t:Table id="spfli" 
+                            title="Flight Schedule"
+                            rows="{/ScheduleSet}"
+                            paste="onPaste"
+                            selectionMode="Single"
+                            ariaLabelledBy="spfliTitle"
+                            visibleRowCount="5"
+                            cellClick="onsflight">
+                        <t:columns>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Carrid/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Carrid}" />        
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Connid/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Connid}" />        
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Cityfrom/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Cityfrom}" />        
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Airpfrom/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Airpfrom}" />        
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Cityto/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Cityto}" />        
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Airpto/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Airpto}" />        
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="{/#ScheduleSet/Deptime/@sap:label}" />
+                                <t:template>
+                                    <Text text="{Deptime}" />        
+                                </t:template>
+                            </t:Column>
+                        </t:columns>
+                    </t:Table>
+
+                    <MessageStrip 
+                        text="Flight schedule"
+                        type="Success"
+                        enableFormattedText="true"
+                        showIcon="true"
+                        showCloseButton="false"
+                        class="sapUiMediumMarginBottom"/>
+
+                        <t:Table id="sflight" 
+                            title="Flight Information"
+                            rows="{/FlightSet}"
+                            paste="onPaste"
+                            selectionMode="Single"
+                            ariaLabelledBy="sflightTitle"
+                            visibleRowCount="5"
+                            >
+                                <t:Column >
+                                <Label text="{/#FlightSet/Carrid/@sap:label}" />
+                                    <t:template>
+                                        <Text text="{Carrid}" />        
+                                    </t:template>
+                                </t:Column>
+                                <t:Column >
+                                <Label text="{/#FlightSet/Connid/@sap:label}" />
+                                    <t:template>
+                                        <Text text="{Connid}" />        
+                                    </t:template>
+                                </t:Column>
+                                <t:Column >
+                                <Label text="{/#FlightSet/Fldate/@sap:label}" />
+                                    <t:template>
+                                        <Text text="{Fldate}" />        
+                                    </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Price" />
+                                    <t:template>
+                                        <Text text="{ 
+                                            parts:[{path:'Price'},{path:'Currency'}],
+                                            type: 'sap.ui.model.type.Currency',
+                                            formatOptions: {showMeasure: true }
+                                            }" wrapping="false"/>
+                                    </t:template>
+                                </t:Column>
+                                <t:Column >
+                                <Label text="{/#FlightSet/Planetype/@sap:label}" />
+                                    <t:template>
+                                        <Text text="{Planetype}" />        
+                                    </t:template>
+                                </t:Column>                      
+                        </t:Table>
+                </Page>
+            </detailPages>    
+        </SplitContainer>
+    </Page>
+</mvc:View>

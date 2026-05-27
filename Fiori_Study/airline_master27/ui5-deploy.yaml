@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: zcl327.airlinemaster27
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: http://bgissap1.bgissap.co.kr:8000/
+        app:
+          name: ZGWCL327_02_SRV
+          description: Airline data service
+          package: ZCL327
+          transport: EFXK903007
+        exclude:
+          - /test/

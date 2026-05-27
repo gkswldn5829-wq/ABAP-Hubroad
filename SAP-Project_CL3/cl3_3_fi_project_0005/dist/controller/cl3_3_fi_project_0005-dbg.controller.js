@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment"
+], function (Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast, Fragment) {
     "use strict";
 
     return Controller.extend("zc33approval.cl33fiproject0005.controller.cl3_3_fi_project_0005", {
@@ -61,9 +62,9 @@ sap.ui.define([
             this._loadLineItems(oHeader.Bukrs, oHeader.Belnr, oHeader.Gjahr);
         },
 
-        // 검색창 입력 → 클라이언트 측 필터
+        // 검색창 입력 → 클라이언트 측 필터 (Input으로 변경되어 query와 value 모두 대응)
         onSearch: function (oEvent) {
-            var sVal     = (oEvent.getParameter("query") || oEvent.getParameter("newValue") || "").trim();
+            var sVal     = (oEvent.getParameter("query") || oEvent.getParameter("newValue") || oEvent.getParameter("value") || "").trim();
             var oList    = this.getView().byId("approvalList");
             var oBinding = oList.getBinding("items");
             if (!oBinding) return;
@@ -80,6 +81,84 @@ sap.ui.define([
                     })
                 ]);
             } else {
+                oBinding.filter([]);
+            }
+        },
+
+        /* ═══════════════════════════════════════════════════════
+           VALUE HELP (SEARCH HELP)
+           ═══════════════════════════════════════════════════════ */
+
+        onValueHelpRequest: function (oEvent) {
+            var oView = this.getView();
+
+            if (!this._pValueHelpDialog) {
+                this._pValueHelpDialog = Fragment.load({
+                    id: oView.getId(),
+                    name: "zc33approval.cl33fiproject0005.view.fragments.BelnrValueHelp",
+                    controller: this
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pValueHelpDialog.then(function (oDialog) {
+                // 다이얼로그 열 때 내부 필터 초기화 (XML의 Zstat 필터는 유지됨)
+                var oBinding = oDialog.getBinding("items");
+                if (oBinding) {
+                    oBinding.filter([]);
+                }
+                oDialog.open();
+            });
+        },
+
+        onValueHelpSearch: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new Filter({
+                filters: [
+                    new Filter("Belnr", FilterOperator.Contains, sValue),
+                    new Filter("Gjahr", FilterOperator.Contains, sValue),
+                    new Filter("Bktxt", FilterOperator.Contains, sValue),
+                    new Filter("Ernam", FilterOperator.Contains, sValue)
+                ],
+                and: false
+            });
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+
+        onValueHelpConfirm: function (oEvent) {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            if (!oSelectedItem) {
+                return;
+            }
+
+            // 선택된 전표번호와 회계연도를 가져오기 (컬럼 순서 0, 1)
+            var sBelnr = oSelectedItem.getCells()[0].getText();
+            var sGjahr = oSelectedItem.getCells()[1].getText();
+
+            // 검색창에 전표번호 세팅 (사용자 편의성)
+            var oSearchField = this.getView().byId("searchField");
+            oSearchField.setValue(sBelnr);
+
+            // 기존 리스트에 전표번호 + 회계연도 조건을 모두 걸어 정확히 1건만 필터링
+            var oList = this.getView().byId("approvalList");
+            var oBinding = oList.getBinding("items");
+            if (oBinding) {
+                oBinding.filter([
+                    new Filter({
+                        filters: [
+                            new Filter("Belnr", FilterOperator.EQ, sBelnr),
+                            new Filter("Gjahr", FilterOperator.EQ, sGjahr)
+                        ],
+                        and: true
+                    })
+                ]);
+            }
+        },
+
+        onValueHelpCancel: function (oEvent) {
+            var oBinding = oEvent.getSource().getBinding("items");
+            if (oBinding) {
                 oBinding.filter([]);
             }
         },

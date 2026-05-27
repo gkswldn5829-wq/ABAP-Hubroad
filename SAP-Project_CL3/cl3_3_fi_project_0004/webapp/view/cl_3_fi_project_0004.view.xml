@@ -27,8 +27,9 @@
                 </contentMiddle>
                 <contentRight>
                     <Text text="{viewModel>/waers}" class="headerWaersTag"/>
-                    <Button text="RESET" icon="sap-icon://refresh" press="onReset" class="btnGlassHeader headerResetBtn"/>
-                    <Button text="SAVE"  icon="sap-icon://save"    press="onSave"  class="btnGlassHeader headerSaveBtn"/>
+                    <Button text="ATTACH" icon="sap-icon://attachment" press="onSelectFiles" class="btnGlassHeader headerAttachBtn"/>
+                    <Button text="RESET"  icon="sap-icon://refresh"    press="onReset"       class="btnGlassHeader headerResetBtn"/>
+                    <Button text="SAVE"   icon="sap-icon://save"       press="onSave"        class="btnGlassHeader headerSaveBtn"/>
                 </contentRight>
             </Bar>
         </customHeader>
@@ -291,12 +292,50 @@
                             <OverflowToolbar class="cardToolbar">
                                 <core:Icon src="sap-icon://attachment" class="cardIcon"/>
                                 <Title text="첨부파일" level="H6" class="cardTitle"/>
+                                <ToolbarSpacer/>
+                                <Text text="{viewModel>/attachCountTag}" class="cardTag"/>
+                                <Button id="attachSelectBtn"
+                                    icon="sap-icon://upload"
+                                    text="파일 선택"
+                                    press="onSelectFiles"
+                                    class="attachSelectBtn"/>
                             </OverflowToolbar>
                         </headerToolbar>
-                        <VBox class="attachArea" alignItems="Center" justifyContent="Center">
-                            <core:Icon src="sap-icon://upload-to-cloud" class="attachIcon"/>
-                            <Text text="파일을 드래그하거나 클릭하여 영수증·세금계산서를 첨부하세요" class="attachText"/>
-                            <Text text="첨부 기능 개발 예정" class="attachSubText"/>
+                        <VBox class="attachBody">
+                            <!-- 파일 목록 -->
+                            <List id="attachList"
+                                items="{viewModel>/attachments}"
+                                showNoData="false"
+                                class="attachList">
+                                <CustomListItem>
+                                    <HBox alignItems="Center" class="attachListItem">
+                                        <core:Icon src="{viewModel>fileIcon}" class="attachFileIcon"/>
+                                        <VBox class="attachFileInfo">
+                                            <Text text="{viewModel>filename}" class="attachFileName"/>
+                                            <Text text="{viewModel>metaText}" class="attachFileMeta"/>
+                                        </VBox>
+                                        <ObjectStatus
+                                            text="{viewModel>statusText}"
+                                            state="{viewModel>statusState}"
+                                            class="attachStatus"/>
+                                        <Button
+                                            icon="sap-icon://decline"
+                                            type="Transparent"
+                                            press="onRemoveAttach"
+                                            tooltip="제거"
+                                            enabled="{viewModel>removable}"
+                                            class="attachRemoveBtn"/>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                            <!-- 빈 상태 -->
+                            <VBox class="attachEmptyArea"
+                                visible="{viewModel>/attachEmpty}"
+                                alignItems="Center"
+                                justifyContent="Center">
+                                <core:Icon src="sap-icon://upload-to-cloud" class="attachIcon"/>
+                                <Text text="파일 선택 버튼을 눌러 영수증·세금계산서를 첨부하세요" class="attachText"/>
+                            </VBox>
                         </VBox>
                     </Panel>
 

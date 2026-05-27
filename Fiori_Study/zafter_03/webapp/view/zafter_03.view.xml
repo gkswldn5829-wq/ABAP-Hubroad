@@ -1,0 +1,48 @@
+<mvc:View controllerName="zafter03.zafter03.controller.zafter_03"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.ui.table"
+   	xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core"
+	xmlns:m="sap.m"
+    height="100%">
+    <m:Page id="page" title="{i18n>title}">
+        <Table 	rows="{/DocumentSet}"
+				selectionMode="MultiToggle"
+				paste="onPaste"
+				ariaLabelledBy="title">
+            <extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Products"/>
+					</m:OverflowToolbar>
+				</extension>
+        	<columns>
+					<Column width="11rem">
+						<m:Label text="Product Name" />
+						<template>
+							<m:Text text="{Name}" wrapping="false" />   
+						</template>
+					</Column>
+                    	<Column width="11rem">
+						<m:Label text="Product Name" />
+						<template>
+							<m:Text text="{Name}" wrapping="false" />   
+						</template>
+					</Column>
+                    	<Column width="11rem">
+						<m:Label text="Product Name" />
+						<template>
+							<m:Text text="{Name}" wrapping="false" />   
+						</template>
+					</Column>
+                    	<Column width="11rem">
+						<m:Label text="Product Name" />
+						<template>
+							<m:Text text="{Name}" wrapping="false" />   
+						</template>
+					</Column>
+            </columns>
+        </Table>
+
+    
+    </m:Page>
+</mvc:View>

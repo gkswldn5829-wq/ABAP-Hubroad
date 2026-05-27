@@ -1,0 +1,79 @@
+<mvc:View controllerName="zcl327.airlinemaster27.controller.zafter_04"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:t="sap.ui.table"
+    xmlns:c="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    >
+    <Page id="page" title="{i18n>title}">
+            <Panel  id="id1"
+                    class="sapUiResponsiveMargin"
+                    headerText="Odata" 
+                    width="auto">
+                <t:Table 
+                id="Table"
+                rows="{/AirlineSet}"
+				selectionMode="Single"
+				paste="onPaste"
+				ariaLabelledBy="Airline"
+                visibleRowCount = '6'>
+                    <t:extension>
+                        <OverflowToolbar >
+                            <Title text="Airline Master Data"/>
+                        </OverflowToolbar>
+                    </t:extension>
+                    <t:columns>
+                        <t:Column width="auto">
+                            <Label text="항공사ID" />
+                            <t:template>
+                                <Text text="{Carrid}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="항공사" />
+                            <t:template>
+                                <Text text="{Carrname}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="통화키" />
+                            <t:template>
+                                <Text text="{Currcode}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="URL" />
+                            <t:template>
+                                <Text text="{Url}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                    </t:columns>
+                </t:Table>
+            </Panel>
+
+            <Panel class="sapUiResponsiveMargin" width="660px">
+                <MessageStrip showIcon="true" text="Data control" showCloseButton="false" />
+                <OverflowToolbar >
+                    <ToolbarSpacer />
+                    <Button text="Display" type="Accept" icon="sap-icon://detail-view" press="onDisplay" />
+                    <Button text="Create"  type="Attention" icon="sap-icon://create" press="onCreate"/>
+                    <Button text="Update"  type="Attention" icon="sap-icon://write-new-document" press="onUpdate"/>
+                    <Button text="Delete"  type="Accept" icon="sap-icon://delete" press="onDelete" />
+                    <Button text="Delete2"  type="Accept" icon="sap-icon://delete" press="onDelete2" />
+                </OverflowToolbar>
+                <f:SimpleForm layout="ResponsiveGridLayout" title="Content">
+                    <f:content>
+                        <Label text="Airline code" />
+                        <Input id="Carrid" width="3rem"/>
+                        <Label text="Airline" />
+                        <Input id="Carrname" width="10rem"/>
+                        <Label text="Currency" />
+                        <Input id="Currcode" width="4rem"/>
+                        <Label text="Airline URL" />
+                        <Input id="Url" width="13rem"/>
+                    </f:content>
+                </f:SimpleForm>
+            </Panel>
+    </Page>
+</mvc:View>

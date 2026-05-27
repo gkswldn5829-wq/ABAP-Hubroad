@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: zcl327.zafter01
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: http://bgissap1.bgissap.co.kr:8000/
+        app:
+          name: ZCL3_27
+          package: ZCL327
+          transport: EFXK902283
+        exclude:
+          - /test/

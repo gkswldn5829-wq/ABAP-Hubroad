@@ -1,0 +1,94 @@
+<mvc:View controllerName="zcl327.zafter05.controller.zafter_05"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:t="sap.ui.table"
+    xmlns:c="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    
+    >
+    <Page id="page" title="{i18n>title}" class = 'Background'>
+            <Panel  id="id1"
+                    class="sapUiResponsiveMargin"
+                    headerText="Odata" 
+                    width="auto">
+                <t:Table 
+                id="Table"
+                rows="{/StudentSet}"
+				selectionMode="Single"
+				paste="onPaste"
+                visibleRowCount = '5'>
+                    <t:extension>
+                        <OverflowToolbar >
+                            <Title text="Student Master Data"/>
+                        </OverflowToolbar>
+                    </t:extension>
+                    <t:columns>
+                        <t:Column width="auto">
+                            <Label text="{/#StudentSet/StdtNo/@sap:label}" />
+                            <t:template>
+                                <Text text="{StdtNo}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="{/#StudentSet/Major/@sap:label}" />
+                            <t:template>
+                                <Text text="{Major}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="{/#StudentSet/StdtName/@sap:label}" />
+                            <t:template>
+                                <Text text="{StdtName}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="{/#StudentSet/Addr/@sap:label}" />
+                            <t:template>
+                                <Text text="{Addr}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="{/#StudentSet/Email/@sap:label}" />
+                            <t:template>
+                                <Text text="{Email}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="{/#StudentSet/Gender/@sap:label}" />
+                            <t:template>
+                                <Text text="{Gender}" wrapping="false" />   
+                            </t:template>
+                        </t:Column>
+                    </t:columns>
+                </t:Table>
+            </Panel>
+
+            <Panel class="sapUiResponsiveMargin" width="660px">
+                <MessageStrip showIcon="true" text="Data control" showCloseButton="false" />
+                <OverflowToolbar >
+                    <ToolbarSpacer />
+                    <Button text="Display" type="Emphasized" icon="sap-icon://detail-view" press="onDisplay" />
+                    <Button text="Create"  type="Ghost" icon="sap-icon://create" press="onCreate"/>
+                    <Button text="Update"  type="Attention" icon="sap-icon://write-new-document" press="onUpdate"/>
+                    <Button text="Delete"  type="Accept" icon="sap-icon://delete" press="onDelete" />
+                </OverflowToolbar>
+                <f:SimpleForm layout="ResponsiveGridLayout" title="Content">
+                    <f:content>
+                        <Label text="{/#StudentSet/StdtNo/@sap:label}" />
+                        <Input id="StdtNo" width="5rem"/>
+                        <Label text="{/#StudentSet/Major/@sap:label}" />
+                        <Input id="Major" width="10rem"/>
+                        <Label text="{/#StudentSet/StdtName/@sap:label}" />
+                        <Input id="StdtName" width="5rem"/>
+                        <Label text="{/#StudentSet/Addr/@sap:label}" />
+                        <Input id="Addr" width="13rem"/>
+                        <Label text="{/#StudentSet/Email/@sap:label}" />
+                        <Input id="Email" width="13rem"/>
+                        <Label text="{/#StudentSet/Gender/@sap:label}" />
+                        <Input id="Gender" width="3rem"/>
+                    </f:content>
+                </f:SimpleForm>
+            </Panel>
+    </Page>
+</mvc:View>

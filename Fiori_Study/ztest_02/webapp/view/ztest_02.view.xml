@@ -1,0 +1,49 @@
+<mvc:View controllerName="zcl327.ztest02.controller.ztest_02"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    height="100%"
+    >
+    <Page id="page" title="{i18n>title}">
+        <viz:VizFrame   id="idVizFrame2"
+                                    height='500px'
+                                    width="800px"
+                                    vizType='pie'
+                                    vizProperties="{ title: {text : '항공사별예약분포도', visible : true}}"
+                    >
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset data ="{/sflightSet}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition   name="항공사이름"
+                                                                    value="{Carrname}"/>
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition name="최대좌석수"
+                                                                value="{Seatmax}"/>
+                                    <viz.data:MeasureDefinition name="좌석점유율"
+                                                                value="{Seatsocc}"/>
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="size"
+                                                type="Measure"
+                                                values="최대좌석수"
+                            />
+                            <viz.feeds:FeedItem uid="size"
+                                                type="Measure"
+                                                values="좌석점유율"
+                            />
+                            <viz.feeds:FeedItem uid="color"
+                                                type="Dimension"
+                                                values="항공사이름"
+                            />
+                        </viz:feeds>
+                    </viz:VizFrame>
+    </Page>
+</mvc:View>

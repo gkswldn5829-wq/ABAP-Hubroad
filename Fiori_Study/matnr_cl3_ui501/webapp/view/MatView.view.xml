@@ -1,0 +1,100 @@
+<mvc:View controllerName="cl3.mat.matnrcl3ui501.controller.MatView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    >
+    <Page id="page" title="{i18n>title}">
+    
+            <HBox >
+                <Panel class="sapUiResponsiveMargin" headerText="헤더텍스트" width="35rem">
+                    <t:Table rows="{/MatSet}"
+                        selectionMode="None">
+                        <t:extension>
+                            <OverflowToolbar >
+                                <Title text="제목띠"/>
+                            </OverflowToolbar>
+                        </t:extension>
+                        
+                        <t:columns>
+                            <t:Column width="11rem">
+                                <Label text="Material code" />
+                                    <t:template>
+                                        <Text text="{matnr}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="자재내역" />
+                                    <t:template>
+                                        <Text text="{maktx}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="vpsta" />
+                                    <t:template>
+                                        <Text text="{vpsta}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="mtart" />
+                                    <t:template>
+                                        <Text text="{mtart}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="matkl" />
+                                    <t:template>
+                                        <Text text="{matkl}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                        </t:columns>
+                    </t:Table>
+                </Panel>
+
+                <Panel class="sapUiResponsiveMargin" headerText="헤더텍스트" width="35rem">
+                    <t:Table rows="{mat>/MatSet}"
+                        selectionMode="None">
+                        <t:extension>
+                            <OverflowToolbar >
+                                <Title text="제목띠"/>
+                            </OverflowToolbar>
+                        </t:extension>
+                        
+                        <t:columns>
+                            <t:Column width="11rem">
+                                <Label text="Material code" />
+                                    <t:template>
+                                        <Text text="{mat>matnr}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="자재내역" />
+                                    <t:template>
+                                        <Text text="{mat>maktx}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="vpsta" />
+                                    <t:template>
+                                        <Text text="{mat>vpsta}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="mtart" />
+                                    <t:template>
+                                        <Text text="{mat>mtart}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="11rem">
+                                <Label text="matkl" />
+                                    <t:template>
+                                        <Text text="{mat>matkl}" wrapping="false"/>
+                                    </t:template>
+                            </t:Column>
+                        </t:columns>
+                    </t:Table>
+                </Panel>
+            </HBox>
+    </Page>
+</mvc:View>

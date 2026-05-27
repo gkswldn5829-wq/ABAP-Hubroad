@@ -64,12 +64,14 @@
                             class="cntBadge"/>
                     </Toolbar>
 
-                    <!-- 검색창 -->
-                    <SearchField
+                    <!-- 검색창 (탐색도움말 지원을 위해 Input으로 변경, 기존 UI 속성 완벽 유지) -->
+                    <Input
                         id="searchField"
-                        placeholder="전표번호, 적요, 기안자 검색..."
-                        search="onSearch"
-                        liveChange="onSearch"
+                        placeholder="전표번호, 적요, 기안자 검색 (F4)..."
+                        showValueHelp="true"
+                        valueHelpRequest=".onValueHelpRequest"
+                        submit=".onSearch"
+                        liveChange=".onSearch"
                         width="100%"
                         class="listSearch"/>
 

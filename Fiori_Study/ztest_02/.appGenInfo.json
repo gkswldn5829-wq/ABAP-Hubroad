@@ -1,0 +1,24 @@
+{
+  "generationParameters": {
+    "generationDate": "Wed Mar 04 2026 16:31:14 GMT+0900 (Korean Standard Time)",
+    "generatorPlatform": "Visual Studio Code",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "http://bgissap1.bgissap.co.kr:8000/sap/opu/odata/sap/ZCL3_27_23_DDL_CDS",
+    "appName": "ztest_02",
+    "appTitle": "ztest_02",
+    "appDescription": "An SAP Fiori application.",
+    "appNamespace": "zcl327",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.0",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.19.6",
+    "template": "Basic V2",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}

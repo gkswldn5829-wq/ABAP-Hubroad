@@ -23,7 +23,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -49,7 +50,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -74,7 +76,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -100,7 +103,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -125,7 +129,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -151,7 +156,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -176,7 +182,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -202,7 +209,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -227,7 +235,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -253,7 +262,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -278,7 +288,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -304,7 +315,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -329,7 +341,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -355,7 +368,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -380,7 +394,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -406,7 +421,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -431,7 +447,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -457,7 +474,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -482,7 +500,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -508,7 +527,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -533,7 +553,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -559,7 +580,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -584,7 +606,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -610,7 +633,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -635,7 +659,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -661,7 +686,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -686,7 +712,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -712,7 +739,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -737,7 +765,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -763,7 +792,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -788,7 +818,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -814,7 +845,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -839,7 +871,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -865,7 +898,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -890,7 +924,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -916,7 +951,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -941,7 +977,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -967,7 +1004,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -992,7 +1030,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1018,7 +1057,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1043,7 +1083,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1069,7 +1110,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1094,7 +1136,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1120,7 +1163,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1146,7 +1190,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1171,7 +1216,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1197,7 +1243,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1223,7 +1270,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1248,7 +1296,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1274,7 +1323,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1300,7 +1350,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1325,7 +1376,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1351,7 +1403,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1377,7 +1430,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1402,7 +1456,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1428,7 +1483,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1454,7 +1510,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1479,7 +1536,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1505,7 +1563,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1531,7 +1590,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1556,7 +1616,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1582,7 +1643,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1607,7 +1669,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1633,7 +1696,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1658,7 +1722,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1684,7 +1749,8 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1709,7 +1775,8 @@
             "outputCapture": "std",
             "env": {
                 "DEBUG": "--inspect",
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         },
         {
@@ -1735,7 +1802,1128 @@
             "internalConsoleOptions": "openOnSessionStart",
             "outputCapture": "std",
             "env": {
-                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start matnr_cl3_ui501",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/matnr_cl3_ui501",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start matnr_cl3_ui501 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/matnr_cl3_ui501",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start matnr_cl3_ui501 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/matnr_cl3_ui501",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start purchasing",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/purchasing",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start purchasing Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/purchasing",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start purchasing Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/purchasing",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_01",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_01",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_01 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_01",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_01 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_01",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_02",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_02",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_02 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_02",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_02 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_02",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_03",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_03",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_03 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_03",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_03 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_03",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start airline_master27",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/airline_master27",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start airline_master27 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/airline_master27",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start airline_master27 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/airline_master27",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_04",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_04",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_04 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_04",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_04 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_04",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_05",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_05",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_05 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_05",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_05 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_05",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_06",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_06",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_06 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_06",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start zafter_06 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zafter_06",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start ztest_01",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztest_01",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start ztest_01 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztest_01",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start ztest_01 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztest_01",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start ztest_02",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztest_02",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start ztest_02 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztest_02",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start ztest_02 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztest_02",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start cl3_3_fi_project_0001",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SAP-Project_CL3/cl3_3_fi_project_0001",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start cl3_3_fi_project_0001 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SAP-Project_CL3/cl3_3_fi_project_0001",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start cl3_3_fi_project_0001 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SAP-Project_CL3/cl3_3_fi_project_0001",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start fi_project_module_name",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SAP-Project_CL3\\fi_project_module_name",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start fi_project_module_name Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SAP-Project_CL3\\fi_project_module_name",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start fi_project_module_name Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SAP-Project_CL3\\fi_project_module_name",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start cl3_3_fi_project_0003",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/cl3_3_fi_project_0003",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start cl3_3_fi_project_0003 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/cl3_3_fi_project_0003",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            }
+        },
+        {
+            "name": "Start cl3_3_fi_project_0003 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/cl3_3_fi_project_0003",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "BROWSER": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
             }
         }
     ]

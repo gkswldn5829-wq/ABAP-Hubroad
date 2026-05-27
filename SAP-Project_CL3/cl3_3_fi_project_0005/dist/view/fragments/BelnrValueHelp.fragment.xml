@@ -1,0 +1,54 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <TableSelectDialog
+        id="belnrValueHelpDialog"
+        title="전표 탐색 도움말 (결재 대기)"
+        items="{
+            path: '/ApprovalHeaderSetSet',
+            filters: [{path: 'Zstat', operator: 'EQ', value1: '01'}]
+        }"
+        search=".onValueHelpSearch"
+        confirm=".onValueHelpConfirm"
+        cancel=".onValueHelpCancel"
+        contentHeight="60%"
+        contentWidth="750px"
+        class="customValueHelpDialog">
+        <columns>
+            <Column width="8rem">
+                <header>
+                    <Text text="전표번호" />
+                </header>
+            </Column>
+            <Column width="5rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                <header>
+                    <Text text="회계연도" />
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true">
+                <header>
+                    <Text text="헤더 텍스트 적요 (BKTXT)" />
+                </header>
+            </Column>
+            <Column width="5rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                <header>
+                    <Text text="기안자" />
+                </header>
+            </Column>
+            <Column width="8rem" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                <header>
+                    <Text text="금액" />
+                </header>
+            </Column>
+        </columns>
+        <ColumnListItem>
+            <cells>
+                <Text text="{Belnr}" class="sapMObjLTitle" />
+                <Text text="{Gjahr}" />
+                <Text text="{Bktxt}" />
+                <Text text="{Ernam}" />
+                <ObjectNumber number="{path: 'Wrbtr', formatter: '.formatCurrency'}" unit="{Waers}" />
+            </cells>
+        </ColumnListItem>
+    </TableSelectDialog>
+</core:FragmentDefinition>

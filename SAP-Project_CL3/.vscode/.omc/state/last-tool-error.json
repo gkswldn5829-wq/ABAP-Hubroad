@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd \\\"C:\\\\Users\\\\pc\\\\Desktop\\\\fiori-main\\\" && cat C:\\\\Users\\\\pc\\\\.claude\\\\projects\\\\C--Users-pc-Desktop-fiori-main-SAP-Project-CL3--vscode\\\\ca98e2e3-0087-4ddc-a854-9df2d8923e4b\\\\tool-result...",
+  "error": "Exit code 1\ncat: 'C:Userspc.claudeprojectsC--Users-pc-Desktop-fiori-main-SAP-Project-CL3--vscodeca98e2e3-0087-4ddc-a854-9df2d8923e4btool-resultsb3jw2b0um.txt': No such file or directory",
+  "timestamp": "2026-05-27T09:17:51.927Z",
+  "retry_count": 2
+}

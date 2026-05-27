@@ -1,0 +1,329 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779807772441,
+  "projectRoot": "c:\\Users\\pc\\Desktop\\fiori-main",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": ">=14.0.0",
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "npm",
+    "runtime": "Node.js 14.0.0"
+  },
+  "build": {
+    "buildCommand": "cd /c/Users/pc/Desktop/fiori-main/SAP-Project_CL3 && \\\necho \"=== [1/5] Building 0001 ===\" && \\\ncd cl3_3_fi_project_0001 && npm run build 2>&1 | tail -5 && cd .. && \\\necho \"=== [2/5] Building 0002 ===\" && \\\ncd cl3_3_fi_project_0002 && npm run build 2>&1 | tail -5 && cd .. && \\\necho \"=== [3/5] Building 0003 ===\" && \\\ncd cl3_3_fi_project_0003 && npm run build 2>&1 | tail -5 && cd .. && \\\necho \"=== [4/5] Building 0004 ===\" && \\\ncd cl3_3_fi_project_0004 && npm run build 2>&1 | tail -5 && cd .. && \\\necho \"=== [5/5] Building 0005 ===\" && \\\ncd cl3_3_fi_project_0005 && npm run build 2>&1 | tail -5 && cd .. && \\\necho \"=== 모든 빌드 완료 ===\"",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "install-all": "npm install",
+      "start": "echo 'Please navigate to specific project to start'",
+      "clean": "npm run clean --workspaces --if-present"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": true,
+    "workspaces": [
+      "*/"
+    ],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "Fiori_Study": {
+      "path": "Fiori_Study",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1779807772400,
+      "keyFiles": []
+    },
+    "SAP-Project_CL3": {
+      "path": "SAP-Project_CL3",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1779807772400,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\webapp\\css\\style.css",
+      "accessCount": 28,
+      "lastAccessed": 1779860808825,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\webapp\\css\\style.css",
+      "accessCount": 9,
+      "lastAccessed": 1779862413638,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\webapp\\controller\\cl_3_fi_project_0004.controller.js",
+      "accessCount": 8,
+      "lastAccessed": 1779862481485,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\webapp\\view\\cl_3_fi_project_0004.view.xml",
+      "accessCount": 6,
+      "lastAccessed": 1779862373233,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\webapp\\css\\style.css",
+      "accessCount": 5,
+      "lastAccessed": 1779860672393,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003\\webapp\\controller\\cl3_3_fi_project_0003.controller.js",
+      "accessCount": 4,
+      "lastAccessed": 1779846913876,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\webapp\\controller\\cl3_3_fi_project_0005.controller.js",
+      "accessCount": 4,
+      "lastAccessed": 1779855075022,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\webapp\\view\\cl3_3_fi_project_0005.view.xml",
+      "accessCount": 4,
+      "lastAccessed": 1779855938804,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3",
+      "accessCount": 4,
+      "lastAccessed": 1779856671686,
+      "type": "directory"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\webapp\\view\\CL3_Fiori_FI_Project_0001.view.xml",
+      "accessCount": 3,
+      "lastAccessed": 1779856136719,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002\\webapp\\view\\cl3_3_fi_project_0002.view.xml",
+      "accessCount": 3,
+      "lastAccessed": 1779856138789,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003\\webapp\\view\\cl3_3_fi_project_0003.view.xml",
+      "accessCount": 3,
+      "lastAccessed": 1779856141025,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002\\webapp\\css\\style.css",
+      "accessCount": 3,
+      "lastAccessed": 1779856218805,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\webapp\\controller\\CL3_Fiori_FI_Project_0001.controller.js",
+      "accessCount": 2,
+      "lastAccessed": 1779846842249,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003\\webapp\\css\\style.css",
+      "accessCount": 2,
+      "lastAccessed": 1779856229523,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\webapp\\manifest.json",
+      "accessCount": 2,
+      "lastAccessed": 1779862123970,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\webapp\\manifest.json",
+      "accessCount": 2,
+      "lastAccessed": 1779873525506,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\webapp\\manifest.json",
+      "accessCount": 2,
+      "lastAccessed": 1779873525781,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002\\webapp\\controller\\cl3_3_fi_project_0002.controller.js",
+      "accessCount": 1,
+      "lastAccessed": 1779846030226,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002\\webapp\\manifest.json",
+      "accessCount": 1,
+      "lastAccessed": 1779846041999,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003\\webapp\\manifest.json",
+      "accessCount": 1,
+      "lastAccessed": 1779846042549,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\webapp\\localService\\mainService\\metadata.xml",
+      "accessCount": 1,
+      "lastAccessed": 1779846813048,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\webapp\\localService\\mainService\\metadata.xml",
+      "accessCount": 1,
+      "lastAccessed": 1779846813658,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\webapp",
+      "accessCount": 1,
+      "lastAccessed": 1779847554438,
+      "type": "directory"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004",
+      "accessCount": 1,
+      "lastAccessed": 1779855953149,
+      "type": "directory"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001",
+      "accessCount": 1,
+      "lastAccessed": 1779855953801,
+      "type": "directory"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002",
+      "accessCount": 1,
+      "lastAccessed": 1779855954823,
+      "type": "directory"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003",
+      "accessCount": 1,
+      "lastAccessed": 1779855955502,
+      "type": "directory"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1779862055013,
+      "type": "directory"
+    },
+    {
+      "path": "SAP-Project_CL3\\.vscode\\launch.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873478124,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\package.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873478370,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003\\package.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873479346,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002\\package.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873479377,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\package.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873479875,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\package.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873479925,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\ui5.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873482880,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0003\\ui5.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873484834,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0002\\ui5.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873484880,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0004\\ui5.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873485206,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0005\\ui5.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873485273,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\ui5-deploy.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873521073,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\ui5-local.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873521445,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\ui5-mock.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779873521659,
+      "type": "file"
+    },
+    {
+      "path": "SAP-Project_CL3\\cl3_3_fi_project_0001\\.appGenInfo.json",
+      "accessCount": 1,
+      "lastAccessed": 1779873532732,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

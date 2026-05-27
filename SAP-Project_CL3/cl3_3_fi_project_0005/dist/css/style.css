@@ -117,15 +117,40 @@
 .listTitle.sapMTitle .sapMTitleText { color: #FFFFFF !important; }
 .cntBadge.sapMObjectStatus { font-size: 0.7rem !important; }
 
-/* ── 검색창 */
-.listSearch.sapMSF {
+/* ── 검색창 (Input으로 변경되어도 기존 디자인 완벽 유지) */
+.listSearch.sapMInput {
     border-radius: 0 !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-top: none !important;
-    border-bottom: 1px solid #C0D0F0 !important;
     margin: 0 !important;
     background: #F5F8FF !important;
+}
+.listSearch.sapMInputBaseInner {
+    border: none !important;
+    border-bottom: 1px solid #C0D0F0 !important;
+    background: transparent !important;
+    height: 100% !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+ * [13] 탐색도움말 (Value Help) 팝업 커스텀
+ * ══════════════════════════════════════════════════════════════ */
+.customValueHelpDialog header.sapMDialogHeader,
+.customValueHelpDialog header.sapMIBar {
+    background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 12px rgba(0,64,139,0.3) !important;
+}
+.customValueHelpDialog .sapMDialogTitle,
+.customValueHelpDialog .sapMTitle {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+.customValueHelpDialog .sapMBarLeft .sapMBtnIcon,
+.customValueHelpDialog .sapMBarRight .sapMBtnIcon {
+    color: #ffffff !important;
+}
+.customValueHelpDialog .sapMDialogSubHeader {
+    background: #F0F4F8 !important;
+    border-bottom: 1px solid #C0D0F0 !important;
 }
 
 /* ── 목록 ScrollContainer */

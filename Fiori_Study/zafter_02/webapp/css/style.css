@@ -1,0 +1,15 @@
+/* Enter your custom styles here */
+.loginPage {
+    background-image: url("../image/jj.jpg"); /* 비행기 배경 이미지 */
+    background-size: cover; /* 화면 꽉 채우기 */
+    background-position: center; /* 이미지를 중앙에 배치 */
+    background-repeat: no-repeat; /* 이미지 반복 안함 */
+    background-attachment: scroll; /* 스크롤 해도 배경 고정 */
+    min-height: 50vh; /* 최소높이를 화면 전체로 */
+    position: relative; /* 요소의 위치 관계 */
+}
+.sapLogo {
+    margin-bottom: 1rem; /* 로고 아래 여백 */
+    margin-left: 36rem;
+    margin-top: 3rem;
+}

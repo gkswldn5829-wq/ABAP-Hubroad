@@ -1,0 +1,137 @@
+<mvc:View controllerName="cl327.zafter02.controller.zafter_02"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    height="100%">
+    <Page id="page" 
+    title="{i18n>title}"
+    class="loginPage">
+        <VBox >
+            <Image
+                src="../image/SAP.png"
+                width="125px"
+                class="sapLogo"
+                />
+                <HBox >
+                    <Panel  id="id1"
+                        class="sapUiResponsiveMargin"
+                        headerText="Odata" 
+                        width="auto">
+                        <t:Table
+                        id="Table" 
+                        rows="{/DocumentSet}"
+                        selectionMode="MultiToggle"
+                        visibleRowCount = '6'
+                        width="auto">
+                            <t:extension>
+                                <OverflowToolbar >
+                                    <Title text="FI Document Odata"/>
+                                        <ToolbarSpacer />
+                                        <Input id="word"  placeholder="BUKRS" width="10rem" />
+                                        <Input id="word2" placeholder="BELNR" width="10rem" />
+                                        <Input id="word3" placeholder="GJAHR" width="10rem" />
+                                        <Button id="btn1" icon="sap-icon://search" type="Ghost" press="onSearch" />
+                                    <ToolbarSeparator/>
+                                    <SearchField
+                                    placeholder="Search"
+                                    search="filterGlobally"
+                                    width="285px"/>
+                                </OverflowToolbar>
+                            </t:extension>
+                        
+                            <t:columns>
+                                <t:Column width="auto">
+                                    <Label text="Bukrs" />
+                                        <t:template>
+                                            <Text text="{Bukrs}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Belnr" />
+                                        <t:template>
+                                            <Text text="{Belnr}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Gjahr" />
+                                        <t:template>
+                                            <Text text="{Gjahr}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Buzei" />
+                                        <t:template>
+                                            <Text text="{Buzei}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Shkzg" />
+                                        <t:template>
+                                            <Text text="{Shkzg}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Gsber" />
+                                        <t:template>
+                                            <Text text="{Gsber}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Wrbtr" />
+                                    <t:template>
+                                        <Text text="{ 
+                                            parts:[{path:'Wrbtr'},{path:'Waers'}],
+                                            type: 'sap.ui.model.type.Currency',
+                                            formatOptions: {showMeasure: true }
+                                            }" wrapping="false"/>
+                                    </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Menge" />
+                                    <t:template>
+                                        <Text text="{
+                                            parts:[{path:'Menge'},{path:'Meins'}],
+                                            type: 'sap.ui.model.type.Unit',
+                                            formatOptions: {showMeasure: true }
+                                            }" wrapping="false" />
+                                    </t:template>
+                                </t:Column>
+                                <t:Column width="auto">
+                                    <Label text="Mwskz" />
+                                        <t:template>
+                                            <Text text="{Mwskz}" wrapping="false"/>
+                                        </t:template>
+                                </t:Column>
+                            </t:columns>
+                    </t:Table>
+                    </Panel>
+                </HBox>
+                    <Panel 
+                        id="id2"
+                        class="sapUiResponsiveMargin"
+                        headerText="Odata" 
+                        width="auto">
+                        <smartTable:SmartTable id="LineItemsSmartTable" entitySet="DocumentSet" smartFilterId="smartFilterBar" tableType="Table" 
+                            useExportToExcel="true" beforeExport="onBeforeExport" useVariantManagement="true" useTablePersonalisation="true"
+                            header="Line Items" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" 
+                            enableAutoBinding="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true"
+                            editTogglable="true" app:useSmartToggle="true" width="auto"
+                            initiallyVisibleFields="Bukrs,Belnr,Gjahr,Buzei,Shkzg,Gsber,Wrbtr,Menge,Mwskz">
+                            <!-- layout data used to make the table growing but the filter bar fixed -->
+                            <smartTable:layoutData>
+                                <FlexItemData growFactor="1" baseSize="0%"/>
+                            </smartTable:layoutData>
+                        </smartTable:SmartTable>
+                    </Panel>
+        </VBox>
+    </Page>
+</mvc:View>

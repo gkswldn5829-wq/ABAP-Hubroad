@@ -195,13 +195,26 @@ sap.ui.define([
                 tableRowCount:  2,
                 items:          [],
                 userName:       "",
-                userPernr:      ""
+                userPernr:      "",
+                attachments:    [],
+                attachCountTag: "",
+                attachEmpty:    true
             });
             this.getView().setModel(oViewModel, "viewModel");
             _lineIdx = 0;
             this._addLine();
             this._addLine();
             this._loadHRData();
+
+            // ── 파일 선택용 hidden input 생성
+            var oInput = document.createElement("input");
+            oInput.type     = "file";
+            oInput.multiple = true;
+            oInput.accept   = ".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.zip,.txt";
+            oInput.style.display = "none";
+            oInput.addEventListener("change", this._onFilesSelected.bind(this));
+            document.body.appendChild(oInput);
+            this._oFileInput = oInput;
         },
 
         // ── 헤더 이벤트 ─────────────────────────────────────
@@ -620,9 +633,12 @@ sap.ui.define([
             oModel.setProperty("/waers",         "KRW");
             oModel.setProperty("/gjahr",         String(oToday.getFullYear()));
             oModel.setProperty("/monat",         String(oToday.getMonth() + 1).padStart(2, "0"));
-            oModel.setProperty("/statusDisplay", "작성중");
-            oModel.setProperty("/statusState",   "Warning");
-            oModel.setProperty("/items",         []);
+            oModel.setProperty("/statusDisplay",  "작성중");
+            oModel.setProperty("/statusState",    "Warning");
+            oModel.setProperty("/items",          []);
+            oModel.setProperty("/attachments",    []);
+            oModel.setProperty("/attachCountTag", "");
+            oModel.setProperty("/attachEmpty",    true);
             _lineIdx = 0;
             this._addLine();
             this._addLine();
@@ -708,8 +724,16 @@ sap.ui.define([
             var that = this;
             oODataModel.create("/VoucherHeaderSet", Object.assign({}, oHeader, { VoucherItemSet: aPayload }), {
                 success: function (oData) {
+                    var sBelnr = oData.Belnr || "";
+                    var sGjahr = oData.Gjahr || "";
+
+                    // 첨부파일 업로드 (전표번호 확정 후 즉시 시작)
+                    if (sBelnr && sGjahr) {
+                        that._uploadAttachments(sBelnr, sGjahr);
+                    }
+
                     MessageBox.success(
-                        "전표가 생성되었습니다.\n전표번호: " + (oData.Belnr || "—") + "  회계연도: " + (oData.Gjahr || "—"),
+                        "전표가 생성되었습니다.\n전표번호: " + (sBelnr || "—") + "  회계연도: " + (sGjahr || "—"),
                         { title: "전표 생성 완료" }
                     );
                     that._resetForm();
@@ -828,6 +852,157 @@ sap.ui.define([
             return oDate.getFullYear() + "-" +
                    String(oDate.getMonth() + 1).padStart(2, "0") + "-" +
                    String(oDate.getDate()).padStart(2, "0");
+        },
+
+        // ── 첨부파일: 파일 선택 버튼 ────────────────────────
+        onSelectFiles: function () {
+            if (this._oFileInput) {
+                this._oFileInput.value = ""; // 같은 파일 재선택 허용
+                this._oFileInput.click();
+            }
+        },
+
+        // ── 첨부파일: 파일 선택 이벤트 핸들러 ──────────────
+        _onFilesSelected: function (oEvent) {
+            var aFiles = Array.from(oEvent.target.files || []);
+            if (!aFiles.length) { return; }
+
+            var oModel       = this.getView().getModel("viewModel");
+            var aAttachments = oModel.getProperty("/attachments") || [];
+
+            aFiles.forEach(function (oFile) {
+                aAttachments.push({
+                    filename:    oFile.name,
+                    size:        oFile.size,
+                    metaText:    this._formatFileSize(oFile.size) + "  ·  " + (oFile.type || "파일"),
+                    mimetype:    oFile.type || "application/octet-stream",
+                    fileIcon:    this._getFileIcon(oFile.name),
+                    statusText:  "대기중",
+                    statusState: "None",
+                    removable:   true,
+                    _file:       oFile
+                });
+            }.bind(this));
+
+            oModel.setProperty("/attachments", aAttachments);
+            this._updateAttachCount();
+        },
+
+        // ── 첨부파일: 항목 제거 ──────────────────────────────
+        onRemoveAttach: function (oEvent) {
+            var oCtx  = oEvent.getSource().getBindingContext("viewModel");
+            var iIdx  = parseInt(oCtx.getPath().split("/").pop(), 10);
+            var oModel = this.getView().getModel("viewModel");
+            var aList  = oModel.getProperty("/attachments");
+            aList.splice(iIdx, 1);
+            oModel.setProperty("/attachments", aList);
+            this._updateAttachCount();
+        },
+
+        // ── 첨부파일: Gateway로 업로드 ──────────────────────
+        _uploadAttachments: function (sBelnr, sGjahr) {
+            var oModel       = this.getView().getModel("viewModel");
+            var aAttachments = oModel.getProperty("/attachments") || [];
+            var aPending     = aAttachments.filter(function (a) {
+                return a.statusText === "대기중" && a._file;
+            });
+            if (!aPending.length) { return; }
+
+            var oODataModel = this.getView().getModel();
+            var that        = this;
+            var iTotal      = aPending.length;
+            var iDone       = 0;
+
+            aPending.forEach(function (oAttach) {
+                // 상태: 업로드중
+                var iGlobalIdx = aAttachments.indexOf(oAttach);
+                that._setAttachStatus(iGlobalIdx, "업로드 중", "Warning", false);
+
+                var oReader   = new FileReader();
+                oReader.onload = function (e) {
+                    // data:mimetype;base64,XXXXX → base64 부분만 추출
+                    var sBase64 = (e.target.result || "").split(",")[1] || "";
+
+                    oODataModel.create("/AttachmentSet", {
+                        Bukrs:    "8282",
+                        Belnr:    sBelnr,
+                        Gjahr:    sGjahr,
+                        Seqno:    "0000",
+                        Filename: oAttach.filename,
+                        Mimetype: oAttach.mimetype,
+                        Filesize: String(oAttach.size),
+                        Filedata: sBase64
+                    }, {
+                        success: function () {
+                            iDone++;
+                            that._setAttachStatus(iGlobalIdx, "완료", "Success", false);
+                            if (iDone === iTotal) {
+                                MessageToast.show(iTotal + "개 첨부파일 업로드 완료 ✓");
+                            }
+                        },
+                        error: function (oErr) {
+                            iDone++;
+                            var sMsg = "업로드 실패";
+                            try {
+                                sMsg = JSON.parse(oErr.responseText).error.message.value || sMsg;
+                            } catch (x) { /* ignore */ }
+                            that._setAttachStatus(iGlobalIdx, "실패", "Error", true);
+                            MessageToast.show(oAttach.filename + " — " + sMsg);
+                        }
+                    });
+                };
+                oReader.readAsDataURL(oAttach._file);
+            });
+        },
+
+        // ── 첨부파일: 상태 업데이트 헬퍼 ───────────────────
+        _setAttachStatus: function (iIdx, sText, sState, bRemovable) {
+            var oModel = this.getView().getModel("viewModel");
+            var sBase  = "/attachments/" + iIdx + "/";
+            oModel.setProperty(sBase + "statusText",  sText);
+            oModel.setProperty(sBase + "statusState", sState);
+            oModel.setProperty(sBase + "removable",   bRemovable);
+        },
+
+        // ── 첨부파일: 카운트 + 빈 상태 업데이트 ────────────
+        _updateAttachCount: function () {
+            var oModel = this.getView().getModel("viewModel");
+            var n      = (oModel.getProperty("/attachments") || []).length;
+            oModel.setProperty("/attachCountTag", n > 0 ? n + "개 파일" : "");
+            oModel.setProperty("/attachEmpty",    n === 0);
+        },
+
+        // ── 첨부파일: 파일 크기 포맷 ────────────────────────
+        _formatFileSize: function (nBytes) {
+            if (nBytes < 1024)            { return nBytes + " B"; }
+            if (nBytes < 1024 * 1024)     { return (nBytes / 1024).toFixed(1) + " KB"; }
+            return (nBytes / (1024 * 1024)).toFixed(1) + " MB";
+        },
+
+        // ── 첨부파일: 확장자별 아이콘 매핑 ─────────────────
+        _getFileIcon: function (sFilename) {
+            var sExt  = (sFilename || "").split(".").pop().toLowerCase();
+            var mIcon = {
+                pdf:  "sap-icon://pdf-attachment",
+                jpg:  "sap-icon://attachment-photo",
+                jpeg: "sap-icon://attachment-photo",
+                png:  "sap-icon://attachment-photo",
+                xls:  "sap-icon://excel-attachment",
+                xlsx: "sap-icon://excel-attachment",
+                doc:  "sap-icon://doc-attachment",
+                docx: "sap-icon://doc-attachment",
+                zip:  "sap-icon://attachment-zip-file",
+                txt:  "sap-icon://document-text"
+            };
+            return mIcon[sExt] || "sap-icon://document";
+        },
+
+        // ── 뷰 소멸 시 hidden input 정리 ────────────────────
+        onExit: function () {
+            if (this._oFileInput && this._oFileInput.parentNode) {
+                this._oFileInput.parentNode.removeChild(this._oFileInput);
+                this._oFileInput = null;
+            }
         }
     });
 });

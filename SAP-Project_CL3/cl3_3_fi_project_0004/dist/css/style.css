@@ -581,30 +581,91 @@
   border-color: var(--fi-blue);
 }
 
-/* ── 첨부파일 영역 ──────────────────────────────────── */
-.attachArea {
-  padding: 28px 20px;
-  gap: 8px;
-  border: 1.5px dashed var(--fi-border);
-  border-radius: var(--fi-radius-sm);
-  margin: 16px;
+/* 파일 선택 버튼 (밝은 카드 헤더 위 — toolbarLineAddBtn과 동일 계열) */
+.attachSelectBtn.sapMBtn .sapMBtnInner {
+  background: transparent !important;
+  border: 1px solid rgba(0, 100, 217, 0.3) !important;
+  color: var(--fi-blue) !important;
+  border-radius: var(--fi-radius-sm) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  height: 28px !important;
+  transition: background 0.15s, border-color 0.15s;
+}
+.attachSelectBtn.sapMBtn .sapMBtnInner:hover {
+  background: var(--fi-blue-lt) !important;
+  border-color: var(--fi-blue) !important;
+}
+.attachSelectBtn.sapMBtn .sapMBtnIcon,
+.attachSelectBtn.sapMBtn .sapMBtnText { color: var(--fi-blue) !important; }
+
+/* ── 첨부파일 본문 ──────────────────────────────────── */
+.attachBody { padding: 0; }
+
+/* 파일 리스트 */
+.attachList.sapMList .sapMListItems { padding: 0 !important; }
+.attachList.sapMList .sapMLIB {
+  padding: 0 !important;
+  border-bottom: 1px solid var(--fi-border-lt) !important;
+  background: transparent !important;
+}
+.attachList.sapMList .sapMLIB:last-child { border-bottom: none !important; }
+
+/* 파일 아이템 행 */
+.attachListItem.sapMHBox {
+  padding: 10px 16px;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 52px;
+}
+.attachFileIcon.sapUiIcon {
+  font-size: 1.6rem;
+  color: var(--fi-blue);
+  flex-shrink: 0;
+  width: 28px;
   text-align: center;
-  background: #fafbfc;
+}
+.attachFileInfo {
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+.attachFileName.sapMText {
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--fi-text) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.attachFileMeta.sapMText {
+  font-size: 0.6875rem !important;
+  color: var(--fi-text-mute) !important;
+}
+.attachStatus.sapMObjStatus { font-size: 0.75rem !important; }
+.attachRemoveBtn.sapMBtn .sapMBtnInner {
+  color: var(--fi-red) !important;
+  border-radius: 50% !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+.attachRemoveBtn.sapMBtn .sapMBtnIcon { color: var(--fi-red) !important; }
+
+/* 빈 상태 */
+.attachEmptyArea {
+  padding: 36px 20px;
+  gap: 10px;
 }
 .attachIcon.sapUiIcon {
-  font-size: 2rem;
-  color: var(--fi-text-mute);
-  margin-bottom: 6px;
+  font-size: 2.5rem;
+  color: #c5d4ea;
 }
 .attachText.sapMText {
   font-size: 0.8125rem;
-  color: var(--fi-text-sec);
-}
-.attachSubText.sapMText {
-  font-size: 0.75rem;
-  color: var(--fi-blue);
-  font-weight: 500;
-  margin-top: 2px;
+  color: var(--fi-text-mute);
+  text-align: center;
 }
 
 /* ── 스크롤 컨테이너 ────────────────────────────────── */
