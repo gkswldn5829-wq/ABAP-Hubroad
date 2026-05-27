@@ -695,15 +695,16 @@ sap.ui.define([
 
             var aPayload = aItems.map(function (item) {
                 var nAmt = parseFloat((item.wrbtrInput || "").replace(/,/g, "")) || 0;
+                var nTax = item.wmwst || 0;
                 return {
                     Saknr:   item.saknr,
                     Shkzg:   item.shkzg,
                     Bschl:   item.bschl,
-                    Wrbtr:   nAmt,
-                    Dmbtr:   nAmt,
-                    Fwbas:   nAmt,
+                    Wrbtr:   nAmt.toFixed(2),   // Edm.Decimal: 문자열로 전송해야 ABAP XML 파서 정상 처리
+                    Dmbtr:   nAmt.toFixed(2),
+                    Fwbas:   nAmt.toFixed(2),
                     Mwskz:   item.mwskz  || "",
-                    Wmwst:   item.wmwst  || 0,
+                    Wmwst:   nTax.toFixed(2),
                     Kostl:   item.kostl  || "",
                     Werks:   item.werks  || "",
                     Prctr:   item.prctr  || "",
