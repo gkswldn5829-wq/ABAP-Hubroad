@@ -1,0 +1,168 @@
+<mvc:View
+    controllerName="code.cl3.project02.controller.Project_02"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%">
+    
+    <Page 
+        id="dashboardPage"
+        title="항공 관리 대시보드"
+        showHeader="true"
+        class="dashboardPage">
+        
+        <!-- 헤더 툴바 -->
+        <customHeader>
+            <Toolbar class="dashboardHeader">
+                <Image src="image/sap.png" width="40px" class="headerLogo"/>
+                <Title text="항공 관리 시스템" level="H4" class="headerTitle"/>
+                <ToolbarSpacer/>
+                <Text text="관리자: admin@airline.com" class="userInfo"/>
+                <Button icon="sap-icon://log" text="로그아웃" press="onLogout" type="Transparent"/>
+            </Toolbar>
+        </customHeader>
+        
+        <content>
+            <!-- 메인 레이아웃 - Flexbox 사용 -->
+            <l:HorizontalLayout class="mainLayout" >
+                <!-- 왼쪽: 차트 영역 (60%) -->
+                <ScrollContainer width="60%" height="100%" vertical="true" class="chartSection">
+                    <!-- KPI 카드 영역 -->
+                    <l:HorizontalLayout class="kpiGrid">
+                        <Panel class="kpiCard" width="33%">
+                            <VBox alignItems="Center" class="kpiContent">
+                                <Text text="오늘 매출" class="kpiLabel"/>
+                                <Text text="₩128,450,000" class="kpiValue"/>
+                                <ObjectStatus text="+12.5%" state="Success" class="kpiChange"/>
+                            </VBox>
+                        </Panel>
+                        <Panel class="kpiCard" width="33%">
+                            <VBox alignItems="Center" class="kpiContent">
+                                <Text text="이번 달 탑승객" class="kpiLabel"/>
+                                <Text text="45,230명" class="kpiValue"/>
+                                <ObjectStatus text="+8.3%" state="Success" class="kpiChange"/>
+                            </VBox>
+                        </Panel>
+                        <Panel class="kpiCard" width="33%">
+                            <VBox alignItems="Center" class="kpiContent">
+                                <Text text="운항률" class="kpiLabel"/>
+                                <Text text="98.2%" class="kpiValue"/>
+                                <ObjectStatus text="+2.1%" state="Success" class="kpiChange"/>
+                            </VBox>
+                        </Panel>
+                    </l:HorizontalLayout>
+                    
+                    <!-- 차트 1: 월별 매출 추이 -->
+                    <Panel 
+                        headerText="월별 매출 추이" 
+                        expandable="true"
+                        expanded="true"
+                        class="chartPanel">
+                        <VBox id="chartContainer1" height="350px" class="chartBox">
+                            <!-- 차트가 여기 들어감 -->
+                        </VBox>
+                    </Panel>
+                    
+                    <!-- 차트 2: 노선별 탑승률 -->
+                    <Panel 
+                        headerText="주요 노선별 탑승률"
+                        width="100%"
+                        expandable="true"
+                        expanded="false"
+                        class="chartPanel">
+                        <VBox id="chartContainer2" height="350px" class="chartBox">
+                            <!-- 차트가 여기 들어감 -->
+                        </VBox>
+                    </Panel>
+                </ScrollContainer>
+                
+                <!-- 오른쪽: 테이블 영역 (40%) -->
+                <l:VerticalLayout width="40%" class="rightSection">
+                    <!-- 상단 테이블: 최근 예약 현황 -->
+                    <Panel 
+                        headerText="최근 예약 현황" 
+                        class="tablePanel topTable"
+                        height="60%">
+                        <ScrollContainer height="100%" vertical="true">
+                            <Table
+                                id="recentBookingsTable"
+                                items="{dashboard>/recentBookings}"
+                                mode="None"
+                                class="dashboardTable">
+                                <columns>
+                                    <Column width="25%">
+                                        <Text text="예약번호"/>
+                                    </Column>
+                                    <Column width="30%">
+                                        <Text text="노선"/>
+                                    </Column>
+                                    <Column width="25%">
+                                        <Text text="날짜"/>
+                                    </Column>
+                                    <Column width="20%">
+                                        <Text text="상태"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{dashboard>bookingId}"/>
+                                            <Text text="{dashboard>route}"/>
+                                            <Text text="{dashboard>date}"/>
+                                            <ObjectStatus 
+                                                text="{dashboard>status}" 
+                                                state="{dashboard>statusState}"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </ScrollContainer>
+                    </Panel>
+                    
+                    <!-- 하단 테이블: 운항 스케줄 -->
+                    <Panel 
+                        headerText="오늘 운항 스케줄" 
+                        class="tablePanel bottomTable"
+                        height="40%">
+                        <ScrollContainer height="100%" vertical="true">
+                            <Table
+                                id="flightScheduleTable"
+                                items="{dashboard>/flightSchedule}"
+                                mode="None"
+                                class="dashboardTable">
+                                <columns>
+                                    <Column width="25%">
+                                        <Text text="편명"/>
+                                    </Column>
+                                    <Column width="35%">
+                                        <Text text="출발/도착"/>
+                                    </Column>
+                                    <Column width="20%">
+                                        <Text text="시간"/>
+                                    </Column>
+                                    <Column width="20%">
+                                        <Text text="상태"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{dashboard>flightNo}"/>
+                                            <Text text="{dashboard>routeInfo}"/>
+                                            <Text text="{dashboard>time}"/>
+                                            <ObjectStatus 
+                                                text="{dashboard>flightStatus}" 
+                                                state="{dashboard>flightStatusState}"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </ScrollContainer>
+                    </Panel>
+                </l:VerticalLayout>
+            </l:HorizontalLayout>
+        </content>
+    </Page>
+</mvc:View>

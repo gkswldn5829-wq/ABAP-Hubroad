@@ -1,0 +1,64 @@
+<mvc:View controllerName="code.cl3.examam.controller.exam_am"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <Panel  headerText="문제 1번" 
+                width="400px" 
+                class="sapUiSmallMargin"
+        >
+            <HBox >
+                <Input id="id" description="피오리입력창입니다."/>
+            </HBox>
+            <HBox >
+                <Input id="id3" description="30Ton"/>
+            </HBox>
+        </Panel>
+
+    <Bar class="sapUiSmallMargin" />
+
+        <Panel  headerText="문제 2번"
+                width="360px"
+                class="sapUiSmallMargin"
+        >
+            <HBox >
+                <Button text="for" press="onFor" type="Unstyled" width="80px" class="sapUiSmallMargin" />
+                <Button text="while" press="onWhile" type="Unstyled" width="80px" class="sapUiSmallMargin" />
+                <Button text="for+while" press="onForWhile" type="Unstyled" width="80px" class="sapUiSmallMargin" />
+            </HBox>
+        </Panel>
+
+    <Bar class="sapUiSmallMargin" />
+        <Panel  headerText="문제 3번"
+                width="180px"
+                class="sapUiSmallMargin"
+        >
+            <VBox >
+                <Input id="Number" description="단 입력"/>
+                <Button text="Click" press="cont_check" type="Unstyled" />
+            </VBox>
+        </Panel>
+    
+    <Bar class="sapUiSmallMargin" />
+        <Panel  headerText="문제 4번"
+                width="120px"
+        >
+            <VBox >
+                <Button text="Click" press="gugu" type="Unstyled" width="75px"/>
+            </VBox>
+        </Panel>
+
+    <Bar class="sapUiSmallMargin" />
+        <Panel  headerText="문제 5번"
+                width="300px"
+        >
+            <HBox >
+                <Button text="Click" press="array" type="Unstyled"/>
+                <Label text="값"/>
+                <Input id="id4" enabled="false"/>
+            </HBox>
+        </Panel>
+
+
+
+    </Page>
+</mvc:View>

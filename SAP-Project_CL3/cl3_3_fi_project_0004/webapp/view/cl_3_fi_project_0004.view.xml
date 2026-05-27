@@ -1,0 +1,308 @@
+<mvc:View
+    controllerName="zc3fijiwoohan.cl3fiproject0004.controller.cl_3_fi_project_0004"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    displayBlock="true">
+
+    <Page id="page" showHeader="true" backgroundDesign="Solid" class="voucherPage">
+
+        <customHeader>
+            <Bar class="voucherHeader" design="Header">
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" class="headerBackBtn" tooltip="뒤로"/>
+                    <core:Icon src="sap-icon://document-text" class="headerAppIcon"/>
+                    <HBox class="headerTitleBox" alignItems="Center">
+                        <Title text="GL 전표 입력" level="H4" class="headerAppTitle"/>
+                        <Text text="일반 전표 · 8282 HubRoad" class="headerAppSub"/>
+                    </HBox>
+                </contentLeft>
+                <contentMiddle>
+                    <ObjectStatus id="statusBadge"
+                        text="{viewModel>/statusDisplay}"
+                        state="{viewModel>/statusState}"
+                        class="headerStatusBadge"/>
+                </contentMiddle>
+                <contentRight>
+                    <Text text="{viewModel>/waers}" class="headerWaersTag"/>
+                    <Button text="초기화" icon="sap-icon://refresh" press="onReset" class="headerResetBtn"/>
+                    <Button text="전표 저장" icon="sap-icon://save" type="Emphasized" press="onSave" class="headerSaveBtn"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <ScrollContainer vertical="true" horizontal="false" height="100%" width="100%">
+                <VBox class="mainContent">
+
+                    <!-- ══ 전표 헤더 카드 ══ -->
+                    <Panel class="voucherCard" expandable="false">
+                        <headerToolbar>
+                            <OverflowToolbar class="cardToolbar">
+                                <core:Icon src="sap-icon://document" class="cardIcon"/>
+                                <Title text="전표 헤더" level="H6" class="cardTitle"/>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <VBox class="cardBody">
+                            <l:Grid defaultSpan="XL3 L3 M6 S12" hSpacing="1" vSpacing="0.5" class="headerFormGrid">
+
+                                <!-- Row 1: 전표유형(SA고정) / 전기일 / 증빙일 / 참조번호 -->
+                                <VBox class="formField">
+                                    <Label text="전표유형" class="fieldLabel"/>
+                                    <Input value="SA · 일반 G/L 전표" editable="false" class="roInput" width="100%"/>
+                                </VBox>
+                                <VBox class="formField">
+                                    <Label text="전기일" required="true" class="fieldLabel"/>
+                                    <DatePicker id="budatPicker"
+                                        value="{viewModel>/budat}"
+                                        valueFormat="yyyy-MM-dd"
+                                        displayFormat="yyyy-MM-dd"
+                                        change="onBudatChange"
+                                        width="100%"/>
+                                </VBox>
+                                <VBox class="formField">
+                                    <Label text="증빙일" required="true" class="fieldLabel"/>
+                                    <DatePicker id="bldatPicker"
+                                        value="{viewModel>/bldat}"
+                                        valueFormat="yyyy-MM-dd"
+                                        displayFormat="yyyy-MM-dd"
+                                        width="100%"/>
+                                </VBox>
+                                <VBox class="formField">
+                                    <Label text="작성자" class="fieldLabel"/>
+                                    <Input value="{viewModel>/userName}" editable="false" class="roInput writerField" placeholder="조회 중..." width="100%"/>
+                                </VBox>
+                                <!-- Row 2: 회사코드(고정) / 회계연도(자동) / 회계기간(자동) / 통화(선택) -->
+                                <VBox class="formField">
+                                    <Label text="회사코드" class="fieldLabel"/>
+                                    <Input value="8282 · HubRoad" editable="false" class="roInput" width="100%"/>
+                                </VBox>
+                                <VBox class="formField">
+                                    <Label text="회계연도" class="fieldLabel"/>
+                                    <Input value="{viewModel>/gjahr}" editable="false" class="roInput" placeholder="자동" width="100%"/>
+                                </VBox>
+                                <VBox class="formField">
+                                    <Label text="회계기간" class="fieldLabel"/>
+                                    <Input value="{viewModel>/monat}" editable="false" class="roInput" placeholder="자동" width="100%"/>
+                                </VBox>
+                                <VBox class="formField">
+                                    <Label text="통화" required="true" class="fieldLabel"/>
+                                    <Select id="waersSel" selectedKey="{viewModel>/waers}" width="100%">
+                                        <core:Item key="KRW" text="KRW · 원화"/>
+                                        <core:Item key="USD" text="USD · 달러"/>
+                                        <core:Item key="EUR" text="EUR · 유로"/>
+                                        <core:Item key="JPY" text="JPY · 엔화"/>
+                                        <core:Item key="CNY" text="CNY · 위안화"/>
+                                    </Select>
+                                </VBox>
+
+                                <!-- Row 3: 전표 적요 (전체 너비) -->
+                                <VBox class="formField">
+                                    <layoutData><l:GridData span="XL12 L12 M12 S12"/></layoutData>
+                                    <Label text="전표 적요" class="fieldLabel"/>
+                                    <Input id="bktxtInput"
+                                        value="{viewModel>/bktxt}"
+                                        placeholder="전표 내용을 입력하세요  (예: 사무용품 구매 비용 처리)"
+                                        width="100%"/>
+                                </VBox>
+                            </l:Grid>
+                        </VBox>
+                    </Panel>
+
+                    <!-- ══ 차대변 밸런스 바 ══ -->
+                    <HBox class="balanceBar" alignItems="Center">
+                        <VBox class="balBlock">
+                            <Text text="차변 합계" class="balLabel"/>
+                            <Text text="{viewModel>/debitSumText}" class="balAmount balDebit"/>
+                        </VBox>
+                        <Text text="=" class="balEq"/>
+                        <VBox class="balBlock">
+                            <Text text="대변 합계" class="balLabel"/>
+                            <Text text="{viewModel>/creditSumText}" class="balAmount balCredit"/>
+                        </VBox>
+                        <VBox class="balDivider"/>
+                        <VBox class="balBlock">
+                            <Text text="차액" class="balLabel"/>
+                            <Text text="{viewModel>/diffText}" class="balAmount balDiff" id="diffText"/>
+                        </VBox>
+                        <VBox class="balBlock">
+                            <Text text="라인 수" class="balLabel"/>
+                            <Text text="{viewModel>/lineCount}" class="balAmount balLineCount"/>
+                        </VBox>
+                        <HBox class="balStatusWrap" alignItems="Center">
+                            <ObjectStatus id="balStatusObj"
+                                text="{viewModel>/balStatusText}"
+                                state="{viewModel>/balState}"
+                                icon="{viewModel>/balIcon}"
+                                class="balStatusPill"/>
+                        </HBox>
+                    </HBox>
+
+                    <!-- ══ 라인 아이템 카드 ══ -->
+                    <Panel class="voucherCard lineItemCard" expandable="false">
+                        <headerToolbar>
+                            <OverflowToolbar class="cardToolbar">
+                                <core:Icon src="sap-icon://list" class="cardIcon"/>
+                                <Title text="라인 아이템" level="H6" class="cardTitle"/>
+                                <ToolbarSpacer/>
+                                <Text text="{viewModel>/lineCountTag}" class="cardTag"/>
+                                <Button icon="sap-icon://add" text="행 추가" press="onAddLine" class="toolbarLineAddBtn"/>
+                                <Button icon="sap-icon://delete" text="행 삭제" press="onDeleteLastLine" class="toolbarLineDelBtn"/>
+                            </OverflowToolbar>
+                        </headerToolbar>
+
+                        <t:Table id="itemTable"
+                            rows="{viewModel>/items}"
+                            selectionMode="None"
+                            visibleRowCount="{viewModel>/tableRowCount}"
+                            rowHeight="46"
+                            columnHeaderHeight="40"
+                            enableBusyIndicator="false"
+                            class="lineItemTable">
+                            <t:columns>
+                                <!-- 순번 (BUZEI) -->
+                                <t:Column width="4.5rem" hAlign="Center">
+                                    <Label text="순번" class="tblColLabel"/>
+                                    <t:template>
+                                        <Text text="{viewModel>lineNo}" textAlign="Center" class="lineNoCell"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 계정번호 (SAKNR) — ValueHelp -->
+                                <t:Column width="11rem">
+                                    <Label text="계정번호" required="true" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>saknr}" maxLength="10" placeholder="계정번호"
+                                            liveChange="onSaknrChange"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onSaknrValueHelp"
+                                            class="tblInput"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 계정명 -->
+                                <t:Column width="9rem">
+                                    <Label text="계정명" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>saknrName}" editable="false" class="tblInputRO"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 차/대 (SHKZG) -->
+                                <t:Column width="9.5rem">
+                                    <Label text="차/대" required="true" class="tblColLabel"/>
+                                    <t:template>
+                                        <Select selectedKey="{viewModel>shkzg}" change="onShkzgChange" width="100%">
+                                            <core:Item key="S" text="차변 (Debit)"/>
+                                            <core:Item key="H" text="대변 (Credit)"/>
+                                        </Select>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 전기키 (BSCHL) — 자동 -->
+                                <t:Column width="4.5rem" hAlign="Center">
+                                    <Label text="전기키" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>bschl}" editable="false" textAlign="Center" class="tblInputRO"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 공급가액 (WRBTR) -->
+                                <t:Column width="10.5rem" hAlign="End">
+                                    <Label text="공급가액" required="true" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>wrbtrInput}" textAlign="End" placeholder="0"
+                                            liveChange="onAmtChange" class="tblInput tblInputAmt"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 세금코드 (MWSKZ) — ValueHelp -->
+                                <t:Column width="9.5rem">
+                                    <Label text="세금코드" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>mwskz}" maxLength="2"
+                                            change="onMwskzInputChange"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onMwskzValueHelp"
+                                            placeholder="—"
+                                            class="tblInput"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 세액 (WMWST) — 자동계산 -->
+                                <t:Column width="8.5rem" hAlign="End">
+                                    <Label text="세액 (자동)" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>wmwstText}" editable="false" textAlign="End" class="tblInputRO"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 코스트센터 (KOSTL) — ValueHelp -->
+                                <t:Column width="10.5rem">
+                                    <Label text="코스트센터" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>kostl}" placeholder="코스트센터"
+                                            liveChange="onKostlChange"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onKostlValueHelp"
+                                            class="tblInput"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 플랜트 (WERKS) — ValueHelp -->
+                                <t:Column width="8rem">
+                                    <Label text="플랜트" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>werks}" placeholder="플랜트"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onWerksValueHelp"
+                                            class="tblInput"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 손익센터 (PRCTR) — ValueHelp -->
+                                <t:Column width="9rem">
+                                    <Label text="손익센터" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>prctr}" placeholder="—"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onPrctrValueHelp"
+                                            class="tblInput"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 적요 (SGTXT) -->
+                                <t:Column width="24rem" minWidth="24rem">
+                                    <Label text="적요" class="tblColLabel"/>
+                                    <t:template>
+                                        <Input value="{viewModel>sgtxt}" placeholder="라인 적요를 입력하세요" class="tblInput"/>
+                                    </t:template>
+                                </t:Column>
+                                <!-- 삭제 버튼 -->
+                                <t:Column width="3.2rem" hAlign="Center">
+                                    <Label text="" class="tblColLabel"/>
+                                    <t:template>
+                                        <Button icon="sap-icon://decline" type="Transparent"
+                                            press="onDeleteLine" tooltip="행 삭제" class="delLineBtn"/>
+                                    </t:template>
+                                </t:Column>
+                            </t:columns>
+                        </t:Table>
+
+                        <VBox class="addRowArea">
+                            <Button text="라인 추가" icon="sap-icon://add" press="onAddLine" class="addLineBtn" width="100%"/>
+                        </VBox>
+                    </Panel>
+
+                    <!-- ══ 첨부파일 카드 ══ -->
+                    <Panel class="voucherCard" expandable="false">
+                        <headerToolbar>
+                            <OverflowToolbar class="cardToolbar">
+                                <core:Icon src="sap-icon://attachment" class="cardIcon"/>
+                                <Title text="첨부파일" level="H6" class="cardTitle"/>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <VBox class="attachArea" alignItems="Center" justifyContent="Center">
+                            <core:Icon src="sap-icon://upload-to-cloud" class="attachIcon"/>
+                            <Text text="파일을 드래그하거나 클릭하여 영수증·세금계산서를 첨부하세요" class="attachText"/>
+                            <Text text="첨부 기능 개발 예정" class="attachSubText"/>
+                        </VBox>
+                    </Panel>
+
+                </VBox>
+            </ScrollContainer>
+        </content>
+
+    </Page>
+</mvc:View>

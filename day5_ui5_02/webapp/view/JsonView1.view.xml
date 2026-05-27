@@ -1,0 +1,65 @@
+<mvc:View controllerName="code.cl3.dayui502.controller.JsonView1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+    <VBox >
+        <HBox >
+            <Button text="{/Buttonset/text}"
+                    type="{/Buttonset/text2}"
+                    icon="{/Buttonset/icon}"
+            />
+            <Input  value="{/InputSet/aaa}"
+                    placeholder="{/InputSet/holder}" 
+                    width="{/InputSet/width}"
+                    description="{/InputSet/dec}"
+            />
+        </HBox>
+    </VBox>
+            <HBox >
+                <Panel  headerText="{/Test/aa}"
+                        width="{/Test/wi}"
+                        height="{/Test/he}">
+                    <VBox >
+                        <Input  value="{/Test/pp}"
+                                description="{/Test/des}"
+                                width="{/Test/wit}"
+                        />
+                
+                        <Input  value="{/Test/con}"
+                                description="{/Test/dec}"
+                                width="{/Test/wit}"
+                        />
+                    
+                        <Input  value="{/Test/hm}"
+                                description="{/Test/hr}"
+                                width="{/Test/wit}"
+                        />
+                    </VBox>
+                </Panel>
+            </HBox>
+        <VBox >
+            <HBox >
+                <Panel  headerText="{panel>/Test/aa}"
+                        width="{panel>/Test/wi}"
+                        height="{panel>/Test/he}">
+                    <VBox >
+                        <Input  value="{panel>/Test/pp}"
+                                description="{panel>/Test/des}"
+                                width="{panel>/Test/wit}"
+                        />
+                
+                        <Input  value="{panel>/Test/con}"
+                                description="{panel>/Test/dec}"
+                                width="{panel>/Test/wit}"
+                        />
+                    
+                        <Input  value="{panel>/Test/hm}"
+                                description="{panel>/Test/hr}"
+                                width="{panel>/Test/wit}"
+                        />
+                    </VBox>
+                </Panel>
+            </HBox>
+        </VBox>
+    </Page>
+</mvc:View>

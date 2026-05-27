@@ -1,0 +1,98 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.examam",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "d5e66721-4e3a-469d-8817-c5a7a8ada2d4"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.examam.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "code.cl3.examam.view",
+        "async": true,
+        "viewPath": "code.cl3.examam.view"
+      },
+      "routes": [
+        {
+          "name": "Routeexam_am",
+          "pattern": ":?query:",
+          "target": [
+            "Targetexam_am"
+          ]
+        }
+      ],
+      "targets": {
+        "Targetexam_am": {
+          "id": "exam_am",
+          "name": "exam_am"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "code.cl3.examam.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

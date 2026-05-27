@@ -1,0 +1,12 @@
+<mvc:View controllerName="code.cl3.precticeui506.controller.prectice_ui5_08"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page3" title="{i18n>title}">
+        <HBox >
+            <Input id="rCarrid" width="5rem" editable="false" />
+            <Input id="rConnid" width="5rem" editable="false" />
+            <Text text="종착지"/>
+            <Button icon="sap-icon://undo" text="Back" press="onBack" type="Emphasized" />
+        </HBox>
+    </Page>
+</mvc:View>

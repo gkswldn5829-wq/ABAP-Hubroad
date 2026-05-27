@@ -1,0 +1,23 @@
+<mvc:View controllerName="code.cl3.day10ui502.controller.day10_ui5_02"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+
+        <Panel  class="sapUiResponsiveMargin"
+                expandable="true" 
+                headerText="First View"
+                width="10rem"
+        >
+            <Text text="1번째"/>
+            <Button text="Go Second" 
+                    icon="sap-icon://cargo-train"
+                    press="goSecond"
+            />
+            <Button text="Go Third" 
+                    icon="sap-icon://cargo-train"
+                    press="goThird"
+            />
+        </Panel>
+
+    </Page>
+</mvc:View>

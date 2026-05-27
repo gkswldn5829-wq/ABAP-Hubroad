@@ -1,0 +1,26 @@
+    <mvc:View controllerName="code.cl3.day10ui502.controller.ThirdView"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <Page   id="page3" title="{i18n>title}"
+                showNavButton="true"
+		        navButtonPress=".onNavBack"
+        >
+
+            <Panel  class="sapUiResponsiveMargin" 
+                    expandable="true" 
+                    headerText="Third View" 
+                    width="10rem" 
+            >
+                <Text text="3번째"/>
+                <Button text="Go First View" 
+                        icon="sap-icon://cargo-train"
+                        press="goFirst" 
+                />
+                <Button text="Go Second View" 
+                        icon="sap-icon://cargo-train"
+                        press="goSecond" 
+                />
+                
+            </Panel>
+        </Page>
+    </mvc:View>

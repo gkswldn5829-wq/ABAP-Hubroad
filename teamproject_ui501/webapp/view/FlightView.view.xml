@@ -1,0 +1,106 @@
+<mvc:View
+    controllerName="code.cl3.teamprojectui501.controller.FlightView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="false"
+>
+    <Page title="✈️ Flight Schedule" class="Vpage" showHeader="false">
+        <content>
+            <HBox>
+                <!-- sap.ui.table.Table 사용 -->
+              <l:VerticalLayout width="100%"
+                                class="loginContainer"
+              >
+                  <l:VerticalLayout
+                  width="100%"
+                  class="logoSection"
+                  >
+                    <Image
+                      src="../image/SAP.png"
+                      width="125px"
+                      class="sapLogo"
+                    />
+                      <Title
+                        text="✈️ Flight Schedule"
+                        level="H2"
+                        class="appTitle2"
+                      />
+                    <f:SimpleForm class="loginForm2">
+                      <t:Table
+                          id="flightTable"
+                          rows="{flight>/FlightSet}"
+                          visibleRowCount="10"
+                          selectionMode="Single"
+                          width="auto"
+                          enableColumnReordering="false"
+                          class="Vtable"
+                      >
+                          <t:extension>
+                              <!-- <OverflowToolbar class="onOver">
+                                  
+                              </OverflowToolbar> -->
+                          </t:extension>
+                          <!-- 열 정의 -->
+                          <t:columns>
+                              <t:Column width="">
+                                  <Label text="Airline" />
+                                  <t:template>
+                                      <Text text="{flight>Carrid}" />
+                                  </t:template>
+                              </t:Column>
+
+                              <t:Column width="">
+                                  <Label text="Connection" />
+                                  <t:template>
+                                      <Text text="{flight>Connid}" />
+                                  </t:template>
+                              </t:Column>
+
+                              <t:Column width="">
+                                  <Label text="Flight date" />
+                                  <t:template>
+                                      <Text text="{flight>Fldate}" />
+                                  </t:template>
+                              </t:Column>
+
+                              <t:Column width="">
+                                  <Label text="Airfare" />
+                                  <t:template>
+                                      <Text text="{flight>Price}" />
+                                  </t:template>
+                              </t:Column>
+
+                              <t:Column width="">
+                                  <Label text="Currency" />
+                                  <t:template>
+                                      <Text text="{flight>Currency}" />
+                                  </t:template>
+                              </t:Column>
+
+                              <t:Column width="">
+                                  <Label text="Planetype" />
+                                  <t:template>
+                                      <Text text="{flight>Planetype}" />
+                                  </t:template>
+                              </t:Column>
+                          </t:columns>
+                      </t:Table>
+                    </f:SimpleForm>
+                    <Button
+                              text="예약"
+                              press="onPress"
+                              width="10rem"
+                              type="Emphasized"
+                              class="onButton"
+                              icon="sap-icon://add-calendar"
+                      />
+                  </l:VerticalLayout>
+              </l:VerticalLayout>  
+            </HBox>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,173 @@
+<mvc:View controllerName="code.cl3.gwcl3ui501.controller.GWCL3_ui501"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:data="sap.viz.ui5.data"
+    >
+    <Page id="page" title="{i18n>title}">
+        <HBox >
+            <Panel  backgroundDesign="Translucent"
+                    class="sapUiSmallMargin"
+                    width="580px"
+                >
+                    <t:Table    id="table1"
+                                rows="{/AirlineSet}"    
+                                ariaLabelledBy="1번 차트"
+                                class="sapUiResponsiveContentPadding"
+                                showColumnVisibilityMenu="true"
+                                alternateRowColors="true"
+                                visibleRowCount="8"
+                    >
+                        <t:extension>
+                            <OverflowToolbar >
+                                <Title text= "첫번째 차트" />
+                                    <ToolbarSpacer />
+                                        <SearchField    width="150px"
+                                                        placeholder="뱅기이름"
+                                                        search="onSearch"/>
+                            </OverflowToolbar>
+                        </t:extension>
+                            <t:columns>
+                                <t:Column >
+                                    <Label text="항공사ID"/>
+                                    <t:template>
+                                        <Text text="{Carrid}" />
+                                    </t:template>
+                                </t:Column>
+                                <t:Column >
+                                    <Label text="뱅기이름"/>
+                                    <t:template>
+                                        <Text text="{Carrname}" />
+                                    </t:template>
+                                </t:Column>
+                                <t:Column >
+                                    <Label text="코드정보"/>
+                                    <t:template>
+                                        <Text text="{Currcode}" />
+                                    </t:template>
+                                </t:Column>
+                                <t:Column >
+                                    <Label text="항공사홈페이지"/>
+                                    <t:template>
+                                        <Text text="{Url}" />
+                                    </t:template>
+                                </t:Column>
+                            </t:columns>
+                    </t:Table>
+            </Panel>
+            <Panel  backgroundDesign="Translucent"
+                    class="sapUiSmallMargin"
+                    width="600px"
+            >
+                <t:Table    id="table2"
+                            rows="{server1>/FlightSet}"    
+                            ariaLabelledBy="2번 차트"
+                            class="sapUiResponsiveContentPadding"
+                            showColumnVisibilityMenu="true"
+                            alternateRowColors="true"
+                            visibleRowCount="8"
+                >
+                    <t:extension>
+                        <OverflowToolbar >
+                            <Title text= "두번째 차트" />
+                                <ToolbarSpacer />
+                                    <SearchField    width="150px"
+                                                    placeholder="비행정보"
+                                                    search="onSearch2"/>
+                        </OverflowToolbar>
+                    </t:extension>
+                        <t:columns>
+                            <t:Column >
+                                <Label text="Airline"/>
+                                <t:template>
+                                    <Text text="{server1>Carrid}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="Flight Connection"/>
+                                <t:template>
+                                    <Text text="{server1>Connid}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="Flight date"/>
+                                <t:template>
+                                    <Text text="{server1>Fldate}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="Airfare"/>
+                                <t:template>
+                                    <Text text="{server1>Price}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="Currency"/>
+                                <t:template>
+                                    <Text text="{server1>Currency}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="AircraftType"/>
+                                <t:template>
+                                    <Text text="{server1>Planetype}" />
+                                </t:template>
+                            </t:Column>
+                        </t:columns>
+                </t:Table>
+            </Panel>
+        </HBox>
+
+            <Panel  height="500px"
+                    width="800px"
+                    class="sapUiSmallMarginTop" 
+            >
+                <viz:VizFrame   id="viz3"
+                                uiConfig="{applicationSet:'fiori'}"
+                                height="500px"
+                                width="700px"
+                                vizType="area"
+                >
+                    <viz:dataset>
+                        <data:FlattenedDataset data="{server1>/PaymentSet}">
+                            <data:dimensions>
+                                <data:DimensionDefinition   name="아이디"
+                                                            value="{server1>Carrid}"
+                                />
+                            </data:dimensions>
+                            <data:measures>
+                                <data:MeasureDefinition name="가격"
+                                                        value="{server1>Price}" 
+                                />
+                                <data:MeasureDefinition name="합계"
+                                                        value="{server1>Paymentsum}" 
+                                />
+                            </data:measures>
+                        </data:FlattenedDataset>
+                    </viz:dataset>
+                    <viz:feeds>
+                        <viz.feeds:FeedItem id='valueAxisFeed' 
+                                            uid="valueAxis" 
+                                            type="Measure"
+                                            values="합계" 
+                        />
+                        <viz.feeds:FeedItem uid="valueAxis" 
+                                            type="Measure"
+                                            values="가격" 
+                        />
+                        <viz.feeds:FeedItem id='categoryAxisFeed' 
+                                            uid="categoryAxis" 
+                                            type="Dimension"
+                                            values="아이디" 
+                        />
+                    </viz:feeds>
+                </viz:VizFrame>
+            </Panel>
+    </Page>
+</mvc:View>

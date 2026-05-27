@@ -1,0 +1,191 @@
+<mvc:View xmlns:mdc="sap.ui.mdc" controllerName="code.cl3.day8ui501.controller.day8_ui5_01"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:p="sap.m.Toolbar"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:mc="sap.suite.ui.microchart"
+>
+    <Page id="page" title="{i18n>title}">
+        <FlexBox    alignContent="Center"
+                    width="auto"
+                    justifyContent="SpaceBetween"
+        >
+            <VBox >
+                <HBox >
+                    <t:Table rows="{server1>/textSet}"
+                    selectionMode="MultiToggle"
+                    paste="onPaste"
+                    ariaLabelledBy="title"
+                    >
+                        <t:extension>
+                            <OverflowToolbar style="Standard">
+                                <Title id="data" text="야구단"/>
+                            </OverflowToolbar>
+                        </t:extension>
+                        <t:columns>
+                        <t:Column width="">
+                                <Label text="팀명" />
+                                <t:template>
+                                    <Text text="{server1>team}" wrapping="false" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column width="">
+                                <Label text="창단연도" />
+                                <t:template>
+                                    <Text text="{server1>tear}" wrapping="false" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column width="">
+                                <Label text="연고지" />
+                                <t:template>
+                                    <Text text="{server1>Area}" wrapping="false" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column width="">
+                                <Label text="우승횟수" />
+                                <t:template>
+                                    <Text text="{server1>alt}" wrapping="false" />
+                                </t:template>
+                            </t:Column>
+                        </t:columns>
+                    </t:Table>
+                </HBox>
+                <Bar></Bar>
+                <HBox >
+                    <Bar class="sapUiLargeMarginTop"/>
+                    <viz:VizFrame   id="idVizFrame"
+                                    height='500px'
+                                    width="500px"
+                                    vizType='stacked_column'
+                                    vizProperties="{ title: {text : '도시별 인구분포도 막대', visible : true}}"
+                                    >
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset data="{server2>/OldSet}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition   name="도시"
+                                                                    value="{server2>City}"
+                                    />
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition     name="인구율"
+                                                                    value="{server2>Ratio}"
+                                    />
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="valueAxis"
+                                                type="Measure"
+                                                values="인구율"
+                            />
+                            <viz.feeds:FeedItem uid="categoryAxis"
+                                                type="Dimension"
+                                                values="도시"
+                            />
+                            <viz.feeds:FeedItem uid="color"
+                                                type="Dimension"
+                                                values="도시"
+                            />
+                        </viz:feeds>
+                    </viz:VizFrame>
+                    <Bar class="sapUiLargeMarginTop"/>
+                    <viz:VizFrame   id="idVizFrame2"
+                                    height='500px'
+                                    width="500px"
+                                    vizType='pie'
+                                    vizProperties="{ title: {text : '도시별 인구분포도 원형', visible : true}}"
+                    >
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset data ="{server2>/OldSet}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition   name="도시이름"
+                                                                    value="{server2>City}"/>
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition name="인구율"
+                                                                value="{server2>Ratio}"/>
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="size"
+                                                type="Measure"
+                                                values="인구율"
+                            />
+                            <viz.feeds:FeedItem uid="color"
+                                                type="Dimension"
+                                                values="도시이름"
+                            />
+                        </viz:feeds>
+                    </viz:VizFrame>
+                </HBox>
+
+            </VBox>
+        </FlexBox>
+        <Bar class="sapUiLargeMarginTop"/>
+        <HBox >
+            <Bar visible="true"/>
+            <Panel width="500px"
+                    height="200px" >
+                <VBox >
+                    <mc:InteractiveDonutChart   segments="{server3>/ProfitSet}" displayedSegments="5"
+                    >
+                        <mc:segments>
+                            <mc:InteractiveDonutChartSegment    label="{server3>Prdnm}"
+                                                                value="{=parseFloat(${server3>Profit})}"
+                                                                displayedValue="{server3>Profit}%"
+                                                                />
+                            <!-- <mc:InteractiveDonutChartSegment    label="Cookie"
+                                                                value="20.0"
+                                                                displayedValue="20.0%"/>
+                            <mc:InteractiveDonutChartSegment    label="아무거나3"
+                                                                value="30.0"
+                                                                displayedValue="30.0%"/> -->
+                        </mc:segments>
+                    </mc:InteractiveDonutChart>
+                </VBox>
+            </Panel>
+                <FlexBox    width="30rem" 
+                            height="10rem" 
+                            alignItems="Center" 
+                            class="sapUiSmallMargin"
+                >
+                    <items>
+                        <mc:InteractiveLineChart    precedingPoint="40" 
+                                                    succeedingPoint="100"
+                                                    displayedPoints="8"
+                                                    points="{server3>/ProfitSet}"
+                        >
+                            <mc:points>
+                            <mc:InteractiveLineChartPoint   value="{=parseFloat(${server3>Profit})}" 
+                                                            label="{server3>Prdnm}" 
+                                                            secondaryLabel="{server3>Prdid}"
+                            />
+                            </mc:points>
+                        </mc:InteractiveLineChart>
+                    </items>    
+                </FlexBox>
+        </HBox>
+        <VBox >
+            <ToolbarSpacer width="100px" />
+        </VBox>
+            <Panel headerText="막대 차트"
+            >
+                <mc:InteractiveBarChart labelWidth="10%"
+                                        selectionChanged="selectionChanged"
+                                        displayedBars="8"
+                                        bars="{server3>/ProfitSet}"
+                                        >
+                    <mc:bars>
+                        <mc:InteractiveBarChartBar label="{server3>Prdnm}" value="{=parseFloat(${server3>Profit})}"/>
+                    </mc:bars>
+                </mc:InteractiveBarChart>
+            </Panel>
+        <VBox width="50px" />
+    </Page>
+</mvc:View>

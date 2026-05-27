@@ -1,0 +1,35 @@
+<mvc:View controllerName="codecl3.day5ui01.controller.Day5_UI501"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <VBox >
+            <HBox>
+                <Input id="input" width="100px"/>
+                <Button text="Creat" press="vCreat"/>
+                <Button text="Delete" press="vDelete" />
+                <Button text="Search" press="vSearch" />
+            </HBox>
+            <HBox>
+                <Input id="input2" placeholder="result" enabled="true" width="300px" />
+            </HBox>
+
+            <HBox>
+                <Button text="IF" press= "onPress"/>
+                <Input id= "text3" placeholder="정답: KA,DL,QA" width="300px"/>
+                <Input id= "text4" placeholder="정답: AA,LH" width="300px" />
+                <Button text="SWITCH" press="onPress2"/>
+            </HBox>
+        <VBox >    
+            <HBox>
+                <Label text="User ID"/>
+                <Input id="ID"/>
+            </HBox>
+            <HBox>
+                <Label text="PW"/>
+                <Input id="PW" type="Password" />
+            </HBox>
+                <Button text="로그인" type="Ghost" press="onButton"/>
+        </VBox>
+        </VBox>
+    </Page>
+</mvc:View>

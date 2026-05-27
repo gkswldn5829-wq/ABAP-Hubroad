@@ -1,0 +1,6 @@
+<mvc:View controllerName="code.cl3.pararoute01.controller.Main_VIew"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+    </Page>
+</mvc:View>

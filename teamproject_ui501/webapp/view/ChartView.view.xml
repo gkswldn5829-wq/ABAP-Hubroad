@@ -1,0 +1,341 @@
+<mvc:View
+    controllerName="code.cl3.teamprojectui501.controller.ChartView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified"
+    xmlns:core="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    displayBlock="true"
+>
+    <Page id="page" 
+          title="관리자 대시보드" 
+          showHeader="false" 
+          enableScrolling="true"
+          class="loginPage">
+    
+
+        <l:VerticalLayout
+                width="100%"
+                class="logoSection"
+            >
+                <Image
+                    src="../image/SAP.png"
+                    width="100px"
+                    class="sapLogo"
+                />
+                    <Title
+                        text="📆Manegement system"
+                        level="H2"
+                        class="appTitle"
+                    />
+            </l:VerticalLayout>
+
+        <!-- Header Bar -->
+        <customHeader>
+            <Bar class="sapUiTinyMarginBottom">
+                <contentLeft>
+                    <Image src="../image/SAP.png" width="40px" class="sapUiTinyMarginEnd"/>
+                    <Title text="항공사 관리 시스템" level="H3"/>
+                </contentLeft>
+                <contentRight>
+                    <Button icon="sap-icon://refresh" tooltip="새로고침" type="Transparent"/>
+                    <Button icon="sap-icon://action-settings" tooltip="설정" type="Transparent"/>
+                    <Avatar initials="AD" displaySize="XS" class="sapUiTinyMarginBegin"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox width="100%" class="sapUiMediumMargin">
+                
+                <!-- KPI Cards Section -->
+                <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom" wrap="Wrap">
+                    <VBox width="23%" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <GenericTile 
+                            header="총 매출"
+                            subheader="이번 달"
+                            press=".onTilePress"
+                            class="총margin">
+                            <tileContent>
+                                <TileContent>
+                                    <content>
+                                        <NumericContent 
+                                            value="₩2,450,000" 
+                                            valueColor="Good"
+                                            icon="sap-icon://money-bills"
+                                            withMargin="false"/>
+                                    </content>
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </VBox>
+                    
+                    <VBox width="23%" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <GenericTile 
+                            header="총 예약 건수"
+                            subheader="금주"
+                            press=".onTilePress"
+                            class="총margin"
+                            >
+                            <tileContent>
+                                <TileContent>
+                                    <content>
+                                        <NumericContent 
+                                            value="1,847" 
+                                            valueColor="Neutral"
+                                            icon="sap-icon://flight"
+                                            withMargin="false"/>
+                                    </content>
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </VBox>
+                    
+                    <VBox width="23%" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <GenericTile 
+                            header="활성 항공사"
+                            subheader="전체"
+                            press=".onTilePress"
+                            class="총margin"
+                            >
+                            <tileContent>
+                                <TileContent>
+                                    <content>
+                                        <NumericContent 
+                                            value="15" 
+                                            valueColor="Critical"
+                                            icon="sap-icon://org-chart"
+                                            withMargin="false"/>
+                                    </content>
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </VBox>
+                    
+                    <VBox width="23%" class="sapUiSmallMarginBottom">
+                        <GenericTile 
+                            header="평균 만족도"
+                            subheader="고객 평점"
+                            press=".onTilePress"
+                            class="총margin"
+                            >
+                            <tileContent>
+                                <TileContent>
+                                    <content>
+                                        <NumericContent 
+                                            value="4.7" 
+                                            scale="/ 5.0"
+                                            valueColor="Good"
+                                            icon="sap-icon://favorite"
+                                            withMargin="false"/>
+                                    </content>
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </VBox>
+                </HBox>
+
+                <!-- Charts Section -->
+                <l:Grid defaultSpan="L12 M12 S12" hSpacing="1" vSpacing="1">
+                    
+                    <!-- Payment Analysis Chart -->
+                    <l:content>
+                        <Panel headerText="항공사별 결제 분석" 
+                               class="margin2"
+                               width="auto"
+                               expandable="true"
+                               expanded="true">
+                            <content>
+                                <viz:VizFrame
+                                    id="idVizFrame"
+                                    uiConfig="{applicationSet:'fiori'}"
+                                    height="400px"
+                                    width="100%"
+                                    vizType="bar"
+                                    vizProperties="{
+                                        title: {
+                                            visible: false
+                                        },
+                                        plotArea: {
+                                            background: { color: 'transparent' },
+                                            colorPalette: ['#5899DA', '#E8743B', '#19A979', '#ED4A7B', '#945ECF', '#13A4B4', '#525DF4', '#BF399E', '#6C8893', '#EE6868'],
+                                            dataLabel: { 
+                                                visible: true, 
+                                                position: 'outside',
+                                                style: { fontSize: '11px' }
+                                            },
+                                            gridline: { 
+                                                visible: true,
+                                                type: 'line',
+                                                color: '#E5E5E5'
+                                            },
+                                            drawingEffect: 'normal'
+                                        },
+                                        valueAxis: {
+                                            title: { 
+                                                visible: true, 
+                                                text: '가격 (₩)',
+                                                style: { fontSize: 12, fontWeight: 'bold' }
+                                            },
+                                            label: { formatString: '¤#,##0' }
+                                        },
+                                        categoryAxis: {
+                                            title: { 
+                                                visible: true, 
+                                                text: '항공사',
+                                                style: { fontSize: 12, fontWeight: 'bold' }
+                                            },
+                                            label: { angle: 0 }
+                                        },
+                                        legend: {
+                                            visible: false
+                                        },
+                                        interaction: {
+                                            selectability: { mode: 'single' },
+                                            hover: { stroke: { visible: true } }
+                                        },
+                                        tooltip: {
+                                            visible: true,
+                                            formatString: ['#,##0 ¤']
+                                        }
+                                    }"
+                                >
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset data="{Payment>/PaymentSet}">
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition
+                                                    name="Carrid"
+                                                    value="{Payment>Carrid}" />
+                                            </viz.data:dimensions>
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition
+                                                    name="Price"
+                                                    value="{Payment>Price}" />
+                                            </viz.data:measures>
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Price" />
+                                        <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Carrid" />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </content>
+                        </Panel>
+                    </l:content>
+
+                    <!-- Sales Trend Chart -->
+                    <l:content>
+                        <Panel headerText="항공사별 매출 추이" 
+                               class="margin4"
+                               width="auto"
+                               expandable="true"
+                               expanded="true">
+                            <content>
+                                <viz:VizFrame
+                                    id="idVizFrame1"
+                                    uiConfig="{applicationSet:'fiori'}"
+                                    height="400px"
+                                    width="100%"
+                                    vizType="line"
+                                    vizProperties="{
+                                        title: {
+                                            visible: false
+                                        },
+                                        plotArea: {
+                                            background: { color: 'transparent' },
+                                            colorPalette: ['#5899DA', '#E8743B', '#19A979', '#ED4A7B', '#945ECF'],
+                                            dataLabel: { 
+                                                visible: false
+                                            },
+                                            gridline: { 
+                                                visible: true,
+                                                color: '#E5E5E5'
+                                            },
+                                            line: {
+                                                width: 2,
+                                                marker: {
+                                                    visible: true,
+                                                    size: 8,
+                                                    shape: 'circle'
+                                                }
+                                            }
+                                        },
+                                        valueAxis: {
+                                            title: { 
+                                                visible: true, 
+                                                text: '매출액',
+                                                style: { fontSize: 12, fontWeight: 'bold' }
+                                            },
+                                            label: { formatString: '#,##0' }
+                                        },
+                                        categoryAxis: {
+                                            title: { 
+                                                visible: true, 
+                                                text: '항공사 코드',
+                                                style: { fontSize: 12, fontWeight: 'bold' }
+                                            },
+                                            label: { angle: 0 }
+                                        },
+                                        legend: {
+                                            visible: true,
+                                            position: 'bottom'
+                                        },
+                                        interaction: {
+                                            selectability: { mode: 'single' }
+                                        },
+                                        tooltip: {
+                                            visible: true
+                                        }
+                                    }"
+                                >
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset data="{sales>/airlineset}">
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition name="항공사 CODE" value="{sales>code}" />
+                                            </viz.data:dimensions>
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition name="sales" value="{sales>sales}" />
+                                            </viz.data:measures>
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <viz.feeds:FeedItem 
+                                            id='valueAxisFeed'
+                                            uid="valueAxis"
+                                            type="Measure"
+                                            values="sales"
+                                        />
+                                        <viz.feeds:FeedItem 
+                                            id='categoryAxisFeed'
+                                            uid="categoryAxis"
+                                            type="Dimension"
+                                            values="항공사 CODE"
+                                        />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </content>
+                        </Panel>
+                    </l:content>
+
+                </l:Grid>
+
+                
+            </VBox>
+        </content>
+
+        <!-- Footer -->
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Text text="© 2024 항공사 관리 시스템 | SAP UI5 Version 1.120.38"/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </footer>
+
+    </Page>
+</mvc:View>

@@ -1,0 +1,59 @@
+<mvc:View controllerName="code.cl3.airlinecl3ui501.controller.GWServiceView01"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    >
+    <Page id="page" title="{i18n>title}" class="sapUiResponsiveContentPaddin">
+
+        <Panel class="sapUiContentPadding">
+            <t:Table    id="airline"
+                        rows="{/AirlineSet}"
+                        visibleRowCount="12"
+                        selectionMode="None"
+                        class="sapUiResponsiveContentPadding"
+                        showColumnVisibilityMenu="true"
+                        alternateRowColors="true"
+            >
+                <t:extension>
+                    <OverflowToolbar style="Clear">
+                        <Title text="Airline master"/>
+                    <ToolbarSpacer />
+                        <SearchField
+                            placeholder="항공사 이름 키워드를 입력하세요"
+                            search="onSearch"
+                            width="300px"/>
+                    </OverflowToolbar>
+                </t:extension>
+                <t:columns>
+                    <t:Column >
+                        <Text text="Carrid"/>
+                        <t:template>
+                            <Text text="{Carrid}"/>
+                        </t:template>
+                    </t:Column>
+                                        <t:Column >
+                        <Text text="Carrname"/>
+                        <t:template>
+                            <Text text="{Carrname}"/>
+                        </t:template>
+                    </t:Column>
+                                        <t:Column >
+                        <Text text="Currcode"/>
+                        <t:template>
+                            <Text text="{Currcode}"/>
+                        </t:template>
+                    </t:Column>
+                                        <t:Column >
+                        <Text text="Url"/>
+                        <t:template>
+                            <Text text="{Url}"/>
+                        </t:template>
+                    </t:Column>
+                </t:columns>
+            </t:Table>
+        </Panel>
+
+    </Page>
+</mvc:View>

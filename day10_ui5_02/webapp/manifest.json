@@ -1,0 +1,120 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.day10ui502",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "9c5747e1-61cd-4afc-89c1-b449ad2f106d"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.day10ui502.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "code.cl3.day10ui502.view",
+        "async": true,
+        "viewPath": "code.cl3.day10ui502.view"
+      },
+        "routes": [
+          {
+            "name": "Routeday10_ui5_02",
+            "pattern": ":?query:",
+            "target": [
+              "Targetday10_ui5_02"
+            ]
+          },
+          {
+            "name": "RoutesecondView",
+            "pattern": "Second",
+            "target": [
+              "TargetsecondView"
+            ]
+          },
+          {
+            "name": "RouteThirdView",
+            "pattern": "Third",
+            "target": [
+              "TargetsThirdview"
+            ]
+          }
+        ],
+        "targets": {
+          "Targetday10_ui5_02": {
+            "id": "day10_ui5_02",
+            "name": "day10_ui5_02"
+          },
+          "TargetsecondView": {
+            "id": "secondViewId",
+            "name": "secondView"
+          },
+          "TargetsThirdview": {
+            "id": "ThirdViewId",
+            "name": "ThirdView"
+          }
+        }
+    },
+    "rootView": {
+      "viewName": "code.cl3.day10ui502.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

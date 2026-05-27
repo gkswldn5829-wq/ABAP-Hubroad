@@ -1,0 +1,653 @@
+/* ═══════════════════════════════════════════════════════════
+   GL 전표 입력 — Custom Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── CSS 변수 ──────────────────────────────────────────── */
+:root {
+  --fi-blue:      #0064d9;
+  --fi-blue-dk:   #0050b3;
+  --fi-blue-lt:   #e8f1fc;
+  --fi-green:     #107e3e;
+  --fi-green-lt:  #e8f4ed;
+  --fi-amber:     #e9730c;
+  --fi-red:       #bb0000;
+  --fi-red-lt:    #fde8e8;
+  --fi-gray-bg:   #f2f4f7;
+  --fi-card-bg:   #ffffff;
+  --fi-border:    #d9dce0;
+  --fi-border-lt: #eeeff1;
+  --fi-text:      #1d2d3e;
+  --fi-text-sec:  #556b82;
+  --fi-text-mute: #8696a9;
+  --fi-shadow:    0 1px 4px rgba(0,0,0,.08), 0 0 1px rgba(0,0,0,.06);
+  --fi-radius:    8px;
+  --fi-radius-sm: 6px;
+}
+
+/* ── 페이지 배경 ─────────────────────────────────────── */
+.voucherPage {
+  background: var(--fi-gray-bg);
+}
+.voucherPage > .sapMPageScroll,
+.voucherPage .sapMScrollContainerContent {
+  background: var(--fi-gray-bg);
+}
+
+/* ══════════════════════════════════════════════════════════
+   헤더 바 — 시각 스타일 + 잘림 방지
+   (SAP Bar 내부 absolute 포지셔닝은 그대로 유지)
+   ══════════════════════════════════════════════════════════ */
+
+/* 페이지 헤더 컨테이너 — overflow 클리핑 방지 */
+.voucherPage > .sapMPageHeader {
+  overflow: visible !important;
+}
+.voucherPage .sapMIBar-CTX {
+  overflow: visible !important;
+}
+
+.voucherHeader.sapMBar {
+  background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 12px rgba(0, 64, 139, 0.35);
+  height: 56px !important;
+  min-height: 56px !important;
+  overflow: visible !important;
+  box-sizing: border-box;
+}
+
+/* 모든 Bar 내부 섹션 — overflow 클리핑 제거 + 수직 중앙 정렬 */
+.voucherHeader.sapMBar .sapMBarSection,
+.voucherHeader.sapMBar .sapMBarPH {
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* 헤더 타이틀/서브 텍스트 — SAP Title 기본 마진 제거 */
+.headerTitleBox .sapMTitle,
+.headerTitleBox .sapMTitleText {
+  margin: 0 !important;
+  line-height: 1.25 !important;
+}
+
+/* 좌측 섹션 — 내용이 중앙을 침범하지 않도록 최대 너비 제한 */
+.voucherHeader.sapMBar .sapMBarLeft.sapMBarSection {
+  max-width: 48% !important;
+}
+
+/* 우측 섹션 — 컨텐츠 여백에 맞게 왼쪽으로 당기기 */
+.voucherHeader.sapMBar .sapMBarRight.sapMBarSection {
+  overflow: visible !important;
+  right: 24px !important;
+  top: 6px !important;
+}
+
+/* 헤더 아이콘 */
+.headerAppIcon.sapUiIcon {
+  font-size: 1.25rem;
+  color: #7ec8ff;
+  margin: 0 8px 0 4px;
+  flex-shrink: 0;
+}
+
+/* 헤더 제목 박스 (HBox — 한 줄 가로 배치) */
+.headerTitleBox.sapMHBox {
+  margin-right: 10px;
+  min-width: 0;
+  overflow: hidden;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+  top: 6px;
+}
+.headerAppTitle.sapMTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.headerAppTitle.sapMTitle .sapMTitleText {
+  color: #ffffff;
+}
+.headerAppSub.sapMText {
+  font-size: 0.6875rem;
+  color: #93b8e0;
+  white-space: nowrap;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 헤더 중앙 — 상태 배지만 */
+.headerStatusBadge.sapMObjStatus {
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  white-space: nowrap;
+}
+.headerStatusBadge.sapMObjStatus .sapMObjStatusText {
+  color: #fff;
+}
+
+/* 헤더 통화 태그 (우측) */
+.headerWaersTag.sapMText {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffd980;
+  letter-spacing: 0.06em;
+  margin-right: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 헤더 버튼들 — !important로 SAP 기본 스타일 강제 오버라이드 */
+.headerResetBtn.sapMBtn .sapMBtnInner {
+  background: rgba(255,255,255,0.22) !important;
+  border: 1.5px solid rgba(255,255,255,0.6) !important;
+  color: #ffffff !important;
+  border-radius: var(--fi-radius-sm) !important;
+  font-size: 0.8125rem !important;
+  height: 32px !important;
+  white-space: nowrap;
+}
+.headerResetBtn.sapMBtn .sapMBtnInner:hover {
+  background: rgba(255,255,255,0.35) !important;
+}
+.headerSaveBtn.sapMBtn {
+  background: transparent !important;
+  margin-left: 6px !important;
+}
+.headerSaveBtn.sapMBtn .sapMBtnInner {
+  background: #ffffff !important;
+  border: 1.5px solid #ffffff !important;
+  color: var(--fi-blue-dk) !important;
+  border-radius: var(--fi-radius-sm) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  height: 32px !important;
+  line-height: 30px !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+}
+.headerSaveBtn.sapMBtn .sapMBtnInner:hover {
+  background: #ddeeff !important;
+  border-color: #ddeeff !important;
+}
+/* save 버튼 아이콘 색도 강제 */
+.headerSaveBtn.sapMBtn .sapMBtnIcon {
+  color: var(--fi-blue-dk) !important;
+}
+.headerResetBtn.sapMBtn .sapMBtnIcon {
+  color: #ffffff !important;
+}
+.headerBackBtn.sapMBtn .sapMBtnInner {
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.18);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+.headerBackBtn.sapMBtn .sapMBtnIcon {
+  color: #ffffff !important;
+}
+.headerBackBtn.sapMBtn .sapMBtnInner:hover {
+  background: rgba(255,255,255,0.32);
+  border-color: rgba(255,255,255,0.8);
+  color: #fff;
+}
+
+/* ── 메인 컨텐츠 ───────────────────────────────────── */
+.mainContent {
+  padding: 20px 24px 36px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  gap: 16px;
+}
+
+/* ── 카드 공통 ─────────────────────────────────────── */
+.voucherCard.sapMPanel {
+  background: var(--fi-card-bg);
+  border: 1px solid var(--fi-border);
+  border-radius: var(--fi-radius);
+  box-shadow: var(--fi-shadow);
+  overflow: hidden;
+  margin-bottom: 0;
+  animation: cardFadeUp 0.28s ease both;
+}
+
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 카드 헤더 툴바 */
+.cardToolbar.sapMOverflowTB {
+  background: #f8fafc;
+  border-bottom: 1px solid var(--fi-border-lt);
+  min-height: 44px;
+  padding: 0 16px;
+}
+.cardIcon.sapUiIcon {
+  font-size: 0.9rem;
+  color: var(--fi-blue);
+  margin-right: 7px;
+}
+.cardTitle.sapMTitle {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fi-text-sec);
+  letter-spacing: 0.02em;
+}
+.cardTag.sapMText {
+  font-size: 0.6875rem;
+  color: var(--fi-text-mute);
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+/* ── 헤더 폼 ────────────────────────────────────────── */
+.cardBody {
+  padding: 18px 20px;
+}
+.headerFormGrid.sapLayoutGrid {
+  width: 100%;
+}
+.formField {
+  gap: 5px;
+  width: 100%;
+}
+.fieldLabel.sapMLbl {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--fi-text-sec);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.roInput.sapMInputBase .sapMInputBaseInner,
+.roInput .sapMInputBaseInner {
+  background: #f4f6f8;
+  color: var(--fi-text-mute);
+}
+.sapMInputBase,
+.sapMSelect {
+  border-radius: var(--fi-radius-sm);
+}
+
+/* ── 밸런스 바 ──────────────────────────────────────── */
+.balanceBar {
+  background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%);
+  border-radius: var(--fi-radius);
+  padding: 14px 24px;
+  box-shadow: 0 4px 18px rgba(0, 80, 179, 0.28);
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  animation: cardFadeUp 0.28s ease 0.06s both;
+  flex-wrap: nowrap;
+}
+.balanceBar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+}
+.balBlock {
+  padding: 0 20px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.balBlock:first-child { padding-left: 0; }
+.balLabel.sapMText {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+.balAmount.sapMText {
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: "Lucida Console", "Courier New", monospace;
+  color: #fff;
+  white-space: nowrap;
+}
+.balDebit.sapMText  { color: #a8d8ff; }
+.balCredit.sapMText { color: #ffb3b3; }
+.balDiff.sapMText   { color: #ffd980; }
+.balLineCount.sapMText { color: rgba(255,255,255,0.6); }
+.balEq.sapMText {
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.2);
+  font-weight: 300;
+  padding: 0 4px;
+  align-self: center;
+  flex-shrink: 0;
+}
+.balDivider.sapMVBox {
+  width: 1px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  background: rgba(255,255,255,0.12) !important;
+  margin: 0 6px !important;
+  flex-shrink: 0;
+  align-self: center;
+}
+.balStatusWrap {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.balStatusPill.sapMObjStatus {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 6px 14px;
+}
+.balStatusPill.sapMObjStatus .sapMObjStatusText {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+.balStatusPill.sapMObjStatus.sapMObjStatusSuccess {
+  background: rgba(16, 126, 62, 0.4);
+  border-color: rgba(90, 220, 145, 0.4);
+}
+.balStatusPill.sapMObjStatus.sapMObjStatusError {
+  background: rgba(187, 0, 0, 0.25);
+  border-color: rgba(255, 140, 140, 0.35);
+}
+
+/* ══════════════════════════════════════════════════════════
+   라인 아이템 테이블 — 가로 스크롤 & 간격 개선
+   ══════════════════════════════════════════════════════════ */
+.lineItemCard.sapMPanel {
+  overflow: hidden;
+}
+.lineItemCard.sapMPanel > .sapMPanelContent {
+  padding: 0 !important;
+}
+
+/* sap.ui.table 기본 스타일 */
+.lineItemTable.sapUiTable {
+  border: none !important;
+  background: transparent;
+}
+
+/* 가로 스크롤바 높이 확보 */
+.lineItemTable .sapUiTableHSb {
+  height: 14px !important;
+}
+.lineItemTable .sapUiTableHSb .sapUiScrollBar {
+  height: 14px !important;
+}
+.lineItemTable .sapUiTableVSb {
+  width: 14px !important;
+}
+
+/* 컬럼 헤더 */
+.lineItemTable .sapUiTableColHdr,
+.lineItemTable .sapUiTableCCnt {
+  background: #f4f7fb !important;
+}
+.lineItemTable .sapUiTableColHdrCnt {
+  border-bottom: 2px solid var(--fi-border) !important;
+}
+.lineItemTable .sapUiTableCol {
+  background: #f4f7fb !important;
+  border-right: 1px solid var(--fi-border-lt) !important;
+}
+.lineItemTable .sapUiTableColCell {
+  padding: 0 10px;
+}
+
+/* 컬럼 레이블 */
+.tblColLabel.sapMLbl {
+  font-size: 0.6563rem;
+  font-weight: 700;
+  color: var(--fi-text-mute);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* 테이블 행 */
+.lineItemTable .sapUiTableRow .sapUiTableTd {
+  border-bottom: 1px solid var(--fi-border-lt) !important;
+  vertical-align: middle;
+}
+.lineItemTable .sapUiTableRow:hover .sapUiTableTd {
+  background: #f0f7ff !important;
+}
+.lineItemTable .sapUiTableDataCell {
+  padding: 5px 8px;
+  vertical-align: middle;
+}
+
+/* 순번 셀 */
+.lineNoCell.sapMText {
+  font-size: 0.6875rem;
+  color: var(--fi-text-mute);
+  font-family: "Lucida Console", "Courier New", monospace;
+  text-align: center;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* 테이블 셀 — 데이터 잘림 방지 */
+.lineItemTable .sapUiTableDataCell .sapMInputBase,
+.lineItemTable .sapUiTableDataCell .sapMSelect,
+.lineItemTable .sapUiTableDataCell .sapMBtn {
+  min-width: 0;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+.lineItemTable .sapUiTableDataCell {
+  overflow: visible;
+}
+.lineItemTable .sapUiTableTd {
+  overflow: visible !important;
+}
+
+/* 테이블 인풋 공통 */
+.tblInput.sapMInputBase .sapMInputBaseInner {
+  border: 1.5px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  font-size: 0.8125rem;
+  height: 32px;
+  padding: 0 8px;
+  transition: border-color 0.12s, background 0.12s;
+}
+.tblInput.sapMInputBase:hover .sapMInputBaseInner {
+  border-color: var(--fi-border);
+  background: #fff;
+}
+.tblInput.sapMInputBase.sapMInputBaseFocused .sapMInputBaseInner {
+  border-color: var(--fi-blue) !important;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(0,100,217,0.12);
+}
+
+/* ValueHelp 아이콘 여백 */
+.tblInput.sapMInputBase .sapMInputBaseInner {
+  padding-right: 6px;
+}
+.tblInput.sapMInputBase .sapMInputBaseIconContainer {
+  padding: 0 4px;
+}
+
+/* 읽기 전용 테이블 인풋 */
+.tblInputRO.sapMInputBase .sapMInputBaseInner {
+  border: 1.5px solid transparent !important;
+  border-radius: 5px;
+  background: #f4f6f8;
+  color: var(--fi-text-mute);
+  font-size: 0.8125rem;
+  height: 32px;
+  padding: 0 8px;
+}
+
+/* 금액 인풋 (모노스페이스) */
+.tblInputAmt.sapMInputBase .sapMInputBaseInner {
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-weight: 500;
+}
+
+/* 셀 내 Select */
+.lineItemTable .sapMSelect {
+  border-radius: 5px;
+  height: 32px;
+  font-size: 0.8125rem;
+}
+.lineItemTable .sapMSelectList {
+  font-size: 0.8125rem;
+}
+
+/* 행 삭제 버튼 */
+.delLineBtn.sapMBtn .sapMBtnInner {
+  color: #bcc8d4;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  width: 28px;
+  height: 28px;
+}
+.delLineBtn.sapMBtn .sapMBtnInner:hover {
+  background: var(--fi-red-lt);
+  color: var(--fi-red);
+}
+
+/* ── 라인 아이템 툴바 버튼 ─────────────────────────── */
+.toolbarLineAddBtn.sapMBtn .sapMBtnInner {
+  background: transparent;
+  border: 1px solid rgba(0, 100, 217, 0.3);
+  color: var(--fi-blue);
+  border-radius: var(--fi-radius-sm);
+  font-size: 0.75rem;
+  height: 28px;
+  margin-left: 4px;
+}
+.toolbarLineAddBtn.sapMBtn .sapMBtnInner:hover {
+  background: var(--fi-blue-lt);
+  border-color: var(--fi-blue);
+}
+.toolbarLineDelBtn.sapMBtn .sapMBtnInner {
+  background: transparent;
+  border: 1px solid rgba(187, 0, 0, 0.2);
+  color: var(--fi-red);
+  border-radius: var(--fi-radius-sm);
+  font-size: 0.75rem;
+  height: 28px;
+  margin-left: 4px;
+}
+.toolbarLineDelBtn.sapMBtn .sapMBtnInner:hover {
+  background: var(--fi-red-lt);
+  border-color: var(--fi-red);
+}
+
+/* ── 라인 추가 버튼 ─────────────────────────────────── */
+.addRowArea {
+  padding: 10px 16px;
+  border-top: 1px solid var(--fi-border-lt);
+}
+.addLineBtn.sapMBtn {
+  width: 100%;
+}
+.addLineBtn.sapMBtn .sapMBtnInner {
+  background: transparent;
+  border: 1.5px dashed #a0bfe0;
+  color: var(--fi-blue);
+  border-radius: var(--fi-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  height: 38px;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.addLineBtn.sapMBtn .sapMBtnInner:hover {
+  background: var(--fi-blue-lt);
+  border-color: var(--fi-blue);
+}
+
+/* ── 첨부파일 영역 ──────────────────────────────────── */
+.attachArea {
+  padding: 28px 20px;
+  gap: 8px;
+  border: 1.5px dashed var(--fi-border);
+  border-radius: var(--fi-radius-sm);
+  margin: 16px;
+  text-align: center;
+  background: #fafbfc;
+}
+.attachIcon.sapUiIcon {
+  font-size: 2rem;
+  color: var(--fi-text-mute);
+  margin-bottom: 6px;
+}
+.attachText.sapMText {
+  font-size: 0.8125rem;
+  color: var(--fi-text-sec);
+}
+.attachSubText.sapMText {
+  font-size: 0.75rem;
+  color: var(--fi-blue);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ── 스크롤 컨테이너 ────────────────────────────────── */
+.voucherPage .sapMScrollContainer {
+  background: var(--fi-gray-bg);
+}
+
+/* ── SelectDialog 헤더 그라디언트 ───────────────────── */
+.sapMSelectDialog .sapMDialogHeader {
+  background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important;
+  border-bottom: none !important;
+  min-height: 44px !important;
+}
+.sapMSelectDialog .sapMDialogHeader .sapMBar {
+  background: transparent !important;
+  border: none !important;
+}
+.sapMSelectDialog .sapMDialogTitle .sapMTitle,
+.sapMSelectDialog .sapMDialogTitle .sapMTitle .sapMTitleDomRef {
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+.sapMSelectDialog .sapMDialogHeader .sapMBarLeft .sapUiIcon,
+.sapMSelectDialog .sapMDialogHeader .sapMBarRight .sapUiIcon {
+  color: rgba(255,255,255,0.9) !important;
+}
+
+/* ── 반응형 ─────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .mainContent { padding: 14px 16px 28px; }
+  .balanceBar  { padding: 12px 18px; }
+  .balBlock    { padding: 0 14px; }
+  .balAmount.sapMText { font-size: 1.05rem; }
+}
+
+@media (max-width: 900px) {
+  .mainContent { padding: 10px 10px 20px; }
+  .balanceBar  { flex-wrap: wrap; padding: 10px 14px; gap: 8px; }
+  .balBlock    { padding: 0 10px; }
+  .headerWaersTag.sapMText { display: none; }
+}
+
+@media (max-width: 640px) {
+  .headerTitleBox .headerAppSub { display: none; }
+}

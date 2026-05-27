@@ -1,0 +1,170 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.teamprojectui501",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "46146238-c021-4a97-b26e-87699a46c2d2"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZCODE_CL301_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.tnt": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.teamprojectui501.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+      "routing": {
+    "config": {
+      "routerClass": "sap.m.routing.Router",
+      "viewType": "XML",
+      "viewPath": "code.cl3.teamprojectui501.view",
+      "controlId": "app",
+      "controlAggregation": "pages",
+      "async": true
+    },
+    "routes": [
+      {
+        "name": "RouteloginView",
+        "pattern": "",
+        "target": "TargetloginView"
+      },
+      {
+        "name": "RouteairlineView",
+        "pattern": "airline",
+        "target": "TargetairlineView"
+      },
+      {
+        "name": "RouteFlightView",
+        "pattern": "FlightView/{Carrid}",
+        "target": "TargetFlightView"
+      },
+      {
+        "name": "RouteThirdView",
+        "pattern": "ThirdView/{Carrid}/{Connid}/{Fldate}/{Price}/{Currency}/{Planetype}",
+        "target": "TargetThirdView"
+      },
+      {
+        "name": "ChartView",
+        "pattern": "ChartView",
+        "target": "TargetChartView"
+      }
+    ],
+
+    "targets": {
+      "TargetloginView": {
+        "id": "loginView",
+        "name": "loginView",
+        "viewId": "loginView",
+        "viewName": "loginView",
+        "controlAggregation": "pages",
+        "controlId": "app"
+      },
+      "TargetairlineView": {
+        "id": "airlineView",
+        "name": "airlineView",
+        "viewId": "airlineView",
+        "viewName": "airlineView",
+        "controlAggregation": "pages",
+        "controlId": "app"
+      },
+      "TargetFlightView": {
+        "id": "FlightView",
+        "name": "FlightView",
+        "viewId": "FlightView",
+        "viewName": "FlightView",
+        "controlAggregation": "pages",
+        "controlId": "app"
+      },
+      "TargetThirdView": {
+        "id": "ThirdView",
+        "name": "ThirdView",
+        "viewId": "ThirdView",
+        "viewName": "ThirdView",
+        "controlAggregation": "pages",
+        "controlId": "app"
+      },
+      "TargetChartView": {
+        "id": "ChartView",
+        "name": "ChartView",
+        "viewId": "ChartView",
+        "viewName": "ChartView",
+        "controlAggregation": "pages",
+        "controlId": "app"
+      }
+    }
+  },
+
+  "rootView": {
+    "viewName": "code.cl3.teamprojectui501.view.App",
+    "type": "XML",
+    "id": "App",
+    "async": true
+  }
+}
+
+}

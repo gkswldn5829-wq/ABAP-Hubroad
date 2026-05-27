@@ -1,0 +1,11 @@
+{
+    "ProfitSet" : [
+        {"Prdid": "ELE01", "Prdnm":"Electronic","Profit":"10.5", "Cost":"38000"},
+        {"Prdid": "ELE02", "Prdnm":"Vehicle","Profit":"12.5", "Cost":"26000"},
+        {"Prdid": "ELE03", "Prdnm":"Food","Profit":"30.23", "Cost":"100000"},
+        {"Prdid": "ELE04", "Prdnm":"Health","Profit":"5.21", "Cost":"25690"},
+        {"Prdid": "ELE05", "Prdnm":"Steel","Profit":"25.3", "Cost":"130000"}
+    ]
+
+
+}

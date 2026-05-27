@@ -1,0 +1,12 @@
+  {
+    "InputSet" : {
+      "value" : "JSON File",
+      "width" : "100px"
+    },
+    
+    "ButtonSet" : {
+      "text" : "File text",
+      "type" : "Accept"
+    }
+  
+  }

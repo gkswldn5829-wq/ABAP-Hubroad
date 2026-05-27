@@ -1,0 +1,22 @@
+{
+  "airlineset": [
+    { "code": "AA", "sales": "1543" },
+    { "code": "AC", "sales": "982"},
+    { "code": "AF", "sales": "1210" },
+    { "code": "AZ", "sales": "740"},
+    { "code": "BA", "sales": "1832" },
+    { "code": "FJ", "sales": "300"},
+    { "code": "CO", "sales": "1240" },
+    { "code": "DL", "sales": "1670" },
+    { "code": "AB", "sales": "650"},
+    { "code": "LH", "sales": "2010" },
+    { "code": "NG", "sales": "480"},
+    { "code": "JL", "sales": "1750" },
+    { "code": "NW", "sales": "960"},
+    { "code": "QF", "sales": "1320" },
+    { "code": "SA", "sales": "520"},
+    { "code": "SQ", "sales": "1470" },
+    { "code": "SR", "sales": "880"},
+    { "code": "UA", "sales": "1890" }
+  ]
+}

@@ -1,0 +1,94 @@
+<mvc:View
+    controllerName="code.cl3.teamprojectui501.controller.loginView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="false"
+>
+    <Page
+        showHeader="false"
+        class="loginPage"
+    >
+        <!-- 로그인 폼 컨테이너 -->
+        <l:VerticalLayout
+            width="100%"
+            class="loginContainer"
+        >
+            <!-- 로고 영역 -->
+            <l:VerticalLayout
+                width="100%"
+                class="logoSection"
+            >
+                <Image
+                    src="../image/SAP.png"
+                    width="100px"
+                    class="sapLogo"
+                />
+                    <Title
+                        text="SAP Airline Reservation system"
+                        level="H2"
+                        class="appTitle"
+                    />
+            </l:VerticalLayout>
+
+            <!-- 로그인 카드 -->
+            <VBox
+                alignItems="Center"
+                justifyContent="Center"
+                class="loginCardContainer"
+            >
+                <VBox class="loginCard">
+                    <!-- 로그인 헤더 -->
+                    <Title
+                        text="로그인"
+                        level="H3"
+                        class="loginTitle"
+                    />
+
+                    <!-- 로그인 폼 -->
+                    <f:SimpleForm class="loginForm">
+                        <f:content>
+                            <!-- 사용자 ID -->
+                            <Label
+                                text="사용자 ID"
+                                required="true"
+                                class="loginLabel"
+                            />
+                            <Input
+                                id="userIdInput"
+                                placeholder="사용자 ID 입력"
+                                width="100%"
+                                class="loginInput"
+                            />
+
+                            <!-- 비밀번호 -->
+                            <Label
+                                text="비밀번호"
+                                required="true"
+                                class="loginLabel"
+                            />
+                            <Input
+                                id="passwordInput"
+                                type="Password"
+                                placeholder="비밀번호 입력"
+                                width="100%"
+                                class="loginInput"
+                            />
+
+                            <!-- 로그인 버튼 -->
+                            <Button
+                                text="로그인"
+                                type="Emphasized"
+                                width="100%"
+                                press="onLogin"
+                                class="loginButton"
+                            />
+                        </f:content>
+                    </f:SimpleForm>
+                </VBox>
+            </VBox>
+        </l:VerticalLayout>
+    </Page>
+</mvc:View>

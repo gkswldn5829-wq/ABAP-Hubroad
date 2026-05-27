@@ -1,0 +1,78 @@
+<mvc:View controllerName="code.cl3.day6ui502.controller.Day6_ui5_02"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+>
+    <Page id="page" title="{i18n>title}">
+    <VBox >
+            <Panel >    
+                <t:Table rows="{name1>/kostarica}"
+                        selectionMode="None"
+                >
+                <t:extension>
+					<OverflowToolbar style="Standard">
+						<Title id="title" text="코스틱마스터?"/>
+					</OverflowToolbar>
+				</t:extension>
+                    <t:columns>
+                        <t:Column >
+                            <Label text="코스트1"/>
+                                <t:template>
+                                    <Text text="{name1>kost1}"/> 
+                                </t:template>
+                        </t:Column>
+                        <t:Column >
+                            <Label text="케이텍스트"/>
+                                <t:template>
+                                    <Text text="{name1>ktext}"/> 
+                                </t:template>
+                        </t:Column>
+                        <t:Column >
+                            <Label text="k스타"/>
+                                <t:template>
+                                    <Text text="{name1>kstar}"/> 
+                                </t:template>
+                        </t:Column>
+                    </t:columns>    
+                </t:Table>
+            </Panel>
+            <Button text="두번째 데이터 만들기" press="onPress"/>
+            <Panel >
+                <t:Table rows="{name2>/prcSet}"
+                            selectionMode="None"
+                >
+                    <t:extension>
+					    <OverflowToolbar style="Clear" >
+						    <Title id="asd" text="2번째 테이블"/>
+					    </OverflowToolbar>
+				    </t:extension>
+                        <t:columns>
+                            <t:Column >
+                                <Label text="PC"/>
+                                    <t:template>
+                                        <Text text= "{name2>prchr}"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="Gtext"/>
+                                    <t:template>
+                                        <Text text= "{name2>gtext}"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column >
+                                <Label text="Hsoot"/>
+                                    <t:template>
+                                        <Text text= "{name2>hsoot}"/>
+                                    </t:template>
+                            </t:Column>
+                            <t:Column width="12rem">
+                                <Label text="Supplier" />
+                            </t:Column>
+                        </t:columns>
+                </t:Table>
+            </Panel>
+    </VBox>
+    </Page>
+</mvc:View>

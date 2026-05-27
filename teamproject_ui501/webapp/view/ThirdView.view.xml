@@ -1,0 +1,188 @@
+<mvc:View
+    controllerName="code.cl3.teamprojectui501.controller.ThirdView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="false"
+>
+    <Page title="✈️ Flight Schedule" class="Vpage" showHeader="false">
+        <content>
+           
+                <l:VerticalLayout
+                    width="100%"
+                    class="loginContainer"
+                >
+                    <l:VerticalLayout
+                        width="100%"
+                        class="logoSection"
+                    >
+                        <Image
+                            src="../image/SAP.png"
+                            width="125px"
+                            class="sapLogo"
+                        />
+                        <Title
+                            text="✈️ Ticket Information"
+                            level="H2"
+                            class="appTitle2"
+                        />
+                       
+                            <Panel
+                                class="ticketPanel"
+                                width="60rem"
+                            >
+                                <VBox>
+                                    <!-- 상단 파란색 띠 -->
+                                    <HBox
+                                        class="topBar"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Center"
+                                    >
+                                        <Text
+                                            text="✈ SAPCODE Air"
+                                            class="topBarText"
+                                        />
+                                        <Text
+                                            text="2025-11-13"
+                                            class="topBarText"
+                                        />
+                                    </HBox>
+
+                                    <!-- 티켓 본문 -->
+                                    <HBox
+                                        class="ticketInner sapUiSmallMargin"
+                                        alignItems="Center"
+                                        justifyContent="SpaceBetween"
+                                    >
+                                        <!-- 왼쪽 바코드 영역 -->
+                                        <VBox
+                                            class="barcodeArea"
+                                            alignItems="Center"
+                                        >
+                                            <Image
+                                                src="../image/barcode.png"
+                                                width="80px"
+                                                height="150px"
+                                            />
+                                        </VBox>
+
+                                        <!-- 오른쪽 입력 영역 -->
+                                        <VBox
+                                            class="ticketInfo"
+                                            width="80%"
+                                        >
+                                            <!-- From - To 영역 -->
+                                            <HBox
+                                                justifyContent="SpaceBetween"
+                                                alignItems="Center"
+                                                class="fromToArea"
+                                            >
+                                                <VBox>
+                                                    <Label
+                                                        text="Airline"
+                                                        design="Bold"
+                                                    />
+                                                    <Input
+                                                        id="Carrid"
+                                                        editable="false"
+                                                    />
+                                                </VBox>
+
+                                                <!-- 화살표 + 비행기 아이콘 -->
+                                                <VBox
+                                                    class="arrowArea"
+                                                    justifyContent="Center"
+                                                    alignItems="Center"
+                                                >
+                                                    <Text
+                                                        text="➔"
+                                                        class="arrowIcon"
+                                                    />
+                                                </VBox>
+
+                                                <VBox>
+                                                    <Label
+                                                        text="Flight Connection"
+                                                        design="Bold"
+                                                    />
+                                                    <Input
+                                                        id="Connid"
+                                                        editable="false"
+                                                    />
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox
+                                                justifyContent="SpaceBetween"
+                                                alignItems="Center"
+                                                class="sapUiSmallMarginTop"
+                                            >
+                                                <VBox>
+                                                    <Label
+                                                        text="Price"
+                                                        design="Bold"
+                                                    />
+                                                    <Input
+                                                        id="Price"
+                                                        editable="false"
+                                                        width="5rem"
+                                                    />
+                                                </VBox>
+                                                <VBox>
+                                                    <Label
+                                                        text="Currency"
+                                                        design="Bold"
+                                                    />
+                                                    <Input
+                                                        id="Currency"
+                                                        editable="false"
+                                                        width="5rem"
+                                                    />
+                                                </VBox>
+                                                <VBox>
+                                                    <Label
+                                                        text="Aircraft Type"
+                                                        design="Bold"
+                                                    />
+                                                    <Input
+                                                        id="Planetype"
+                                                        editable="false"
+                                                    />
+                                                </VBox>
+                                                <VBox>
+                                                    <Label
+                                                        text="Flight Date"
+                                                        design="Bold"
+                                                    />
+                                                    <Input
+                                                        id="Fldate"
+                                                        editable="false"
+                                                    />
+                                                </VBox>
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+
+                                    <!-- 하단 파란색 띠 -->
+                                    <HBox
+                                        class="bottomBar"
+                                        justifyContent="Center"
+                                        alignItems="Center"
+                                    >
+                                        <Text
+                                            text=""
+                                            class="bottomBarText"
+                                        />
+                                    </HBox>
+                                </VBox>
+                            </Panel>
+                        
+                    </l:VerticalLayout>
+                </l:VerticalLayout>
+           
+        </content>
+    </Page>
+</mvc:View>

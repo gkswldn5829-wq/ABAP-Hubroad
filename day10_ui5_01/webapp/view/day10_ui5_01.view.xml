@@ -1,0 +1,68 @@
+<mvc:View controllerName="code.cl3.day10ui501.controller.day10_ui5_01"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified"
+    >
+    <Page id="page" title="{i18n>title}">
+        <Panel  >
+            <t:Table    id="table"
+                        selectionMode="MultiToggle"
+                        rows="{server1>/kostlSet}"
+                        filter="filterPrice"
+                        ariaLabelledBy="title"
+                        visibleRowCountMode="Auto"
+                        width="auto"
+            >
+                <t:extension>
+                    <OverflowToolbar style="Standard">
+                    
+                        <Title id="title" text="Products"/>
+
+                            <ToolbarSpacer />
+                                <Input id="word" placeholder="Code" width="10rem" />
+                                <Input id="word2" placeholder="Name" width="10rem" />
+                                <Button id="btn1" icon="sap-icon://search" type="Ghost" press="onSearch" />
+                            <ToolbarSeparator/>
+
+                        <SearchField
+                            placeholder="입력하세요"
+                            search="filterGlobally"
+                            width="285px"/>
+
+                    </OverflowToolbar>
+                </t:extension>
+
+                    <t:columns>
+                        <t:Column filterProperty="Code">
+                            <Label text="Code" />
+                            <t:template>
+                                <Text text="{server1>kost}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column filterProperty="Ktext">
+                            <Label text="Ktext" />
+                            <t:template>
+                                <Text text="{server1>ktext}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column filterProperty="Kstar">
+                            <Label text="Kstar" />
+                            <t:template>
+                                <Text text="{server1>kstar}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                    </t:columns>
+                    
+            </t:Table>
+
+        </Panel>
+
+    </Page>
+</mvc:View>

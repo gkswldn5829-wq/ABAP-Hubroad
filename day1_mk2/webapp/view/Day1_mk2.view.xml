@@ -1,0 +1,12 @@
+<mvc:View controllerName="academycl3.day1mk2.controller.Day1_mk2"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+
+        <VBox>
+       <Input id="text" placeholder="anything"/>
+       <Button text="2222" icon="sap-icon://accept" type="Emphasized" press="onpress"/>
+        </VBox>
+
+    </Page>
+</mvc:View>

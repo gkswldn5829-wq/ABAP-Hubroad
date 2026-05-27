@@ -1,0 +1,138 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "cl327ns.fiprojectmodulename",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.6",
+      "toolsId": "4816ad67-6169-445b-918f-11106de093cc"
+    },
+    "dataSources": {
+      "ZCDS_C3_FI_0005_CDS_VAN": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZCDS_C3_FI_0005_CDS_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZCDS_C3_FI_0005_CDS_VAN.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZCDS_C3_FI_0005_CDS/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZCDS_C3_FI_0005_CDS_VAN"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "CL3FIDoc-display": {
+          "semanticObject": "CL3FIDoc",
+          "action": "display",
+          "title": "전표 상세조회",
+          "signature": {
+            "parameters": {
+              "Belnr": { "required": false },
+              "Gjahr": { "required": false }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "cl327ns.fiprojectmodulename.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "cl327ns.fiprojectmodulename.view",
+        "async": true,
+        "viewPath": "cl327ns.fiprojectmodulename.view"
+      },
+      "routes": [
+        {
+          "name": "Routecl3_3_fi_project_0002",
+          "pattern": ":?query:",
+          "target": [
+            "Targetcl3_3_fi_project_0002"
+          ]
+        }
+      ],
+      "targets": {
+        "Targetcl3_3_fi_project_0002": {
+          "id": "cl3_3_fi_project_0002",
+          "name": "cl3_3_fi_project_0002"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "cl327ns.fiprojectmodulename.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

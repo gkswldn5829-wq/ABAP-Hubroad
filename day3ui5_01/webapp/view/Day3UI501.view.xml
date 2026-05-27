@@ -1,0 +1,22 @@
+<mvc:View controllerName="codecl3.day3ui501.controller.Day3UI501"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <VBox >
+            <HBox>
+                <Input  id ="text2" 
+                        autocomplete="false"
+                        showClearIcon="true" 
+                        placeholder="anything"/>
+                <Button text="second" type="Default" press="onButton()"/>
+            </HBox>
+            <HBox>
+                <Input id ="do"/>
+                <Button text="second" type="Default" press="onDo()"/>
+            </HBox>
+            <HBox>
+                <Button id="btrl" text="Button" icon="" width="200px" press="onChange()"/>
+            </HBox>
+        </VBox>
+    </Page>
+</mvc:View>

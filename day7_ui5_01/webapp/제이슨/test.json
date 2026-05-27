@@ -1,0 +1,27 @@
+{
+    "gsberSet" : [
+        {"Gsber": "BIZ001", "Gtext":"Erectronic", "Acfnr":"PR001", "KUN1":"CR001" },
+        {"Gsber": "BIZ012", "Gtext":"Mechine", "Acfnr":"PR002", "KUN1":"CR002" },
+        {"Gsber": "BIZ013", "Gtext":"Food", "Acfnr":"PR003", "KUN1":"CR003" },
+        {"Gsber": "BIZ025", "Gtext":"something", "Acfnr":"PR004", "KUN1":"CR004" },
+        {"Gsber": "BIZ074", "Gtext":"anything", "Acfnr":"PR005", "KUN1":"CR005" },
+        {"Gsber": "BIZ100", "Gtext":"nothing", "Acfnr":"PR006", "KUN1":"CR006" }
+    ],
+
+    "chartSet" : [
+        {"Cardid":"KA", "Price":45870},
+        {"Cardid":"LH", "Price":154252},
+        {"Cardid":"DA", "Price":22314},
+        {"Cardid":"GA", "Price":41235},
+        {"Cardid":"HA", "Price":7123}
+    ],
+
+    "ProfitSet" : [
+        {"Prdid" : "ELE01", "Prdnm" : "Erectronic", "Profit": 45205},
+        {"Prdid" : "ELE02", "Prdnm" : "Vehicle", "Profit": 51452},
+        {"Prdid" : "ELE03", "Prdnm" : "Food", "Profit": 250000},
+        {"Prdid" : "ELE04", "Prdnm" : "Health", "Profit": 52621},
+        {"Prdid" : "ELE05", "Prdnm" : "Steel", "Profit": 245000}
+    ]
+
+}

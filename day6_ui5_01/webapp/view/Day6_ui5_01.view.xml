@@ -1,0 +1,85 @@
+<mvc:View controllerName="code.cl3.day6ui501.controller.Day6_ui5_01"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    >
+    
+    <Page id="page" title="{i18n>title}">
+        <VBox >
+            <HBox >
+                <Panel  headerText="{fail>/panelSet/header}"
+                        width="{fail>/panelSet/width}"
+                        height="{fail>/panelSet/height}"
+                 >
+                 <Label text="{live>/labelSet/text}"
+                        width="{live>/labelSet/width}"
+                        vAlign="{live>/labelSet/vAlign}" 
+                 />
+                 <Input value="{live>/Inputset/value}"
+                        placeholder="{live>/Inputset/holder}"
+                        width="{live>/Inputset/width}"
+                        description="{live>/Inputset/desc}" 
+                 />
+                 <Button text="{live>/ButtonSet/text}"
+                        type="{live>/ButtonSet/type}"
+                        press="{live>/ButtonSet/press}"
+                        icon="{live>/ButtonSet/icon}"
+                 />
+                <Input  value="{file>/InputSet/value}"
+                        width="{file>/InputSet/width}"
+                 />
+                <Button text="{file>/ButtonSet/text}"
+                        type="{file>/ButtonSet/type}"
+                />
+                </Panel>
+            </HBox>
+            <Button text="Array"
+                    press="onArray()"
+            >
+            </Button>
+        </VBox>
+        <Panel  class="sapUiResponsiveMargin" width="auto">
+            <VBox >
+                <t:Table rows="{air>/airlineSet}"
+                         selectionMode="None"
+                         paste="onPaste"
+                         ariaLabelledBy="title"
+                >
+                    <t:extension>
+                        <OverflowToolbar style="Standard">
+                            <Title id="title" text="항공사 마스터"/>
+                        </OverflowToolbar>
+                    </t:extension>
+                    <t:columns>
+                        <t:Column width="12rem">
+						        <Label text="Airline code" />
+						    <t:template>
+						        <Text text="{air>Aircd}" wrapping="false" />
+						    </t:template>
+					    </t:Column>
+                        <t:Column width="12rem">
+						        <Label text="Airline name" />
+						    <t:template>
+						        <Text text="{air>Airline}" wrapping="false" />
+						    </t:template>
+					    </t:Column>
+                        <t:Column width="12rem">
+						        <Label text="Airline Url" />
+						    <t:template>
+						        <Text text="{air>Url}" wrapping="false" />
+						    </t:template>
+					    </t:Column>
+                        <t:Column width="12rem">
+						        <Label text="Airline Curr" />
+						    <t:template>
+						        <Text text="{air>Curr}" wrapping="false" />
+						    </t:template>
+					    </t:Column>
+                    </t:columns>
+                </t:Table>
+            </VBox>
+        </Panel>
+    </Page>
+</mvc:View>

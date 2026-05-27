@@ -1,0 +1,14 @@
+<mvc:View controllerName="code.cl3.precticeui506.controller.prectice_ui5_07"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page2" title="{i18n>title}">
+        <Panel >
+            <Text  text="두번쨰" />
+                <HBox >
+                    <Input id="Carrid" description="Airline code" width="9rem" fieldWidth="3rem"/>
+                    <Input id="Connid" description="Flight Connection Number" width="16rem" fieldWidth="4rem"/>
+                    <Button icon="sap-icon://accept" text="goThird" press="NextSet"/>
+                </HBox>
+        </Panel>
+    </Page>
+</mvc:View>

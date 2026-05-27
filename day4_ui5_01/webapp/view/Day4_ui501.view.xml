@@ -1,0 +1,48 @@
+<mvc:View controllerName="codecl3.day4ui501.controller.Day4_ui501"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <VBox >
+            <HBox >
+                <Label text="Number"/>
+                <Input id="text"/>
+            </HBox>
+            <HBox >
+                <Button text="입력체크" press="input_check"/>
+            </HBox>
+            <HBox >
+                <Button text="합산" type="Ghost" press="Sum"/>
+                <Input id="Q"/>
+                <Input id="result" enabled="false" />
+            </HBox>
+            <HBox >
+                <Button text="if 숫자체크" type="Emphasized" press="cont_check()" />
+            </HBox>
+            <HBox >
+                <Button text="Continue 숫자체크" type="Emphasized" press="Continue()" />
+            </HBox>
+            <HBox >
+                <Input id="input1" width="100px" liveChange="onChange" />
+                <Input id="input2" width="100px" />
+            </HBox>
+
+            <HBox >
+                <Input id="aval1" width="150px" />
+                <!-- <Input id="aval2" width="70px" /> -->
+                <Button text="Append" press="onAppend"/>
+                <Button text="Shift(Del)" press="onShift"/>
+                <Button text="pop(pop)" press="onPop"/>
+                <Button text="length" press="onLength"/>
+                <Button text="splice" press="onSplice"/>
+                <Input id="aval2" width="150px" />
+            </HBox>
+            <HBox >
+                <Input id="text1" width="50px"/>
+                <Input id="text2" width="50px"/>
+                <Input id="text3" width="50px"/>
+                <Button text="Something" press="spText" />
+                <Input id="text4" enabled="false" width="100px"/>
+            </HBox>
+        </VBox>
+    </Page>
+</mvc:View>

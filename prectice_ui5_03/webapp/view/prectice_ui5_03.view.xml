@@ -1,0 +1,113 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="code.cl3.precticeui503.controller.prectice_ui5_03"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:mc="sap.suite.ui.microchart"
+    >
+    <Page id="page" title="{i18n>title}" class="sapUiSmallMargin" >
+
+        <HBox >
+            <Panel  width="550px"
+                    height="500px"
+                    class="sapUiSmallMargin"
+            >
+                <viz:VizFrame   id="idVizFrame" 
+                                height='100%'
+                                width="100%" 
+                                vizType='line' 
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{/PaymentSet}" >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition   name="ID"
+                                                                value="{Carrid}"
+                                />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="가격"
+                                                            value="{Price}"
+                                />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+                    <viz:feeds>
+                        <viz.feeds:FeedItem id='valueAxisFeed'
+                                            uid="valueAxis"
+                                            type="Measure" 
+                                            values="가격"                
+                        />
+                        <viz.feeds:FeedItem id='categoryAxisFeed'
+                                            uid="categoryAxis"
+                                            type="Dimension"
+                                            values="ID"                    
+                        />
+                    </viz:feeds>
+                </viz:VizFrame>
+            </Panel>
+
+            <Panel  width="550px"
+                    height="500px"
+                    class="sapUiSmallMargin"
+            >
+                <viz:VizFrame   id="vizFrame2"
+                                height='100%' 
+                                width="100%" 
+                                vizType='pie'
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{/PaymentSet}" >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition   name="아이디"
+                                                                value="{Carrid}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition     name="가격"
+                                                                value="{Price}"/>
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="size"
+                                            type="Measure" 
+                                            values="가격"                
+                        />
+                        <viz.feeds:FeedItem uid="color"
+                                            type="Dimension"
+                                            values="아이디"                    
+                        />
+ 
+                    </viz:feeds>
+                </viz:VizFrame>
+            </Panel>
+        </HBox>
+        
+        <HBox >
+             <Panel  width="550px"
+                    height="500px"
+                    class="sapUiSmallMargin"
+            >
+                <FlexBox >
+                    <mc:InteractiveDonutChart segments="{/PaymentSet}" >
+                        <mc:segments>
+                            <mc:InteractiveDonutChartSegment    label="{Carrid}"
+                                                                value="{=parseFloat(${Price})}"                                
+                            />
+                        </mc:segments>
+                    </mc:InteractiveDonutChart>
+                </FlexBox>
+            </Panel>
+
+            <Panel  width="550px"
+                    height="500px"
+                    class="sapUiSmallMargin"
+            >
+            
+            </Panel>
+
+        </HBox>
+
+    </Page>
+</mvc:View>

@@ -1,0 +1,19 @@
+{
+  "name": "fiori-workspace",
+  "version": "1.0.0",
+  "description": "Workspace for Fiori projects",
+  "private": true,
+  "workspaces": [
+    "*/"
+  ],
+  "scripts": {
+    "install-all": "npm install",
+    "start": "echo 'Please navigate to specific project to start'",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
+  }
+}

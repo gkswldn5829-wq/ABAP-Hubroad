@@ -1,0 +1,336 @@
+/* Enter your custom styles here */
+/* 전체 페이지 배경 설정 */
+.loginPage {
+    background-image: url("../image/jj.jpg"); /* 비행기 배경 이미지 */
+    background-size: cover; /* 화면 꽉 채우기 */
+    background-position: center; /* 이미지를 중앙에 배치 */
+    background-repeat: no-repeat; /* 이미지 반복 안함 */
+    background-attachment: fixed; /* 스크롤 해도 배경 고정 */
+    min-height: 100vh; /* 최소높이를 화면 전체로 */
+    position: relative; /* 요소의 위치 관계 */
+}
+
+/* 배경 오버레이 효과 */
+.loginPage::before { /*로그인 페이지 이전에 나올 내용 */
+    content: ''; /* 가상 요소 생성 (빈 내용) */
+    position: absolute; /* 부모(.loginPage)를 기준으로 절대 위치 */
+    top: 0; /* 위에서 0px부터 */
+    left: 0; /* 왼쪽에서 0px부터 */
+    right: 0; /* 오른쪽에서 0px부터 */
+    bottom: 0; /* 아래에서 0px부터 */
+    background: rgba(0, 0, 0, 0.3); /* 검은색 30% 투명도 */
+    z-index: 0; /* 배경 레이어 (가장 뒤) */
+}
+
+/* 로그인 컨테이너 */
+.loginContainer { /*로그인 컨테이너의 전체 화면 설정값 */
+    min-height: 100vh; /* 최소 높이 화면 전체 */
+    display: flex; /* flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    position: relative; /* z-index 기준점 */
+    z-index: 1; /* 오버레이보다 위에 표시 */
+    padding: 2rem 1rem; /* 컨테이너 위아래 여백 2rem, 좌우 1rem여백 */
+}
+
+/* 로고 섹션 */
+.logoSection {
+    text-align: center; /* 텍스트 중앙 정렬 */
+    margin-bottom: 1rem; /* 아래 여백 2rem */
+    align-items: center; /* flex 아이템 중앙 정렬 */
+}
+
+.sapLogo {
+    margin-bottom: 1rem; /* 로고 아래 여백 */
+    margin-top: 3rem;
+}
+/*오버플로우툴바섹션*/
+.onOver{ 
+}
+
+/*버튼 스타일 섹션*/
+.onButton{
+}
+
+/*페이지 디자인 섹션*/
+.Vpage{
+    background-image: url("../image/jj.jpg"); /* 비행기 배경 이미지 */
+    background-size: cover; /* 화면 꽉 채우기 */
+    background-position: center; /* 이미지를 중앙에 배치 */
+    background-repeat: no-repeat; /* 이미지 반복 안함 */
+    background-attachment: fixed; /* 스크롤 해도 배경 고정 */
+    min-height: 100vh; /* 최소높이를 화면 전체로 */
+    position: relative; /* 요소의 위치 관계 */
+    margin-bottom: 1rem;
+}
+
+
+/*테이블 섹션*/
+.Vtable{
+    min-height: 60vh; /* 최소 높이 화면 전체 */
+    display: flex; /* flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    position: relative; /* z-index 기준점 */
+    z-index: 1; /* 오버레이보다 위에 표시 */
+    padding: 1rem auto; /* 컨테이너 위아래 여백 2rem, 좌우 1rem여백 */
+}
+.Vtable2{
+    min-height: 60vh; /* 최소 높이 화면 전체 */
+    display: flex; /* flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    position: relative; /* z-index 기준점 */
+    z-index: 1; /* 오버레이보다 위에 표시 */
+    padding: 1rem auto; /* 컨테이너 위아래 여백 2rem, 좌우 1rem여백 */
+}
+
+.appTitle {
+    color: white; /* 텍스트 흰색 */
+    font-weight: 1000; /* 두꺼운폰트 (숫자로 크기 부여함) */
+    font-size: 25px; ;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 텍스트 그림자 (가독성↑) */
+}
+.appTitle2 {
+    color: white; /* 텍스트 흰색 */
+    font-weight: 1000; /* 두꺼운폰트 (숫자로 크기 부여함) */
+    font-size: 35px; ;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 텍스트 그림자 (가독성↑) */
+    margin-bottom: 30px;
+}
+
+/* 로그인 카드 컨테이너 */
+.loginCardContainer {
+    width: 100%; /* 부모 너비 100% */
+    max-width: 420px;  /* 최대 너비 420px (너무 안 넓게) */
+}
+
+/* 로그인 카드 */
+.loginCard {
+    background: rgba(255, 255, 255, 0.95); /* 로그인 배경 색상 */
+    backdrop-filter: blur(10px); /* 블러처리되는 필터 색상 */
+    border-radius: 8px; /*  */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* 박스 그림자 농도 */
+    padding: 2.5rem 2rem; /* 로그인창 너비 여백 */
+    width: 100%; /* 로그인 화면 너비 */
+}
+
+/* 로그인 타이틀 */
+.loginTitle { 
+    text-align: center; /*  */
+    margin-bottom: 2rem;
+    color: #0070f2;
+    font-weight: 600;
+}
+
+/* 로그인 폼 */
+.loginForm {
+    margin-bottom: 1.5rem;
+}
+.loginForm2{
+    margin-bottom: 15px;
+    padding-left:3rem;
+    padding-right:3rem;
+}
+
+.loginForm .sapUiForm {
+    background: transparent;
+}
+
+/* 레이블 스타일 */
+.loginLabel {
+    font-weight: 500;
+    color: #32363a;
+    margin-bottom: 0.5rem;
+}
+
+
+
+/* 입력 필드 */
+.loginInput {
+    margin-bottom: 1.5rem;
+}
+
+
+
+.loginInput .sapMInputBaseInner {
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+}
+.margin2{
+    margin-right: 3rem;
+    margin-bottom: 1rem;
+}
+.margin4{
+    margin-right: 3rem;
+}
+.총margin{
+    margin: 1rem;
+    margin-left: 30px;
+}
+
+.loginInput .sapMInputBaseInner:focus {
+    border-color: #0070f2;
+    box-shadow: 0 0 0 2px rgba(0, 112, 242, 0.1);
+}
+
+/* 로그인 버튼 */
+.loginButton {
+    margin-top: 1rem;
+    height: 3rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.loginButton .sapMBtn {
+    background: #0070f2;
+}
+
+.loginButton .sapMBtn:hover {
+    background: #005fb8;
+}
+
+/* 로그인 옵션 */
+.loginOptions {
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+    align-items: center;
+}
+
+.rememberMe .sapMCb {
+    font-size: 0.875rem;
+    color: #6a6d70;
+}
+
+.forgotPassword .sapMLnk {
+    font-size: 0.875rem;
+    color: #0070f2;
+    text-decoration: none;
+}
+
+.forgotPassword .sapMLnk:hover {
+    text-decoration: underline;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .loginCard {
+        padding: 2rem 1.5rem;
+    }
+    
+    .loginContainer {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .loginCard {
+        padding: 1.5rem 1rem;
+    }
+    
+    .loginButton {
+        height: 2.75rem;
+    }
+}
+.ticketPanel {
+  border-radius: 16px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* 상단 파란 띠 */
+.topBar {
+  background: #0059c1;
+  padding: 0.8rem 1.2rem;
+  font-weight: bold;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.topBarText:first-child {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+}
+.topBarText:last-child {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* 본문 */
+.ticketInner {
+  background: #ffffff;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* 왼쪽 바코드 영역 */
+.barcodeArea {
+  border-right: 2px dashed #0059c1;
+  padding-right: 1rem;
+  align-self: stretch;
+  justify-content: center;
+}
+.barcodeImage {
+  filter: grayscale(100%);
+}
+
+/* 오른쪽 내용 */
+.ticketInfo {
+  flex: 1;
+}
+
+/* From - To 화살표 영역 */
+.fromToArea {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arrowArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #0059c1;
+}
+
+.arrowIcon {
+  font-size: 1.8rem;
+  margin-bottom: 0.2rem;
+}
+
+/* 입력창 스타일 */
+.ticketPanel .sapMInputBase {
+  border: 1px solid #0059c1;
+  border-radius: 6px;
+}
+.ticketPanel .sapMInputBaseInner {
+  text-align: center;
+  color: #003b99;
+  font-weight: bold;
+}
+
+/* 하단 띠 */
+.bottomBar {
+  background: #0059c1;
+  color: white;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.bottomBarText {
+  color: white;
+  opacity: 0.9;
+}

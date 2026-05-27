@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: zc3fijiwoohan.cl3fiproject0004
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertErrors: true # HTTPS 백엔드(44300) 인증서 오류 무시
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - path: /sap/bc/ui2/start_up
+            url: https://bgissap1.bgissap.co.kr:44300
+          - path: /sap
+            url: http://bgissap1.bgissap.co.kr:8000
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        flp:
+          theme: sap_horizon
+        # ★ 명시적 앱 등록 — 이 설정이 없으면 fiori-tools-preview가 상위/인접
+        # 디렉터리의 다른 manifest.json(0005 등)도 스캔하여 잘못된 앱을 표시할 수 있음
+        apps:
+          - local:
+              id: zc3fijiwoohan.cl3fiproject0004
+              intent:
+                object: app
+                action: preview

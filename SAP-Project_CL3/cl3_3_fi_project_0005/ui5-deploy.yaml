@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: zc33approval.cl33fiproject0005
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: http://bgissap1.bgissap.co.kr:8000/
+        app:
+          name: ZCL3_3_APPROVAL
+          description: 전표결재
+          package: ZPC3FI
+          transport: EFXK901695
+          overwrite: true
+        exclude:
+          - /test/

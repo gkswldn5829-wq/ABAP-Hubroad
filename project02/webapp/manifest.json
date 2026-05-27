@@ -1,0 +1,99 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.project02",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "b1e3d5a5-e4ed-46b0-92e2-70f55289c267"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.38",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.project02.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        },
+        { "uri": "css/dashboard.css" }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "code.cl3.project02.view",
+        "async": true,
+        "viewPath": "code.cl3.project02.view"
+      },
+      "routes": [
+        {
+          "name": "RouteProject_02",
+          "pattern": ":?query:",
+          "target": [
+            "TargetProject_02"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetProject_02": {
+          "id": "Project_02",
+          "name": "Project_02"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "code.cl3.project02.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.precticeui506",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "af6da5db-8a6c-4930-9603-ae2bdcd6d4dd"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.precticeui506.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "flip",
+        "type": "View",
+        "viewType": "XML",
+        "path": "code.cl3.precticeui506.view",
+        "async": true,
+        "viewPath": "code.cl3.precticeui506.view"
+      },
+      "routes": [
+        {
+          "name": "Routeprectice_ui5_06",
+          "pattern": ":?query:",
+          "target": [
+            "Targetprectice_ui5_06"
+          ]
+        },
+        {
+          "name": "Routeprectice_ui5_07",
+          "pattern": "second",
+          "target": [
+            "Targetprectice_ui5_07"
+          ]
+        },
+        {
+          "name": "Routeprectice_ui5_08",
+          "pattern": "Third/{Carrid}/{Connid}",
+          "target": [
+            "Targetprectice_ui5_08"
+          ]
+        }
+      ],
+      "targets": {
+        "Targetprectice_ui5_06": {
+          "id": "prectice_ui5_06",
+          "name": "prectice_ui5_06"
+        },
+        "Targetprectice_ui5_07": {
+          "id": "prectice_ui5_07",
+          "name": "prectice_ui5_07"
+        },
+        "Targetprectice_ui5_08": {
+          "id": "prectice_ui5_08",
+          "name": "prectice_ui5_08"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "code.cl3.precticeui506.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

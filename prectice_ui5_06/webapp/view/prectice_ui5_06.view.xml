@@ -1,0 +1,9 @@
+<mvc:View controllerName="code.cl3.precticeui506.controller.prectice_ui5_06"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <Panel >
+            <Button text="Go second" press="goSecond" />
+        </Panel>
+    </Page>
+</mvc:View>

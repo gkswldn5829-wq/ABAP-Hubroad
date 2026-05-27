@@ -1,0 +1,655 @@
+/* ================================================================
+ * 전표 결재 통제 모듈 — Custom CSS
+ * 프로그램 : cl3_3_fi_project_0005
+ * 디자인   : 0001~0004 재무 화면과 동일한 디자인 시스템
+ * ================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [0] 공용 그라디언트 헤더 (0001~0004 공통)
+ * ══════════════════════════════════════════════════════════════ */
+.fiPage > .sapMPageHeader { overflow: visible !important; }
+.fiPage .sapMIBar-CTX     { overflow: visible !important; }
+.fiAppHeader.sapMBar {
+    background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 12px rgba(0,64,139,0.35);
+    height: 56px !important;
+    min-height: 56px !important;
+    overflow: visible !important;
+    box-sizing: border-box;
+}
+.fiAppHeader.sapMBar .sapMBarSection,
+.fiAppHeader.sapMBar .sapMBarPH {
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+}
+.fiAppHeader.sapMBar .sapMBarLeft.sapMBarSection { max-width: 70% !important; }
+.headerAppIcon.sapUiIcon {
+    font-size: 1.25rem;
+    color: #7ec8ff;
+    margin: 0 8px 0 4px;
+    flex-shrink: 0;
+}
+.headerTitleBox.sapMHBox {
+    min-width: 0;
+    overflow: hidden;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: nowrap;
+    position: relative;
+    top: 6px;
+}
+.headerAppTitle.sapMTitle {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.headerAppTitle.sapMTitle .sapMTitleText { color: #ffffff; }
+.headerAppSub.sapMText {
+    font-size: 0.6875rem;
+    color: #93b8e0;
+    white-space: nowrap;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.aprHeaderRight.sapMHBox  { gap: 10px; align-items: center; }
+.aprBadge.sapMObjectStatus { font-size: 0.7rem !important; }
+.aprUserIcon.sapUiIcon { font-size: 1rem !important; color: rgba(255,255,255,0.78) !important; }
+.aprUserText.sapMText  { font-size: 0.75rem !important; color: rgba(255,255,255,0.88) !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [1] 페이지 전체 레이아웃
+ * ══════════════════════════════════════════════════════════════ */
+.approvalMainPage { background: #F0F2F5; }   /* 조금 더 짙은 배경으로 카드 대비 강조 */
+.approvalMainPage .sapMPageSub,
+.approvalMainPage .sapMPage-Cont {
+    overflow: hidden !important;
+    height: 100% !important;
+    background: #F0F2F5;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [2] Splitter 레이아웃
+ * ══════════════════════════════════════════════════════════════ */
+.approvalSplitter { width: 100%; height: 100% !important; }
+.approvalSplitter.sapUiLoSplitter > .sapUiLoSplitterContent {
+    overflow: hidden !important;
+    height: 100% !important;        /* ← 자식 VBox로 높이 전달 */
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [3] LEFT PANEL : 전표 목록
+ * ══════════════════════════════════════════════════════════════ */
+.listPanel.sapMFlexBox {
+    background: #FFFFFF;
+    border-right: 2px solid #C0D0F0;
+    overflow: hidden !important;
+    height: 100% !important;
+    box-shadow: 2px 0 8px rgba(0,64,139,0.08);
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* ── 목록 헤더 : bsHead 파란 그라디언트 */
+.listHead.sapMTB {
+    background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 6px rgba(0,80,179,0.30);
+    min-height: 44px !important;
+    padding: 0 0.875rem !important;
+}
+/* 스몰 타이틀 — balLabel과 동일한 스타일로 통일 */
+.listTitle.sapMTitle {
+    font-size: 0.688rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #FFFFFF !important;
+}
+.listTitle.sapMTitle .sapMTitleText { color: #FFFFFF !important; }
+.cntBadge.sapMObjectStatus { font-size: 0.7rem !important; }
+
+/* ── 검색창 */
+.listSearch.sapMSF {
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid #C0D0F0 !important;
+    margin: 0 !important;
+    background: #F5F8FF !important;
+}
+
+/* ── 목록 ScrollContainer */
+.listScrollArea.sapMScrollCont {
+    flex: 1 !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 140px) !important;  /* 100vh - 앱헤더(56) - 리스트헤더(44) - 검색창(40) */
+}
+
+/* ── 전표 목록 */
+.approvalList.sapMList {
+    border-bottom: none !important;
+}
+
+/* ── 전표 카드 */
+.voucherItem.sapMLIB {
+    padding: 0.75rem 0.875rem !important;
+    border-left: 4px solid transparent !important;
+    border-bottom: 1px solid #EEF2F8 !important;
+    transition: background 0.1s, border-left-color 0.15s !important;
+    cursor: pointer !important;
+    background: #FFFFFF !important;
+}
+.voucherItem.sapMLIB:hover {
+    background: #F0F6FF !important;
+    border-left-color: #0070D2 !important;
+}
+.voucherItem.sapMLIBSelected,
+.voucherItem.sapMLIB.sapMLIBSelected {
+    border-left-color: #0070D2 !important;
+    background: #E8F0FF !important;
+}
+.voucherItem .sapMObjLTitle {
+    font-family: Consolas,"Lucida Console","Courier New",monospace !important;
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+    color: #00177C !important;
+}
+.voucherItem .sapMObjLNumber {
+    font-family: Consolas,"Lucida Console","Courier New",monospace !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #0070D2 !important;
+}
+.voucherItem .sapMObjLIntro {
+    font-size: 0.75rem !important;
+    color: #6A6D70 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [4] RIGHT PANEL 컨테이너
+ * ★ detailContainer는 항상 visible → display:flex !important 안전
+ * ══════════════════════════════════════════════════════════════ */
+.detailContainer.sapMFlexBox {
+    flex: 1 !important;
+    overflow: hidden !important;
+    height: 100% !important;
+    display: flex !important;          /* ★ 항상 visible이라 sapUiHidden 충돌 없음 */
+    flex-direction: column !important;
+    background: #F0F2F5;
+}
+
+/* ── Empty State
+   ※ visible 바인딩 대상 → display !important 절대 금지 */
+.emptyStateBox.sapMFlexBox {
+    flex: 1 !important;
+    background: #FFFFFF;
+    gap: 0.75rem;
+}
+.emptyIcon.sapUiIcon { color: #BFBFBF !important; opacity: 0.5; }
+.emptyTitle.sapMTitle {
+    color: #6A6D70 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+}
+.emptyDesc.sapMText {
+    font-size: 0.8125rem !important;
+    color: #AEAEAE !important;
+    text-align: center;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [5] RIGHT PANEL : 상세 뷰
+ * ══════════════════════════════════════════════════════════════ */
+/* ★ display:flex / flex-direction은 절대 !important로 쓰지 말 것
+   SAP UI5 visible=false → .sapUiHidden { display:none !important }  (특이도 0,1,0)
+   만약 여기서 display:flex !important 를 쓰면 특이도 0,2,0 으로 이겨서
+   visible=false여도 패널이 항상 표시됨 — VBox는 자체 CSS로 이미 flex 설정됨 */
+.detailPanel.sapMFlexBox {
+    flex: 1 !important;
+    overflow: hidden !important;
+    background: #F0F2F5;
+    flex-direction: column;   /* !important 없음 — sapUiHidden이 우선할 수 있도록 */
+}
+
+/* ── 상세 툴바 : 0004 스타일 프리미엄 블루 그라데이션 */
+.detailHead.sapMTB {
+    background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 12px rgba(0,64,139,0.3) !important;
+    min-height: 56px !important;
+    padding: 0 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.dhTitleBlock.sapMFlexBox { gap: 4px; }
+.dhBelnr.sapMTitle {
+    font-size: 1.0625rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: -0.01em;
+}
+.dhBelnr.sapMTitle .sapMTitleText { color: #ffffff !important; }
+.dhMetaText.sapMText {
+    font-size: 0.75rem !important;
+    color: #93b8e0 !important;
+    font-weight: 500;
+}
+
+/* ── 상태별 프리미엄 배지 스타일 (0004 기반 최종 정밀 조정) ── */
+.statBadge.sapMObjectStatus {
+    padding: 2px 12px !important;
+    border-radius: 6px !important;
+    font-size: 0.725rem !important;
+    font-weight: 800 !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    text-transform: uppercase;
+}
+
+/* 결재대기 (Warning) : 강제 솔리드 오렌지 — UI5 버전 무관하게 선명하게 표시 */
+.statBadge.sapMObjectStatus.sapMObjStatusWarn,
+.statBadge.sapMObjectStatus[class*="Warn"] {
+    background: #E05500 !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.35) !important;
+    opacity: 1 !important;
+}
+.statBadge.sapMObjectStatus.sapMObjStatusWarn .sapMObjStatusText,
+.statBadge.sapMObjectStatus[class*="Warn"] .sapMObjStatusText {
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4) !important;
+    opacity: 1 !important;
+    letter-spacing: 0.04em !important;
+}
+.statBadge.sapMObjectStatus.sapMObjStatusWarn .sapMObjStatusIcon,
+.statBadge.sapMObjectStatus[class*="Warn"] .sapMObjStatusIcon {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* 승인완료 (Success) : 유리 질감 (진한 초록 블록 제거) */
+.statBadge.sapMObjectStatus.sapMObjStatusSuccess {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(4px);
+}
+.statBadge.sapMObjectStatus.sapMObjStatusSuccess .sapMObjStatusText { 
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* 반려 (Error) : 유리 질감 (진한 빨간 블록 제거) */
+.statBadge.sapMObjectStatus.sapMObjStatusError {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(4px);
+}
+.statBadge.sapMObjectStatus.sapMObjStatusError .sapMObjStatusText { 
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* ── 섹션 패널 헤더 : 0004 스타일 프리미엄 블루 그라데이션 타이틀 ── */
+.detailSection.sapMPanel > .sapMPanelHdr {
+    background: linear-gradient(135deg, #003d87 0%, #0056bc 50%, #0064d9 100%) !important;
+    border-bottom: 2px solid rgba(255,255,255,0.1) !important;
+    min-height: 2.5rem !important;
+    padding: 0 1.25rem !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 패널 헤더 텍스트 : 선명한 화이트 및 0004 스타일 폰트 정렬 */
+.detailSection.sapMPanel > .sapMPanelHdr .sapMPanelHdrText,
+.detailSection.sapMPanel > .sapMPanelHdr .sapMTitle,
+.detailSection.sapMPanel > .sapMPanelHdr span,
+.detailSection.sapMPanel > .sapMPanelHdr .sapUiIcon {
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* 확장/축소 아이콘 색상 화이트로 통일 */
+.detailSection.sapMPanel > .sapMPanelHdr .sapMPanelExpandablePart {
+    color: #ffffff !important;
+}
+
+/* ── 툴바 액션 버튼 : 유리 질감 프리미엄 디자인 (0004 스타일) */
+.btnReject.sapMBtn .sapMBtnInner,
+.btnApprove.sapMBtn .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+    font-weight: 700 !important;
+}
+.btnReject.sapMBtn .sapMBtnInner:hover,
+.btnApprove.sapMBtn .sapMBtnInner:hover {
+    background: rgba(255, 255, 255, 0.28) !important;
+    transform: translateY(-1px);
+}
+.btnReject.sapMBtn .sapMBtnIcon,
+.btnApprove.sapMBtn .sapMBtnIcon { color: #FFFFFF !important; }
+
+
+/* ── 상세 스크롤 영역 */
+.detailScrollArea.sapMScrollCont {
+    flex: 1 !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 112px) !important;  /* 100vh - 앱헤더(56) - 상세헤더(56) */
+}
+.detailBodyInner.sapMFlexBox {
+    padding: 0.875rem 1rem 2rem;
+    gap: 0;
+    width: 100%;                    /* 수평 넘침 방지 */
+    box-sizing: border-box;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [6] 타임라인 패널 — detailSection 카드와 동일한 외형 적용
+ * ══════════════════════════════════════════════════════════════ */
+.tlPanel.sapMPanel {
+    margin-bottom: 0.75rem !important;
+    border-radius: 4px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #D9D9D9 !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 4px rgba(0,64,139,0.07);
+}
+.tlPanel.sapMPanel > .sapMPanelContent { padding: 0.875rem 1.25rem !important; }
+.tlPanel.sapMPanel > .sapMPanelHdr     { display: none !important; }
+
+.statusTimeline.sapMFlexBox { gap: 0.5rem; }
+.tlStep.sapMFlexBox {
+    opacity: 0.22;
+    transition: opacity 0.2s;
+    min-width: 72px;
+    gap: 0.35rem;
+}
+
+/* 타임라인 숫자 원형 */
+.tlIconText.sapMText {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    border-radius: 50% !important;
+    border: 2px solid #D9D9D9 !important;
+    background: #F5F5F5 !important;
+    color: #AEAEAE !important;
+    font-family: Consolas,"Courier New",monospace !important;
+    font-size: 0.688rem !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    box-sizing: border-box !important;
+}
+/* 타임라인 라벨 — balLabel 스타일 통일 */
+.tlLabel.sapMText {
+    font-size: 0.688rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #AEAEAE !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+/* ── 활성 단계 : 솔리드 채움 색상 (투명 제거) */
+.tlStep.tlActive { opacity: 1 !important; }
+
+/* s01 결재대기 — 솔리드 주황 */
+.tlStep.tlActive.s01 .tlIconText {
+    border-color: #e76500 !important;
+    background: #e76500 !important;
+    color: #FFFFFF !important;
+}
+.tlStep.tlActive.s01 .tlLabel { color: #e76500 !important; }
+
+/* s02 승인완료 — 솔리드 초록 */
+.tlStep.tlActive.s02 .tlIconText {
+    border-color: #107E3E !important;
+    background: #107E3E !important;
+    color: #FFFFFF !important;
+}
+.tlStep.tlActive.s02 .tlLabel { color: #107E3E !important; }
+
+/* s05 반려 — 솔리드 빨강 */
+.tlStep.tlActive.s05 .tlIconText {
+    border-color: #BB0000 !important;
+    background: #BB0000 !important;
+    color: #FFFFFF !important;
+}
+.tlStep.tlActive.s05 .tlLabel { color: #BB0000 !important; }
+
+/* 연결선 */
+.tl-connector {
+    flex: 1; height: 2px;
+    background: linear-gradient(90deg, #C0D0F0 0%, #E0E8F8 100%);
+    min-width: 20px;
+    margin-top: -1.25rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [7] 섹션 카드 (공통) — 0002 스타일 커스텀 타이틀 적용
+ * ══════════════════════════════════════════════════════════════ */
+.detailSection.sapMFlexBox {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0.75rem !important;
+    border-radius: 4px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #D9D9D9 !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 4px rgba(0,64,139,0.07);
+}
+
+/* 섹션 헤더 — 0002 .bsHead 동일 그라디언트 스타일 */
+.bsHead.sapMHBox {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important;
+    padding: 8px 14px !important;
+    box-shadow: 0 2px 6px rgba(0, 80, 179, 0.28) !important;
+    min-height: 2.25rem !important;
+}
+.bsHeadText.sapMText,
+.bsHeadText.sapMText > span {
+    font-size: 0.688rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* 섹션 본문 패딩 */
+.sectionBody.sapMFlexBox {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.875rem !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [8] 헤더 필드 그리드
+ * ══════════════════════════════════════════════════════════════ */
+.headerFieldGrid { margin-bottom: 0.75rem !important; }
+.fieldItem.sapMFlexBox { gap: 0.2rem; padding: 0.25rem 0; }
+.fieldFull.sapMFlexBox {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #EEF2F8;
+}
+
+/* ── 스몰 타이틀 : balLabel과 완전히 동일한 CSS */
+.fieldLabel.sapMLabel,
+.balLabel.sapMLabel {
+    font-size: 0.688rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #6A6D70 !important;
+}
+
+.fieldValue.sapMText {
+    font-size: 0.8125rem !important;
+    color: #32363A !important;
+    font-weight: 500 !important;
+}
+
+/* 모노스페이스 */
+.mono.sapMText,
+.mono.sapMLabel,
+.mono.sapMObjectNumberNumber {
+    font-family: Consolas,"Lucida Console","Courier New",monospace !important;
+}
+.muted.sapMText { color: #6A6D70 !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [9] 차대변 균형 검증 바
+ * ══════════════════════════════════════════════════════════════ */
+.balanceBar.sapMFlexBox {
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    padding: 0.25rem 0;
+    align-items: center;
+}
+.balItem.sapMFlexBox { gap: 0.25rem; }
+/* balLabel은 [8]에서 fieldLabel과 함께 통합 정의됨 */
+
+/* 차변 (파란색) */
+.debitAmt.sapMObjectNumber .sapMObjectNumberNumber {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #0070D2 !important;
+    font-family: Consolas,"Lucida Console",monospace !important;
+}
+/* 대변 (빨간색) */
+.creditAmt.sapMObjectNumber .sapMObjectNumberNumber {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #BB0000 !important;
+    font-family: Consolas,"Lucida Console",monospace !important;
+}
+.balSep.sapMText {
+    font-size: 1.5rem !important;
+    color: #C0D0F0 !important;
+    font-weight: 300 !important;
+    padding: 0 0.25rem;
+}
+.balStatus.sapMObjectStatus { font-size: 0.8125rem !important; font-weight: 700 !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [10] 라인 아이템 테이블 — fiDocTable 스타일 통일
+ * ══════════════════════════════════════════════════════════════ */
+.itemsTable.sapMTable { border: none; }
+
+/* 테이블 헤더 — #F0F4F8 + 파란 하단선 (0001~0004 동일) */
+.itemsTable .sapMListTblHeaderCell {
+    background: #F0F4F8 !important;
+    border-bottom: 2px solid #0070D2 !important;
+    padding: 7px 10px !important;
+}
+/* 테이블 헤더 스몰 타이틀 — balLabel 동일 */
+.itemsTable .sapMListTblHeaderCell .sapMLabel,
+.itemsTable .sapMListTblHeaderCell .sapMText,
+.itemsTable .sapMListTblHeaderCell span {
+    font-size: 0.688rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #32363A !important;
+}
+.itemsTable .sapMLIBContent { padding: 0 !important; }
+.itemsTable td.sapMListTblCell {
+    padding: 7px 10px !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #F0F0F0 !important;
+    font-size: 0.8125rem !important;
+    color: #32363A !important;
+}
+/* 짝수 행 */
+.itemsTable .sapMListTblRow:nth-child(even) td { background: #FAFBFF; }
+/* 마지막 행 선 제거 */
+.itemRow.sapMLIB:last-child td { border-bottom: none !important; }
+/* hover */
+.itemRow.sapMLIB:hover td,
+.itemRow.sapMLIB.sapMLIBHovered td {
+    background: #F0F6FF !important;
+    transition: background .12s;
+}
+.itemsTable .sapMObjectNumber { text-align: right !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [11] 결재 의견 / 하단 액션 버튼
+ * ══════════════════════════════════════════════════════════════ */
+.commentContent.sapMFlexBox  { gap: 0.75rem; }
+.commentInput.sapMTextArea   { border-radius: 4px !important; font-size: 0.8125rem !important; resize: none !important; }
+.commentActions.sapMFlexBox  { gap: 0.5rem; margin-top: 0.25rem; }
+
+/* ── 하단 결재 의견 버튼 — 동일 솔리드 색상 통일 */
+/* type="Reject" → SAP이 .sapMBtnReject 클래스를 렌더링하므로 해당 셀렉터 사용 */
+.actionBtn.sapMBtn.sapMBtnReject .sapMBtnInner,
+.actionBtn.sapMBtn[data-sap-ui-type="sap.m.Button"][class*="Reject"] .sapMBtnInner {
+    background: #BB0000 !important;
+    color: #FFFFFF !important;
+    border-color: #990000 !important;
+    border-radius: 4px !important;
+}
+.actionBtn.sapMBtn.sapMBtnReject .sapMBtnInner:hover { background: #990000 !important; }
+.actionBtn.sapMBtn.sapMBtnReject .sapMBtnIcon { color: #FFFFFF !important; }
+
+.actionBtn.sapMBtn.sapMBtnAccept .sapMBtnInner {
+    background: #107E3E !important;
+    color: #FFFFFF !important;
+    border-color: #0A5E2E !important;
+    border-radius: 4px !important;
+}
+.actionBtn.sapMBtn.sapMBtnAccept .sapMBtnInner:hover { background: #0A5E2E !important; }
+.actionBtn.sapMBtn.sapMBtnAccept .sapMBtnIcon { color: #FFFFFF !important; }
+.actionBtn.sapMBtn { border-radius: 4px !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [12] 반응형
+ * ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .listPanel.sapMFlexBox { width: 300px !important; }
+    .dhMeta.sapMFlexBox    { flex-wrap: wrap !important; }
+}
+@media (max-width: 768px) {
+    .headerAppSub.sapMText { display: none !important; }
+}

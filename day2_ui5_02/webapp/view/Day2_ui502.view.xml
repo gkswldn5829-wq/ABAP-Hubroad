@@ -1,0 +1,23 @@
+<mvc:View controllerName="codecl3.day2ui502.controller.Day2_ui502"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <VBox >
+            <HBox>
+                <Label text="Horizon"/>
+                <Input id ="h1"/>
+            </HBox>
+            <HBox>
+                <Label text="Vertical"/>
+                <Input id ="v1"/>
+            </HBox>
+            <HBox>
+                <Label text="Area"/>
+                <Input id ="area"/>
+            </HBox>
+                <Button text="Calcul" press="vPress"/>
+                <Button text="gugudan" press="gugu"/>
+                <Button text="jaja" press="jaja"/>
+        </VBox>
+    </Page>
+</mvc:View>

@@ -1,0 +1,744 @@
+/* ================================================================
+ * 재무상태표 BS — Custom CSS v3
+ * 프로그램 : CL3_Fiori_FI_Project_0001
+ * 화면     : 재무상태표 (Balance Sheet) 조회 화면
+ * 수정 시  : 아래 섹션 번호를 참고하여 해당 구역만 수정하세요.
+ * ================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [0] 공용 그라디언트 헤더 (0001~0004 공통)
+ * ══════════════════════════════════════════════════════════════ */
+.fiPage > .sapMPageHeader { overflow: visible !important; }
+.fiPage .sapMIBar-CTX     { overflow: visible !important; }
+.fiAppHeader.sapMBar {
+  background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 12px rgba(0, 64, 139, 0.35);
+  height: 56px !important;
+  min-height: 56px !important;
+  overflow: visible !important;
+  box-sizing: border-box;
+}
+.fiAppHeader.sapMBar .sapMBarSection,
+.fiAppHeader.sapMBar .sapMBarPH {
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.fiAppHeader.sapMBar .sapMBarLeft.sapMBarSection { max-width: 70% !important; }
+.headerAppIcon.sapUiIcon {
+  font-size: 1.25rem;
+  color: #7ec8ff;
+  margin: 0 8px 0 4px;
+  flex-shrink: 0;
+}
+.headerTitleBox.sapMHBox {
+  min-width: 0;
+  overflow: hidden;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+  top: 6px;
+}
+.headerAppTitle.sapMTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.headerAppTitle.sapMTitle .sapMTitleText { color: #ffffff; }
+.headerAppSub.sapMText {
+  font-size: 0.6875rem;
+  color: #93b8e0;
+  white-space: nowrap;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.headerBackBtn.sapMBtn .sapMBtnInner {
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.18);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+.headerBackBtn.sapMBtn .sapMBtnIcon { color: #ffffff !important; }
+.headerBackBtn.sapMBtn .sapMBtnInner:hover {
+  background: rgba(255,255,255,0.32);
+  border-color: rgba(255,255,255,0.8);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [1] 페이지 전체 레이아웃
+ *     - .bsPage      : 최외곽 VBox (배경색, 패딩)
+ *     - .bsPageTitle : 제목 영역 하단 구분선
+ *     - .bsTitleText : 메인 제목 글꼴 크기/두께
+ *     - .bsSubText   : 부제목 (회사코드·회사명) 스타일
+ * ══════════════════════════════════════════════════════════════ */
+.bsPage        { background:#F7F7F7; padding:16px; }
+.bsPageTitle   { padding-bottom:12px; border-bottom:1px solid #D9D9D9; margin-bottom:12px; }
+.bsTitleText   { font-size:30px !important; font-weight:300 !important; color:#32363A !important; }
+.bsSubText     { font-size:15px !important; color:#6A6D70 !important; margin-top:2px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [2] 필터 바
+ *     - .bsFilterBar   : 필터 전체 감싸는 HBox (흰 배경, 테두리, 패딩)
+ *     - .bsFi          : 개별 필터 필드 간격
+ *     - .bsFl          : 필드 라벨 (기준일자, 비교연도 등) 스타일
+ *     - .bsMlAuto      : 오른쪽 버튼 그룹 (margin-left:auto 로 우측 정렬)
+ *     - .bsBalanceBadge: "균형 확인 전" 상태 뱃지 오른쪽 간격
+ *     ※ 필터 필드를 추가하려면 View XML에서 VBox class="bsFi" 블록을 복사하세요.
+ * ══════════════════════════════════════════════════════════════ */
+.bsFilterBar   { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 padding:10px 14px; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.bsFi          { margin-right:8px; }
+.bsFl          { font-size:11px !important; color:#6A6D70 !important; margin-bottom:3px; }
+.bsMlAuto      { margin-left:auto; gap:4px; }
+.bsBalanceBadge{ margin-right:8px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [3] KPI 카드 행 (상단 5개 카드)
+ *     - .bsKpiRow    : KPI 카드 전체 감싸는 HBox (gap, 하단 마진)
+ *     - .bsKpi       : 개별 카드 공통 스타일 (흰 배경, 테두리, flex:1)
+ *     - .bsKpiAccent : 파란 왼쪽 테두리 (자산 계열 카드)
+ *     - .bsKpiWarn   : 빨간 왼쪽 테두리 (부채 카드)
+ *     - .bsKpiOk     : 초록 왼쪽 테두리 (자본 카드)
+ *     ※ 카드 개수를 늘리려면 View XML의 HBox class="bsKpiRow" 안에 VBox 추가 후
+ *       .bsKpi 클래스를 부여하세요.
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiRow      { gap:10px; margin-bottom:12px; }
+.bsKpi         { background:#FFFFFF; border:1px solid #d9dce0; border-radius:6px;
+                 padding:12px 16px; flex:1; min-width:0;
+                 box-shadow:0 1px 4px rgba(0,0,0,.07); }
+.bsKpiAccent   { border-left:3px solid #0064d9 !important; }
+.bsKpiWarn     { border-left:3px solid #bb0000 !important; }
+.bsKpiOk       { border-left:3px solid #107e3e !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [4] KPI 카드 텍스트 스타일
+ *     - .bsKpiLabel : 카드 상단 소제목 (자산 총계, 유동자산 등)
+ *     - .bsKpiVal   : 카드 금액 숫자 (모노스페이스 굵게)
+ *     - .bsKpiSub   : 카드 하단 보조 텍스트 (자산 대비 %)
+ *     ※ span 선택자까지 지정한 이유: SAP UI5가 Text 컨트롤을 span 태그로
+ *       렌더링하기 때문에 !important 없이는 스타일이 무시됩니다.
+ * ══════════════════════════════════════════════════════════════ */
+
+/* KPI 텍스트 — sapMText span까지 타고 내려가도록 */
+.bsKpiLabel,
+.bsKpiLabel .sapMText,
+.bsKpiLabel span { font-size:11px !important; font-weight:600 !important; color:#556b82 !important; margin-bottom:6px; }
+
+.bsKpiVal,
+.bsKpiVal .sapMText,
+.bsKpiVal span   { font-size:1.15rem !important; font-weight:700 !important;
+                   font-family: Consolas, "Courier New", monospace !important;
+                   -webkit-font-smoothing: antialiased !important;
+                   -moz-osx-font-smoothing: grayscale !important; }
+
+.bsKpiSub,
+.bsKpiSub .sapMText,
+.bsKpiSub span   { font-size:11px !important; color:#6A6D70 !important; margin-top:3px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [5] KPI 색상 클래스 (숫자 + 텍스트 색 구분)
+ *     - .bsKpiBlue  : 파란색 (#0070D2) — 자산 계열
+ *     - .bsKpiRed   : 빨간색 (#BB0000) — 부채 계열
+ *     - .bsKpiGreen : 초록색 (#107E3E) — 자본 계열
+ *     ※ View XML에서 Text 컨트롤에 class="bsKpiVal bsKpiBlue" 처럼 중복 클래스로 사용합니다.
+ * ══════════════════════════════════════════════════════════════ */
+
+/* KPI 색상 — span까지 강제 */
+.bsKpiBlue .sapMText,
+.bsKpiBlue span,
+.bsKpiBlue       { color:#0064d9 !important; }
+
+.bsKpiRed .sapMText,
+.bsKpiRed span,
+.bsKpiRed        { color:#BB0000 !important; }
+
+.bsKpiGreen .sapMText,
+.bsKpiGreen span,
+.bsKpiGreen      { color:#107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [6] 차트 영역 (자산/부채-자본 구성비율 바 차트)
+ *     - .bsChartWrap     : 차트 + 전기비교 테이블 전체 감싸는 HBox
+ *     - .bsChartBox      : 좌측 차트 / 우측 비교 테이블 각 VBox (flex:1)
+ *     - .bsChartTitleRow : 차트 제목 + 기간 뱃지 수평 배치 HBox
+ *     - .bsChartTitle    : 차트 섹션 제목 글꼴
+ *     - .bsChartPeriod   : 기간 뱃지 (파란 배경 알약 형태)
+ *     - .bsMt            : 두 번째 차트 상단 여백 (margin-top)
+ * ══════════════════════════════════════════════════════════════ */
+.bsChartWrap   { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 padding:14px; margin-bottom:12px; gap:20px; }
+.bsChartBox    { flex:1; min-width:0; }
+
+/* 차트 타이틀 행 (제목 + 기간 뱃지 수평 배치) */
+.bsChartTitleRow { margin-bottom:8px; align-items:baseline; }
+.bsChartTitle  { font-size:12px !important; font-weight:600 !important; color:#32363A !important; }
+
+/* 기간 뱃지 */
+.bsChartPeriod,
+.bsChartPeriod .sapMText,
+.bsChartPeriod span {
+    font-size:11px !important;
+    color:#FFFFFF !important;
+    background:#5B7FA6;
+    border-radius:3px;
+    padding:1px 7px;
+    font-weight:500 !important;
+    white-space:nowrap !important;
+}
+
+.bsMt          { margin-top:14px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [7] 바 차트 List 아이템
+ *     - .bsBarList  : 바 차트를 담는 sap.m.List (기본 패딩·구분선 제거)
+ *     - .bsBarRow   : 각 항목 행 (레이블 + 배경 + 채움 + % + 금액)
+ *     - .bsBarLabel : 항목명 (유동자산, 비유동자산 등) — 너비 고정 80px
+ *     - .bsBarBg    : 회색 바 배경 (전체 100%)
+ *     - .bsBarFill  : 실제 채움 바 (JS에서 width % 와 색상 주입)
+ *     - .bsBarPct   : 퍼센트 숫자 (35px 고정)
+ *     - .bsBarAmt   : 금액 텍스트 (90px 고정, 모노스페이스)
+ *     ※ 바 색상은 컨트롤러 _renderBarChart() 메서드에서 segment.color 로 지정합니다.
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 바 차트 List — 기본 패딩/테두리 제거 */
+.bsBarList .sapMLIBContent { padding:0 !important; }
+.bsBarList .sapMLIB        { padding:0 !important; border-bottom:none !important; background:transparent !important; }
+
+.bsBarRow      { gap:8px; width:100%; padding:4px 0; }
+.bsBarLabel,
+.bsBarLabel .sapMText,
+.bsBarLabel span { font-size:13px !important; color:#32363A !important;
+                   font-weight:500 !important;
+                   min-width:80px; max-width:80px; flex-shrink:0; }
+.bsBarBg       { flex:1; height:10px; background:#EEEEEE; border-radius:5px; overflow:hidden; }
+.bsBarFill     { height:100%; border-radius:5px; transition:width .5s ease; }
+.bsBarPct,
+.bsBarPct .sapMText,
+.bsBarPct span { font-size:13px !important; font-weight:700 !important; color:#32363A !important;
+                 min-width:35px; text-align:right; flex-shrink:0; }
+.bsBarAmt,
+.bsBarAmt .sapMText,
+.bsBarAmt span { font-size:13px !important; color:#32363A !important;
+                 font-family: Consolas, "Lucida Console", monospace !important;
+                 font-weight:600 !important;
+                 -webkit-font-smoothing: antialiased !important;
+                 -moz-osx-font-smoothing: grayscale !important;
+                 min-width:90px; text-align:right; flex-shrink:0; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [8] 전기비교 테이블 (우측 반쪽 — 전기/당기/증감 3열)
+ *     - .bsCompareTable       : 테이블 전체 폰트 크기 지정
+ *     - td / HeaderCell 패딩  : 셀 내부 여백 — 선 없이 여백으로 컬럼 구분
+ *     - :first-child          : 항목명 열 — 오른쪽 패딩 추가
+ *     - :nth-child(2/3)       : 전기·당기 열 — 왼쪽 패딩 추가
+ *     - .bsNumRight           : 숫자 우측 정렬 + 모노스페이스 (전기/당기 금액)
+ *     - .bsCompareGrp         : 자산/부채/자본 소계 행 파란 배경
+ *     - .bsCompareLabelGrp    : 소계 행 레이블 (진한 파랑, 굵게)
+ *     - .bsCompareLabel       : 세부 항목 레이블 (회색, 들여쓰기)
+ * ══════════════════════════════════════════════════════════════ */
+.bsCompareTable { font-size:14px !important; }
+
+/* 셀 전반 패딩 — 선 없이 여백으로 컬럼 구분 */
+.bsCompareTable td.sapMListTblCell {
+    padding: 10px 14px !important;
+    vertical-align: middle !important;
+}
+.bsCompareTable .sapMListTblHeaderCell {
+    padding: 8px 14px !important;
+    vertical-align: middle !important;
+}
+/* 첫 열(항목)은 오른쪽 패딩을 더 줘서 숫자 열과 확실히 분리 */
+.bsCompareTable td.sapMListTblCell:first-child,
+.bsCompareTable .sapMListTblHeaderCell:first-child {
+    padding-right: 20px !important;
+}
+/* 전기·당기 열은 왼쪽 패딩을 넓혀 필드 간 여유 확보 */
+.bsCompareTable td.sapMListTblCell:nth-child(2),
+.bsCompareTable td.sapMListTblCell:nth-child(3),
+.bsCompareTable .sapMListTblHeaderCell:nth-child(2),
+.bsCompareTable .sapMListTblHeaderCell:nth-child(3) {
+    padding-left: 20px !important;
+}
+.bsNumRight,
+.bsNumRight .sapMText,
+.bsNumRight span {
+    font-family: Consolas, "Lucida Console", monospace !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #32363A !important;
+    white-space: nowrap !important;
+    display: block !important;
+    text-align: right !important;
+}
+.bsCompareGrp   { background:#E8F0FF !important; }
+.bsCompareLabelGrp,
+.bsCompareLabelGrp .sapMText,
+.bsCompareLabelGrp span { font-weight:600 !important; color:#00177C !important; font-size:14px !important; }
+.bsCompareLabel,
+.bsCompareLabel .sapMText,
+.bsCompareLabel span     { font-size:14px !important; color:#6A6D70 !important; padding-left:8px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [9] BS 대조표 외곽 래퍼
+ *     - .bsWrap      : 자산/부채+자본 두 패널을 감싸는 HBox (흰 배경, 테두리)
+ *     - .bsSideLeft  : 자산 패널 오른쪽 파란 구분선
+ * ══════════════════════════════════════════════════════════════ */
+.bsWrap        { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 overflow:hidden; margin-bottom:12px; }
+.bsSideLeft    { border-right:2px solid #0070D2 !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [10] 섹션 헤더 (파란 배경 헤더 바)
+ *     - .bsHead     : 파란 배경 헤더 행 (패딩)
+ *     - .bsHeadText : 헤더 왼쪽 텍스트 (자산 / 부채·자본)
+ *     - .bsHeadNum  : 헤더 오른쪽 합계 금액 (흰색 모노스페이스)
+ * ══════════════════════════════════════════════════════════════ */
+.bsHead        { background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%);
+                 padding:8px 12px;
+                 box-shadow: 0 2px 6px rgba(0, 80, 179, 0.28); }
+.bsHeadText,
+.bsHeadText .sapMText,
+.bsHeadText span { font-size:12px !important; font-weight:600 !important; color:#FFFFFF !important; }
+.bsHeadNum,
+.bsHeadNum .sapMText,
+.bsHeadNum span  { font-size:12px !important; font-weight:600 !important; color:#FFFFFF !important;
+                   font-family:monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [11] 트리 List (자산/부채+자본 항목 나열)
+ *     - .bsTreeList : sap.m.List 기본 패딩 완전 제거
+ *     - .bsLvl1Row  : 1단계 — 유동자산, 비유동자산 등 (파란 배경, 굵게)
+ *     - .bsLvl2Row  : 2단계 — 중분류 (들여쓰기 24px)
+ *     - .bsLvl3Row  : 3단계 — 계정과목 (들여쓰기 42px, 클릭 가능, hover 효과)
+ *     ※ 트리 항목 클릭 시 컨트롤러 onTreeItemPress() → 드릴다운 팝업 열림
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 트리 List 기본 패딩 제거 */
+.bsTreeList .sapMLIBContent { padding:0 !important; }
+.bsTreeList .sapMLIB        { padding:0 !important; border-bottom:none !important; }
+
+/* lvl1 — 대분류 행 (유동자산, 비유동자산, 유동부채, 비유동부채, 자본) */
+.bsLvl1Row     { background:#E8F0FF; border-bottom:1px solid #C0D0F0;
+                 border-top:1px solid #C0D0F0; padding:6px 12px; width:100%; }
+.bsLvl1Row .bsRowLabel,
+.bsLvl1Row .bsRowLabel .sapMText,
+.bsLvl1Row .bsRowLabel span { font-size:12px !important; font-weight:600 !important; color:#00177C !important; }
+.bsLvl1Row .bsRowNum,
+.bsLvl1Row .bsRowNum .sapMText,
+.bsLvl1Row .bsRowNum span   { font-size:12px !important; font-weight:600 !important;
+                               color:#00177C !important; font-family:monospace !important; }
+
+/* lvl2 — 중분류 행 (매출채권, 재고자산 등) */
+.bsLvl2Row     { background:#FFFFFF; border-bottom:1px solid #F0F0F0;
+                 padding:5px 12px 5px 24px; width:100%; }
+.bsLvl2Row .bsRowLabel,
+.bsLvl2Row .bsRowLabel .sapMText,
+.bsLvl2Row .bsRowLabel span { font-size:12px !important; font-weight:500 !important; color:#32363A !important; }
+.bsLvl2Row .bsRowNum,
+.bsLvl2Row .bsRowNum .sapMText,
+.bsLvl2Row .bsRowNum span   { font-size:12px !important; color:#32363A !important; font-family:monospace !important; }
+
+/* lvl3 — 계정과목 행 (클릭 시 드릴다운 팝업 오픈) */
+.bsLvl3Row     { background:#FFFFFF; border-bottom:1px solid #F5F5F5;
+                 padding:4px 12px 4px 42px; width:100%; cursor:pointer; }
+.bsLvl3Row .bsRowLabel,
+.bsLvl3Row .bsRowLabel .sapMText,
+.bsLvl3Row .bsRowLabel span { font-size:12px !important; color:#6A6D70 !important; }
+.bsLvl3Row .bsRowNum,
+.bsLvl3Row .bsRowNum .sapMText,
+.bsLvl3Row .bsRowNum span   { font-size:12px !important; color:#6A6D70 !important; font-family:monospace !important; }
+/* hover 효과: 배경 하이라이트 + 텍스트 파랑 밑줄 */
+.bsLvl3Row:hover             { background:#F0F6FF !important; }
+.bsLvl3Row:hover .bsRowLabel .sapMText,
+.bsLvl3Row:hover .bsRowLabel span { color:#0070D2 !important; text-decoration:underline; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [12] 소계 / 1단계 합계 / 총계 행
+ *     - .bsSubtotalRow  : 중분류 소계 행 (옅은 회색 배경)
+ *     - .bsL1TotalRow   : 대분류 합계 행 (파란 계열 배경, 굵게)
+ *     - .bsSpacer       : 대분류 사이 구분 여백 (높이 8px)
+ *     - .bsTotalRow     : 최하단 총계 행 (짙은 네이비 배경, 흰 글자)
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 소계 */
+.bsSubtotalRow  { background:#F7F7F7; border-top:1px solid #D9D9D9;
+                  border-bottom:1px solid #D9D9D9; padding:5px 12px 5px 24px; width:100%; }
+.bsSubtotalLabel,
+.bsSubtotalLabel .sapMText,
+.bsSubtotalLabel span { font-size:12px !important; font-weight:600 !important; color:#32363A !important; }
+.bsSubtotalNum,
+.bsSubtotalNum .sapMText,
+.bsSubtotalNum span   { font-size:12px !important; font-weight:600 !important; color:#32363A !important;
+                        font-family:monospace !important; }
+
+/* lvl1 합계 */
+.bsL1TotalRow   { background:#F0F4F8; border-top:1px solid #C0D0F0;
+                  border-bottom:1px solid #C0D0F0; padding:5px 12px; width:100%; }
+.bsL1TotalLabel,
+.bsL1TotalLabel .sapMText,
+.bsL1TotalLabel span { font-size:12px !important; font-weight:700 !important; color:#00177C !important; padding-left:4px; }
+.bsL1TotalNum,
+.bsL1TotalNum .sapMText,
+.bsL1TotalNum span   { font-size:13px !important; font-weight:700 !important; color:#0070D2 !important;
+                       font-family:monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [13] 숫자 색상 (양수/음수 구분)
+ *     - .bsNumNeg : 음수 금액 — 빨간색 (#BB0000)
+ *     - .bsNumPos : 양수 금액 — 기본 텍스트 (#32363A)
+ *     ※ 컨트롤러 _mkRow() 에서 value < 0 이면 bsNumNeg 자동 적용
+ * ══════════════════════════════════════════════════════════════ */
+.bsNumNeg,
+.bsNumNeg .sapMText,
+.bsNumNeg span { color:#BB0000 !important; }
+.bsNumPos,
+.bsNumPos .sapMText,
+.bsNumPos span { color:#32363A !important; }
+
+/* 스페이서 — 대분류 사이 빈 공간 */
+.bsSpacer      { height:8px; background:#F7F7F7; width:100%; }
+
+/* 총계 footer 행 */
+.bsTotalRow    { background:#00177C; padding:8px 12px; }
+.bsTotalLabel,
+.bsTotalLabel .sapMText,
+.bsTotalLabel span { font-size:13px !important; font-weight:600 !important; color:#FFFFFF !important; }
+.bsTotalNum,
+.bsTotalNum .sapMText,
+.bsTotalNum span   { font-size:13px !important; font-weight:600 !important; color:#FFFFFF !important;
+                     font-family:monospace !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [14] 페이지 Footer
+ *     - .bsFooter  : 페이지 최하단 우측 정렬 HBox
+ *     - .bsInfoBox : "ZI_FI_BS · OData 연동 · BSdataSet" 안내 박스
+ * ══════════════════════════════════════════════════════════════ */
+.bsFooter      { padding:4px 0 8px; }
+.bsInfoBox,
+.bsInfoBox .sapMText,
+.bsInfoBox span { font-size:11px !important; color:#6A6D70 !important;
+                  padding:4px 10px; background:#F7F7F7; border:1px solid #D9D9D9; border-radius:3px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [15] KPI 카드 금액 글꼴 재정의 (Override)
+ *     - .bsKpiVal 블록 재정의: letter-spacing·display·width 보정
+ *     ※ 위 [4]에서 선언된 .bsKpiVal 를 더 강하게 덮어씁니다.
+ *       두 규칙 사이에 충돌이 생기면 이 블록이 우선됩니다.
+ * ══════════════════════════════════════════════════════════════ */
+.bsKpiVal {
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0px !important;
+    white-space: nowrap !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 3px 0;
+}
+
+/* KPI 색상 최종 재정의 (선택 사항 — 더 쨍한 톤) */
+.bsKpiBlue  { color: #0064d9 !important; }
+.bsKpiRed   { color: #BB0000 !important; }
+.bsKpiGreen { color: #107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [16] KPI 카드 소제목 (글자/숫자 수평 정렬)
+ *     - .bsKpiSubWrap  : 소제목 텍스트 + 숫자를 묶는 HBox (baseline 정렬)
+ *     - .bsKpiSubTxt   : 소제목 레이블 ("자산 대비", "부채비율" 등)
+ *     - .bsKpiSubNum   : 소제목 퍼센트 숫자
+ *     - .bsKpiBlueSub / RedSub / GreenSub : 카드 색상에 맞는 숫자 색
+ *     ※ View XML에서 HBox class="bsKpiSubWrap" 으로 감싸고 그 안에
+ *       Text class="bsKpiSubTxt" 과 Text class="bsKpiSubNum bsKpiBlueSub" 를 배치합니다.
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 자산 카드 소제목 색상 */
+.bsKpiBlue + .bsKpiSub {
+    color: #0070D2 !important;
+    font-weight: 600 !important;
+}
+
+/* 부채 카드 소제목 색상 */
+.bsKpiRed + .bsKpiSub {
+    color: #BB0000 !important;
+    font-weight: 600 !important;
+}
+
+/* 자본 카드 소제목 색상 */
+.bsKpiGreen + .bsKpiSub {
+    color: #107E3E !important;
+    font-weight: 600 !important;
+}
+
+.bsKpiSubWrap {
+    margin-top: 6px !important;
+    gap: 5px;
+    display: flex !important;
+    align-items: baseline !important; /* 다른 크기의 글자 기준선을 일치시킴 */
+}
+
+/* 기본 텍스트 (자산 대비, 부채비율 등) */
+.bsKpiSubTxt {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: #555555 !important;
+    line-height: 1 !important;
+}
+
+/* 퍼센트 숫자 */
+.bsKpiSubNum {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+}
+
+/* 테마별 숫자 색상 */
+.bsKpiBlueSub  { color: #0064d9 !important; }
+.bsKpiRedSub   { color: #BB0000 !important; }
+.bsKpiGreenSub { color: #107E3E !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [17] 드릴다운 팝업 (Dialog) — 계정과목 클릭 시 전표 목록 표시
+ *     ┌─ 팝업 외형 (.bsDrillDialog)
+ *     ├─ 타이틀 헤더 (.sapMDialogHeader) — .bsHead 와 동일한 파란 배경
+ *     ├─ 계정 정보 바 (.bsDrillInfoBar) — 계정번호 뱃지 + 계정명 + 잔액
+ *     │    .bsDrillSaknrCode : 계정과목번호 (파란 뱃지)
+ *     │    .bsDrillSaknrName : 계정명 텍스트 (네이비 굵게)
+ *     │    .bsDrillBalBox    : 우측 잔액 영역
+ *     │    .bsDrillBalLabel  : "당기 누계 잔액 (기준일 기준)" 라벨
+ *     │    .bsDrillBalAmt    : 잔액 금액 (파란 큰 숫자)
+ *     ├─ 전표 테이블 (.bsDrillTable)
+ *     │    .bsDrillBelnr : 전표번호 링크 (클릭 → 0002 전표조회 이동)
+ *     │    .bsDrillDate  : 전기일 (Consolas 모노)
+ *     │    .bsDrillShkzg : 차/대 뱃지
+ *     │    .bsDrillAmt   : 금액 (우측 정렬, 네이비 굵게)
+ *     │    .bsDrillSgtxt : 적요 (1줄 말줄임)
+ *     └─ 팝업 푸터
+ *     ※ 드릴다운 팝업 열기: 컨트롤러 onTreeItemPress()
+ *     ※ 전표조회 이동: 컨트롤러 _navigateToFI0002()
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 팝업 외형 */
+.bsDrillDialog.sapMDialog {
+    border: none !important;
+    border-radius: 6px !important;
+    box-shadow: 0 12px 40px rgba(0,23,60,0.22), 0 2px 8px rgba(0,0,0,0.12) !important;
+}
+
+/* 타이틀 헤더: .bsHead 와 동일한 #0070D2 */
+.bsDrillDialog .sapMDialogHeader {
+    background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important;
+    border-bottom: none !important;
+    min-height: 44px !important;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBar {
+    background: transparent !important;
+    border: none !important;
+}
+.bsDrillDialog .sapMDialogTitle .sapMTitle,
+.bsDrillDialog .sapMDialogTitle .sapMTitle .sapMTitleDomRef {
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBarLeft .sapUiIcon,
+.bsDrillDialog .sapMDialogHeader .sapMBarRight .sapUiIcon {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+/* 스크롤 컨테이너 패딩 */
+.bsDrillDialog .sapMDialogScrollCont {
+    padding: 0 0 16px 0 !important;
+}
+
+/* 계정 정보 바: .bsLvl1Row 배경과 동일 */
+.bsDrillInfoBar {
+    background: #E8F0FF;
+    border-bottom: 1px solid #C0D0F0;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* 계정과목번호 뱃지 */
+.bsDrillSaknrCode,
+.bsDrillSaknrCode .sapMText,
+.bsDrillSaknrCode span {
+    display: inline-block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: 'Courier New', monospace !important;
+    color: #ffffff !important;
+    background: #0070D2;
+    border-radius: 3px;
+    padding: 2px 9px;
+    white-space: nowrap !important;
+    flex-shrink: 0;
+}
+
+/* 계정명 텍스트 */
+.bsDrillSaknrName,
+.bsDrillSaknrName .sapMText,
+.bsDrillSaknrName span {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #00177C !important;
+    margin-left: 10px !important;
+}
+
+/* 잔액 영역 (VBox — 우측 정렬) */
+.bsDrillBalBox { text-align: right; }
+
+.bsDrillBalLabel,
+.bsDrillBalLabel .sapMText,
+.bsDrillBalLabel span {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #6A6D70 !important;
+    letter-spacing: 0.2px;
+    text-align: right !important;
+    display: block !important;
+}
+
+/* 잔액 금액 */
+.bsDrillBalAmt,
+.bsDrillBalAmt .sapMText,
+.bsDrillBalAmt span {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-family: "72", "72full", "Segoe UI", Arial, sans-serif !important;
+    color: #0070D2 !important;
+    letter-spacing: 0.5px;
+    text-align: right !important;
+    display: block !important;
+}
+
+/* 전표 테이블 헤더 */
+.bsDrillTable .sapMListTblHeaderCell {
+    background: #F0F4F8 !important;
+    border-bottom: 2px solid #0070D2 !important;
+    padding: 7px 10px !important;
+}
+.bsDrillTable .sapMListTblHeaderCell .sapMLabel,
+.bsDrillTable .sapMListTblHeaderCell .sapMText,
+.bsDrillTable .sapMListTblHeaderCell span {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #32363A !important;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+/* 전표 테이블 셀 */
+.bsDrillTable .sapMLIBContent { padding: 0 !important; }
+.bsDrillTable td.sapMListTblCell {
+    padding: 7px 10px !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #F0F0F0 !important;
+}
+
+/* 짝수 행 배경 */
+.bsDrillTable .sapMListTblRow:nth-child(even) td {
+    background: #FAFBFF;
+}
+
+/* 행 hover 효과 */
+.bsDrillTable .sapMLIB:hover td,
+.bsDrillTable .sapMLIB.sapMLIBHovered td {
+    background: #F0F6FF !important;
+    transition: background 0.12s;
+}
+
+/* 전표번호 링크 */
+.bsDrillBelnr.sapMLnk,
+.bsDrillBelnr.sapMLnk span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #0070D2 !important;
+    text-decoration: none !important;
+}
+.bsDrillBelnr.sapMLnk:hover,
+.bsDrillBelnr.sapMLnk:hover span {
+    color: #00177C !important;
+    text-decoration: underline !important;
+}
+
+/* 전기일 */
+.bsDrillDate,
+.bsDrillDate .sapMText,
+.bsDrillDate span {
+    font-family: Consolas, "Lucida Console", "Courier New", monospace !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #32363A !important;
+    letter-spacing: 0.3px;
+}
+
+/* 차/대 뱃지 텍스트 */
+.bsDrillShkzg .sapMObjStatusText {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px;
+}
+
+/* 금액 (우측 정렬, 네이비 굵게) */
+.bsDrillAmt,
+.bsDrillAmt .sapMText,
+.bsDrillAmt span {
+    display: block !important;
+    text-align: right !important;
+    font-family: Consolas, "Lucida Console", "Courier New", monospace !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #00177C !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.3px;
+}
+
+/* 적요 (1줄 말줄임) */
+.bsDrillSgtxt,
+.bsDrillSgtxt .sapMText,
+.bsDrillSgtxt span {
+    font-size: 13px !important;
+    color: #32363A !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 200px !important;
+    display: block !important;
+}
+
+/* 팝업 푸터 */
+.bsDrillDialog .sapMDialogFooter {
+    border-top: 1px solid #D9D9D9 !important;
+    background: #FFFFFF !important;
+    padding: 8px 14px !important;
+}

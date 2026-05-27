@@ -1,0 +1,131 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.exampm",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "ed962d3d-b0ff-4ea7-82be-98a96e63d9e2"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.exampm.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "code.cl3.exampm.view",
+        "async": true,
+        "viewPath": "code.cl3.exampm.view"
+      },
+      "routes": [
+        {
+          "name": "Routeexam_pm",
+          "pattern": ":?query:",
+          "target": [
+            "Targetexam_pm"
+          ]
+        },
+        {
+          "name": "RoutesecondView",
+          "pattern": "second",
+          "target": [
+            "TargetsecondView"
+          ]
+        },
+        {
+          "name": "RouteThirdView",
+          "pattern": "Third",
+          "target": [
+            "TargetThirdView"
+          ]
+        },
+        {
+          "name": "RouteFourView",
+          "pattern": "Four",
+          "target": [
+            "TargetFourView"
+          ]
+        }
+      ],
+      "targets": {
+        "Targetexam_pm": {
+          "id": "exam_pm",
+          "name": "exam_pm"
+        },
+        "TargetsecondView": {
+          "id": "secondViewId",
+          "name": "secondView"
+        },
+        "TargetThirdView": {
+          "id": "ThirdViewId",
+          "name": "ThirdView"
+        },
+        "TargetFourView": {
+          "id": "RouteFourViewId",
+          "name": "FourView"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "code.cl3.exampm.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

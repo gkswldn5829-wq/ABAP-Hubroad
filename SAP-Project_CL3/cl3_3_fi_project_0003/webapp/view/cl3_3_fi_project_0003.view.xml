@@ -1,0 +1,325 @@
+<!--
+    ═══════════════════════════════════════════════════════════
+    뷰      : cl3_3_fi_project_0003.view.xml
+    화면    : 손익계산서 (Income Statement) 조회
+    컨트롤러: cl3_3_fi_project_0003.controller.js
+    CSS     : webapp/css/style.css
+    OData   : /ISdataSet (ZCDS_C3_FI_0002_CDS)
+
+    화면 구성 순서:
+      ① 타이틀
+      ② 필터 바 (회계연도 / 시작월 / 종료월 / 손익센터 / 버튼)
+      ③ KPI 카드 5개 (매출액/매출원가/매출총이익/영업이익/당기순이익)
+      ④ 메인 2열 레이아웃
+           - 좌 (50%): 손익 계층 트리 (FsLvl1 → FsLvl2 → 계정)
+           - 우 (50%): 월별 추이 차트 + 이익 흐름 Waterfall
+      ⑤ 하단 3열 차트
+           - 비용 구성 비율 (도넛) | 손익센터별 매출 (막대) | 이익률 추이 (선)
+      ⑥ 드릴다운 팝업 (계정 클릭 시 전표 목록)
+      ⑦ Footer
+    ═══════════════════════════════════════════════════════════
+-->
+<mvc:View controllerName="zcl3fi.cl33fiproject0003.controller.cl3_3_fi_project_0003"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page id="page" showHeader="true" backgroundDesign="Solid" enableScrolling="true" class="fiPage">
+
+        <customHeader>
+            <Bar class="fiAppHeader" design="Header">
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" class="headerBackBtn" tooltip="뒤로"/>
+                    <core:Icon src="sap-icon://line-chart" class="headerAppIcon"/>
+                    <HBox class="headerTitleBox" alignItems="Center">
+                        <Title text="손익계산서" level="H4" class="headerAppTitle"/>
+                        <Text text="Income Statement · 8282 HubRoad" class="headerAppSub"/>
+                    </HBox>
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <!-- ════════════════════════════════════════════════
+             ⑥ 드릴다운 팝업 (dependents — 계정 클릭 시 전표 목록)
+             ════════════════════════════════════════════════ -->
+        <dependents>
+            <Dialog id="dlgDrill"
+                title="{drillModel>/title}"
+                contentWidth="900px"
+                contentHeight="500px"
+                draggable="true"
+                resizable="true"
+                class="bsDrillDialog">
+                <content>
+                    <VBox>
+                        <HBox class="bsDrillInfoBar" alignItems="Center" justifyContent="SpaceBetween">
+                            <HBox alignItems="Center">
+                                <Text text="{drillModel>/saknr}" class="bsDrillSaknrCode"/>
+                                <Text text="{drillModel>/txt50}" class="bsDrillSaknrName"/>
+                            </HBox>
+                            <VBox class="bsDrillBalBox" alignItems="End">
+                                <Text text="당기 누계 잔액" class="bsDrillBalLabel"/>
+                                <Text text="{drillModel>/balance} KRW" class="bsDrillBalAmt"/>
+                            </VBox>
+                        </HBox>
+                        <Table id="tblDrill"
+                            items="{drillModel>/items}"
+                            mode="SingleSelectMaster"
+                            growing="true"
+                            growingThreshold="25"
+                            showSeparators="Inner"
+                            class="bsDrillTable">
+                            <columns>
+                                <Column width="120px"><Text text="전표번호"/></Column>
+                                <Column width="100px"><Text text="전기일"/></Column>
+                                <Column width="60px" hAlign="Center"><Text text="월"/></Column>
+                                <Column width="150px"><Text text="손익센터"/></Column>
+                                <Column hAlign="End" width="180px"><Text text="금액 (부호반영)"/></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem type="Active" press=".onDrillItemPress">
+                                    <cells>
+                                        <Link text="{drillModel>belnr}" press=".onDrillBelnrPress" class="bsDrillBelnr"/>
+                                        <Text text="{drillModel>budat}" class="bsDrillDate"/>
+                                        <Text text="{drillModel>monat}" textAlign="Center"/>
+                                        <Text text="{drillModel>prctr}"/>
+                                        <Text text="{drillModel>amount}" class="bsDrillAmt" textAlign="End"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="닫기" press=".onDrillClose" type="Transparent"/>
+                </beginButton>
+            </Dialog>
+        </dependents>
+
+        <content>
+            <!-- 최외곽 VBox -->
+            <VBox class="bsPage">
+
+
+                <!-- ════════════════════════════════════════════════
+                     ② 필터 바
+                        - inpGjahr    : 회계연도 Input (4자리)
+                        - inpMonatFrom: 시작월 Input (01~12)
+                        - inpMonatTo  : 종료월 Input (01~12)
+                        - inpPrctr    : 손익센터 Input (공백=전체)
+                        - inpBukrs    : 회사코드 (고정 8282)
+                        - 조회 버튼   : onSearch() 호출
+                        CSS: .bsFilterBar / .bsFi / .bsFl / .bsMlAuto
+                     ════════════════════════════════════════════════ -->
+                <HBox alignItems="End" class="bsFilterBar" wrap="Wrap">
+                    <VBox class="bsFi">
+                        <Label text="회계연도 *" class="bsFl"/>
+                        <Input id="inpGjahr" maxLength="4" width="100px" placeholder="2026" submit="onSearch" showValueHelp="true" valueHelpRequest=".onGjahrValueHelp" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="조회 기간 *" class="bsFl"/>
+                        <HBox alignItems="Center" class="bsPeriodSelBox">
+                            <Select id="selMonatFrom" class="bsPeriodSel">
+                                <items>
+                                    <core:Item key="01" text="1월"/>
+                                    <core:Item key="02" text="2월"/>
+                                    <core:Item key="03" text="3월"/>
+                                    <core:Item key="04" text="4월"/>
+                                    <core:Item key="05" text="5월"/>
+                                    <core:Item key="06" text="6월"/>
+                                    <core:Item key="07" text="7월"/>
+                                    <core:Item key="08" text="8월"/>
+                                    <core:Item key="09" text="9월"/>
+                                    <core:Item key="10" text="10월"/>
+                                    <core:Item key="11" text="11월"/>
+                                    <core:Item key="12" text="12월"/>
+                                </items>
+                            </Select>
+                            <Text text=" ～ " class="bsPeriodSep"/>
+                            <Select id="selMonatTo" class="bsPeriodSel">
+                                <items>
+                                    <core:Item key="01" text="1월"/>
+                                    <core:Item key="02" text="2월"/>
+                                    <core:Item key="03" text="3월"/>
+                                    <core:Item key="04" text="4월"/>
+                                    <core:Item key="05" text="5월"/>
+                                    <core:Item key="06" text="6월"/>
+                                    <core:Item key="07" text="7월"/>
+                                    <core:Item key="08" text="8월"/>
+                                    <core:Item key="09" text="9월"/>
+                                    <core:Item key="10" text="10월"/>
+                                    <core:Item key="11" text="11월"/>
+                                    <core:Item key="12" text="12월"/>
+                                </items>
+                            </Select>
+                        </HBox>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="손익센터" class="bsFl"/>
+                        <Input id="inpPrctr" width="130px" placeholder="전체" showValueHelp="true" valueHelpRequest=".onPrctrValueHelp" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="회사코드" class="bsFl"/>
+                        <Input id="inpBukrs" value="8282" maxLength="4" width="70px" editable="false" class="bsFin"/>
+                    </VBox>
+                    <Button text="조회" type="Emphasized" icon="sap-icon://search" press=".onSearch" class="bsFiBtn"/>
+                    <!-- 우측 버튼 그룹 -->
+                    <HBox class="bsMlAuto" alignItems="Center">
+                        <Text id="isStatusText" text="" class="bsBalanceBadge"/>
+                        <Button icon="sap-icon://pdf-attachment"   type="Transparent" tooltip="PDF"   press=".onPressPdf"/>
+                        <Button icon="sap-icon://excel-attachment" type="Transparent" tooltip="Excel" press=".onPressExcel"/>
+                    </HBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ③ KPI 카드 5개
+                        - kpiRevenue    : 매출액      (파랑 테두리)
+                        - kpiCogs       : 매출원가    (빨강 테두리)
+                        - kpiGrossProfit: 매출총이익  (초록 테두리) + GP Margin %
+                        - kpiOpIncome   : 영업이익    (초록 테두리) + OP Margin %
+                        - kpiNetIncome  : 당기순이익  (초록 테두리) + NP Margin %
+                        CSS: .bsKpiRow / .bsKpi / .bsKpiAccent·Warn·Ok
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsKpiRow" justifyContent="SpaceBetween">
+                    <!-- 매출액 카드 -->
+                    <VBox class="bsKpi bsKpiAccent" renderType="Bare">
+                        <Text text="매출액" class="bsKpiLabel"/>
+                        <Text id="kpiRevenue" text="-" class="bsKpiVal bsKpiBlue"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="매출 수익 항목 합계" class="bsKpiSubTxt"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 매출원가 카드 -->
+                    <VBox class="bsKpi bsKpiWarn" renderType="Bare">
+                        <Text text="매출원가" class="bsKpiLabel"/>
+                        <Text id="kpiCogs" text="-" class="bsKpiVal bsKpiRed"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="제품·용역 원가 항목" class="bsKpiSubTxt"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 매출총이익 카드 -->
+                    <VBox class="bsKpi bsKpiOk" renderType="Bare">
+                        <Text text="매출총이익" class="bsKpiLabel"/>
+                        <Text id="kpiGrossProfit" text="-" class="bsKpiVal bsKpiGreen"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="GP Margin " class="bsKpiSubTxt"/>
+                            <Text id="kpiGpMargin" text="-" class="bsKpiSubNum bsKpiGreenSub"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 영업이익 카드 -->
+                    <VBox class="bsKpi bsKpiOk" renderType="Bare">
+                        <Text text="영업이익" class="bsKpiLabel"/>
+                        <Text id="kpiOpIncome" text="-" class="bsKpiVal bsKpiGreen"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="OP Margin " class="bsKpiSubTxt"/>
+                            <Text id="kpiOpMargin" text="-" class="bsKpiSubNum bsKpiGreenSub"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 당기순이익 카드 -->
+                    <VBox class="bsKpi bsKpiOk" renderType="Bare">
+                        <Text text="당기순이익" class="bsKpiLabel"/>
+                        <Text id="kpiNetIncome" text="-" class="bsKpiVal bsKpiGreen"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="NP Margin " class="bsKpiSubTxt"/>
+                            <Text id="kpiNpMargin" text="-" class="bsKpiSubNum bsKpiGreenSub"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+                <!-- ════ GP/OP/NP 용어 안내 ═══════════════════════════ -->
+                <HBox class="bsKpiLegend">
+                    <Text text="GP: Gross Profit Margin (매출총이익률)  |  OP: Operating Profit Margin (영업이익률)  |  NP: Net Profit Margin (순이익률)" class="bsKpiLegendTxt"/>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑤ 상단 2열 차트 (월별 추이 + 이익 흐름)
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsIsChart2Row" alignItems="Stretch">
+                    <VBox class="bsIsChart2Card">
+                        <HBox class="bsIsChartCardHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="월별 매출 · 영업이익 추이" class="bsIsChartCardTitle"/>
+                            <Text text="월별 추이" class="bsHeadAnnot"/>
+                        </HBox>
+                        <core:HTML id="htmlMonthChart" sanitizeContent="false" content="&lt;div class=&quot;bsIsCanvasWrapLg&quot;&gt;&lt;canvas id=&quot;isMonthCanvas&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;"/>
+                    </VBox>
+                    <VBox class="bsIsChart2Card bsIsChart2Right">
+                        <HBox class="bsIsChartCardHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="이익 흐름 (Waterfall)" class="bsIsChartCardTitle"/>
+                            <Text text="매출 → 이익 단계" class="bsHeadAnnot"/>
+                        </HBox>
+                        <core:HTML id="htmlWfChart" sanitizeContent="false" content="&lt;div class=&quot;bsIsCanvasWrapLg&quot;&gt;&lt;canvas id=&quot;isWfCanvas&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑥ 하단 3열 차트
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsIsChart3Row" alignItems="Stretch">
+
+                    <!-- 비용 구성 비율 -->
+                    <VBox class="bsIsChart3Card">
+                        <HBox class="bsIsChartCardHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="비용 구성 비율" class="bsIsChartCardTitle"/>
+                            <Text text="비용 항목별" class="bsHeadAnnot"/>
+                        </HBox>
+                        <core:HTML id="htmlCostChart" sanitizeContent="false" content="&lt;div class=&quot;bsIsCanvasWrap&quot;&gt;&lt;canvas id=&quot;isCostCanvas&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;"/>
+                    </VBox>
+
+                    <!-- 손익센터별 매출 비교 -->
+                    <VBox class="bsIsChart3Card bsIsChart3Mid">
+                        <HBox class="bsIsChartCardHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="손익센터별 매출 비교" class="bsIsChartCardTitle"/>
+                            <Text text="손익센터별" class="bsHeadAnnot"/>
+                        </HBox>
+                        <core:HTML id="htmlPlantChart" sanitizeContent="false" content="&lt;div class=&quot;bsIsCanvasWrap&quot;&gt;&lt;canvas id=&quot;isPlantCanvas&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;"/>
+                    </VBox>
+
+                    <!-- 이익률 추이 -->
+                    <VBox class="bsIsChart3Card">
+                        <HBox class="bsIsChartCardHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="이익률 추이" class="bsIsChartCardTitle"/>
+                            <Text text="수익률 분석" class="bsHeadAnnot"/>
+                        </HBox>
+                        <List id="listIsMarginBars" showSeparators="None" class="bsIsMarginList"/>
+                        <Text text="전월 대비 증감" class="bsIsMarginTrendLbl"/>
+                        <core:HTML id="htmlMarginChart" sanitizeContent="false" content="&lt;div class=&quot;bsIsCanvasWrapSm&quot;&gt;&lt;canvas id=&quot;isMarginCanvas&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;"/>
+                    </VBox>
+
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ④ 손익 계층 트리 (전체 너비)
+                     ════════════════════════════════════════════════ -->
+                <VBox class="bsIsFullPanel">
+                    <HBox class="bsHead" justifyContent="SpaceBetween" alignItems="Center">
+                        <Text text="손익 계층 트리" class="bsHeadText"/>
+                        <Text text="▶ 클릭하면 상세 펼침 / 접기" class="bsHeadAnnot"/>
+                    </HBox>
+                    <HBox class="bsIsTreeCols" alignItems="Stretch">
+                        <VBox class="bsIsTreeCol bsIsTreeColLeft" width="50%">
+                            <Text text="수  익" class="bsIsColHeader"/>
+                            <List id="listISLeft" showSeparators="None" mode="None" class="bsTreeList"/>
+                        </VBox>
+                        <VBox class="bsIsTreeCol bsIsTreeColRight" width="50%">
+                            <Text text="비용 · 손익" class="bsIsColHeader"/>
+                            <List id="listISRight" showSeparators="None" mode="None" class="bsTreeList"/>
+                        </VBox>
+                    </HBox>
+                    <HBox class="bsTotalRow" justifyContent="SpaceBetween" alignItems="Center">
+                        <Text text="당기순이익 (Net Income)" class="bsTotalLabel"/>
+                        <Text id="txtNetIncomeBot" text="-" class="bsTotalNum"/>
+                    </HBox>
+                </VBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑦ Footer
+                     ════════════════════════════════════════════════ -->
+                <HBox justifyContent="End" class="bsFooter">
+                    <Text text="ZCDS_C3_FI_0002_CDS · OData 연동 · ISdataSet" class="bsInfoBox"/>
+                </HBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

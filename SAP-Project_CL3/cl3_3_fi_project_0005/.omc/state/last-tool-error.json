@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"ls \\\"C:\\\\Users\\\\pc\\\\Desktop\\\\fiori-main\\\\SAP-Project_CL3\\\\\\\"\"}",
+  "error": "Exit code 2\n/usr/bin/bash: eval: line 1: unexpected EOF while looking for matching `\"'",
+  "timestamp": "2026-05-27T00:30:17.452Z",
+  "retry_count": 1
+}

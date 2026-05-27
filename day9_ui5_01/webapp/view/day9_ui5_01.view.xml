@@ -1,0 +1,148 @@
+<mvc:View controllerName="code.cl3.day9ui501.controller.day9_ui5_01"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified"
+    >
+    <Page id="page" title="{i18n>title}">
+        <Panel  >
+            <t:Table    id="table"
+                        selectionMode="MultiToggle"
+                        rows="{server2>/airSet}"
+                        filter="filterPrice"
+                        ariaLabelledBy="title"
+                        width="auto"
+            >
+                <t:extension>
+                    <OverflowToolbar style="Clear">
+                        <Title id="title" text="Products"/>
+                            <ToolbarSpacer />
+                                <Input id="word" placeholder="Code" width="10rem" />
+                                <Input id="word2" placeholder="Name" width="10rem" />
+                                <Button id="btn1" icon="sap-icon://search" type="Attention" press="onSearch" />
+                                <Button id="btn2" icon="sap-icon://search" type="Attention" press="onPress" />
+                            <ToolbarSeparator/>
+
+                        <SearchField
+                            placeholder="항공사 이름을 입력하세요"
+                            search="filterGlobally"
+                            width="285px"/>
+
+                    </OverflowToolbar>
+                </t:extension>
+                    <t:columns>
+                        <t:Column filterProperty="Code">
+                            <Label text="Airline" />
+                            <t:template>
+                                <Text text="{server2>Carrid}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column filterProperty="Name">
+                            <Label text="Airline name" />
+                            <t:template>
+                                <Text text="{server2>Carrname}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column filterProperty="Price">
+                            <Label text="Price" />
+                            <t:template>
+                                <Text text="{server2>Price}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column filterProperty="Currency">
+                            <Label text="Currency" />
+                            <t:template>
+                                <Text text="{server2>Curkey}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                    </t:columns>
+            </t:Table>
+        </Panel>
+
+    <tnt:ToolHeader class="sapUiTinyMargin"/>
+
+    <VBox >
+        <Panel width="700px"
+                height="250px"
+                headerText="InteractiveBarChart"
+        >
+            <FlexBox    width="30rem" 
+                        height="10rem" 
+                        alignItems="Center" 
+                        class="sapUiSmallMargin"
+            >
+                <items>
+                    <mc:InteractiveBarChart labelWidth="10%"
+                                            selectionChanged="selectionChanged"
+                                            displayedBars="6"
+                                            bars="{server1>/chartSet}"
+                    >
+                        <mc:bars>
+                            <mc:InteractiveBarChartBar  label="{=parseFloat(${server1>Age})}"
+                                                        value="{=parseFloat(${server1>Answer})}"
+                                                        color="{server1>color}"
+                            />
+                        </mc:bars>
+                    </mc:InteractiveBarChart>
+                </items>
+            </FlexBox>
+        </Panel>
+
+        <Bar class="sapUiSmallMargin"/>
+
+        <Panel  width="700px"
+                height="250px"
+                headerText="InteractiveDonutChart"
+        >
+            <FlexBox    width="30rem" 
+                    height="10rem" 
+                    alignItems="Center" 
+                    class="sapUiSmallMargin"
+            >
+                <items>
+                    <mc:InteractiveDonutChart   selectionChanged="onSelectionChanged"
+                                                segments="{server1>/chartSet}"
+                                                displayedSegments="6"
+                    >
+                        <mc:segments>
+                            <mc:InteractiveDonutChartSegment    label="{=parseFloat(${server1>Age})}"
+                                                                value="{=parseFloat(${server1>Answer})}"
+                                                                color="{server1>color}"
+                                                                />
+                        </mc:segments>
+                    </mc:InteractiveDonutChart>
+                </items>
+            </FlexBox>
+        </Panel>
+
+         <Bar class="sapUiSmallMargin"/>
+    
+        <Panel  width="700px"
+                height="250px"
+                headerText="InteractiveLineChart"
+        >
+            <FlexBox    width="30rem" 
+                    height="10rem" 
+                    alignItems="Center" 
+                    class="sapUiSmallMargin"
+            >
+                <items>
+                    <mc:InteractiveLineChart  selectionChanged="selectionChanged" 
+                                                points="{server1>/chartSet}"
+                                                >
+                        <mc:points>
+                            <mc:InteractiveLineChartPoint   label="{=parseFloat(${server1>Age})}"
+                                                            value="{=parseFloat(${server1>Answer})}"
+                                                            color="{server1>color}"
+                            />
+                        </mc:points>
+                    </mc:InteractiveLineChart>
+                </items>
+            </FlexBox>
+        </Panel>
+    </VBox>
+    </Page>
+</mvc:View>

@@ -1,0 +1,24 @@
+{
+  "generationParameters": {
+    "generationDate": "Tue May 19 2026 14:28:06 GMT+0900 (Korean Standard Time)",
+    "generatorPlatform": "Visual Studio Code",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "http://bgissap1.bgissap.co.kr:8000/sap/opu/odata/sap/ZCDS_C3_FI_0005_CDS",
+    "appName": "fi_project_module_name",
+    "appTitle": "FI Project",
+    "appDescription": "FI Proejct 전표 상세조회 프로그램",
+    "appNamespace": "cl3_27_ns",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.0",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.19.6",
+    "template": "Basic V2",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}

@@ -1,0 +1,358 @@
+<!--
+    ═══════════════════════════════════════════════════════════
+    뷰      : CL3_Fiori_FI_Project_0001.view.xml
+    화면    : 재무상태표 (Balance Sheet) 조회
+    컨트롤러: CL3_Fiori_FI_Project_0001.controller.js
+    CSS     : webapp/css/style.css
+
+    화면 구성 순서:
+      ① 타이틀
+      ② 필터 바 (기준일자 / 비교연도 / 회사코드 / 버튼)
+      ③ 드릴다운 팝업 (dependents — 계정 클릭 시 전표 목록)
+      ④ 차트 + 전기비교 테이블
+      ⑤ KPI 카드 5개 (자산/유동/비유동/부채/자본)
+      ⑥ BS 대조표 (자산 패널 | 부채+자본 패널)
+      ⑦ Footer
+    ═══════════════════════════════════════════════════════════
+-->
+<mvc:View controllerName="fiisdata.cl33fiproject0001.controller.CL3_Fiori_FI_Project_0001"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+    <Page id="page" showHeader="true" backgroundDesign="Solid" class="fiPage">
+
+        <customHeader>
+            <Bar class="fiAppHeader" design="Header">
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" class="headerBackBtn" tooltip="뒤로"/>
+                    <core:Icon src="sap-icon://bar-chart" class="headerAppIcon"/>
+                    <HBox class="headerTitleBox" alignItems="Center">
+                        <Title text="재무상태표" level="H4" class="headerAppTitle"/>
+                        <Text text="Balance Sheet · 8282 HubRoad" class="headerAppSub"/>
+                    </HBox>
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <!-- 최외곽 VBox: CSS [1] .bsPage -->
+            <VBox class="bsPage">
+
+                <!-- ════════════════════════════════════════════════
+                     ② 필터 바
+                        - dpKeyDate   : 기준일자 DatePicker (yyyyMMdd 형식)
+                        - inpCompYear : 비교연도 Input (4자리, 전기비교에 사용)
+                        - inpBukrs    : 회사코드 Input (편집 불가, 고정 8282)
+                        - 조회 버튼   : onSearch() 호출
+                        - statusBalance : 자산=부채+자본 균형 상태 뱃지
+                        - 전체 펼치기/접기: onExpandAll() / onCollapseAll()
+                        - PDF/Excel 버튼 : onPressPdf() / onPressExcel()
+                        CSS: .bsFilterBar / .bsFi / .bsFl / .bsMlAuto / .bsBalanceBadge
+                        ※ 필터 필드 추가 시 VBox class="bsFi" 블록을 복사하세요.
+                     ════════════════════════════════════════════════ -->
+                <HBox alignItems="End" class="bsFilterBar" wrap="Wrap">
+                    <VBox class="bsFi">
+                        <Label text="기준일자 *" class="bsFl"/>
+                        <DatePicker id="dpKeyDate" valueFormat="yyyyMMdd" displayFormat="yyyy.MM.dd" width="140px" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="비교연도" class="bsFl"/>
+                        <Input id="inpCompYear" maxLength="4" width="90px" placeholder="2025" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="회사코드" class="bsFl"/>
+                        <Input id="inpBukrs" value="8282" maxLength="4" width="70px" editable="false" class="bsFin"/>
+                    </VBox>
+                    <Button text="조회"  type="Emphasized"  icon="sap-icon://search"         press=".onSearch"/>
+                    <!-- 우측 정렬 버튼 그룹 (margin-left:auto) -->
+                    <HBox class="bsMlAuto" alignItems="Center">
+                        <ObjectStatus id="statusBalance" text="균형 확인 전" state="None" class="bsBalanceBadge"/>
+                        <Button text="전체 펼치기"  type="Transparent" icon="sap-icon://expand-group"   press=".onExpandAll"/>
+                        <Button text="전체 접기"    type="Transparent" icon="sap-icon://collapse-group" press=".onCollapseAll"/>
+                        <Button icon="sap-icon://pdf-attachment"   type="Transparent" tooltip="PDF"   press=".onPressPdf"/>
+                        <Button icon="sap-icon://excel-attachment" type="Transparent" tooltip="Excel" press=".onPressExcel"/>
+                    </HBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ③ 드릴다운 팝업 (dependents)
+                        - Page 컨텐츠 바깥, dependents 에 선언해야
+                          SAP UI5가 라이프사이클을 올바르게 관리합니다.
+                        - 팝업 열기: 컨트롤러 onTreeItemPress()
+                        - 팝업 닫기: onDrillClose()
+                        - 전표조회(0002) 이동: onNavToDoc() / onDrillBelnrPress()
+                        ─ 내부 구성 ─
+                        [계정 정보 바]
+                          - 좌: 계정번호 뱃지(bsDrillSaknrCode) + 계정명(bsDrillSaknrName)
+                          - 우: 잔액 라벨(bsDrillBalLabel) + 잔액 금액(bsDrillBalAmt)
+                        [전표 테이블 tblDrill]
+                          - 전표번호(Link) / 전기일 / 유형 / 차대 / 금액 / 적요
+                          - 데이터: drillModel>/items
+                        CSS: .bsDrillDialog / .bsDrillInfoBar / .bsDrillTable 등
+                     ════════════════════════════════════════════════ -->
+                <dependents>
+                    <Dialog id="dlgDrill"
+                        title="{drillModel>/title}"
+                        contentWidth="900px"
+                        contentHeight="500px"
+                        draggable="true"
+                        resizable="true"
+                        class="bsDrillDialog">
+                        <content>
+                            <VBox>
+                                <!-- 계정·잔액 정보 바 -->
+                                <HBox class="bsDrillInfoBar" alignItems="Center" justifyContent="SpaceBetween">
+                                    <!-- 좌측: 계정과목번호 + 계정명 -->
+                                    <HBox alignItems="Center">
+                                        <Text text="{drillModel>/saknr}" class="bsDrillSaknrCode"/>
+                                        <Text text="{drillModel>/txt50}" class="bsDrillSaknrName"/>
+                                    </HBox>
+                                    <!-- 우측: 잔액 -->
+                                    <VBox class="bsDrillBalBox" alignItems="End">
+                                        <Text text="당기 누계 잔액 (기준일 기준)" class="bsDrillBalLabel"/>
+                                        <Text text="{drillModel>/balance} KRW" class="bsDrillBalAmt"/>
+                                    </VBox>
+                                </HBox>
+                                <!-- 전표 목록 테이블 -->
+                                <Table id="tblDrill"
+                                    items="{drillModel>/items}"
+                                    mode="SingleSelectMaster"
+                                    growing="true"
+                                    growingThreshold="25"
+                                    alternateRowColors="false"
+                                    showSeparators="Inner"
+                                    class="bsDrillTable">
+                                    <columns>
+                                        <Column width="110px"><Text text="전표번호"/></Column>
+                                        <Column width="98px"><Text text="전기일"/></Column>
+                                        <Column width="60px" hAlign="Center"><Text text="유형"/></Column>
+                                        <Column width="72px" hAlign="Center"><Text text="차/대"/></Column>
+                                        <Column hAlign="End" width="160px"><Text text="금액 (KRW)"/></Column>
+                                        <Column><Text text="적요"/></Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem type="Active" press=".onDrillItemPress">
+                                            <cells>
+                                                <!-- 전표번호: 클릭 시 onDrillBelnrPress() → 0002 이동 -->
+                                                <Link text="{drillModel>belnr}" press=".onDrillBelnrPress" class="bsDrillBelnr"/>
+                                                <Text text="{drillModel>budat}" class="bsDrillDate"/>
+                                                <Text text="{drillModel>blart}" textAlign="Center"/>
+                                                <!-- shkzgState: S=Information(파랑), H=None(회색) -->
+                                                <ObjectStatus text="{drillModel>shkzg}" state="{drillModel>shkzgState}" class="bsDrillShkzg"/>
+                                                <Text text="{drillModel>dmbtr}" class="bsDrillAmt" textAlign="End"/>
+                                                <Text text="{drillModel>sgtxt}" wrapping="false" class="bsDrillSgtxt"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </VBox>
+                        </content>
+                        <!-- 닫기 버튼 -->
+                        <beginButton>
+                            <Button text="닫기" press=".onDrillClose" type="Transparent"/>
+                        </beginButton>
+                        <!-- 전표조회 이동 버튼 (선택된 행 or 첫 번째 행의 전표번호로 이동) -->
+                        <endButton>
+                            <Button text="전표조회 이동" icon="sap-icon://forward" press=".onNavToDoc" type="Emphasized"/>
+                        </endButton>
+                    </Dialog>
+                </dependents>
+
+                <!-- ════════════════════════════════════════════════
+                     ④ 차트 + 전기비교 테이블 (좌우 50% 분할)
+                        ─ 좌측 (50%): 구성비율 바 차트 ─
+                          - listAssetChart : 자산 구성비율 바 차트 List
+                          - listLeChart    : 부채·자본 구성비율 바 차트 List
+                          - chartPeriodText: 기간 뱃지 (예: "2026년 1~3월 누계")
+                          - 차트 항목은 컨트롤러 _renderBarChart() 에서 동적 생성
+                        ─ 우측 (50%): 전기비교 테이블 ─
+                          - tblCompare     : 전기/당기/증감 비교 Table
+                          - 데이터: compareModel>/items
+                          - compareTitleText: 테이블 제목 (연도 범위 포함)
+                        CSS: .bsChartWrap / .bsChartBox / .bsBarList / .bsCompareTable
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsChartWrap">
+                    <!-- 좌: 구성비율 바 차트 -->
+                    <VBox class="bsChartBox" width="50%">
+                        <HBox class="bsChartTitleRow" justifyContent="SpaceBetween">
+                            <Title text="자산 구성 비율" level="H6" class="bsChartTitle"/>
+                            <Text id="chartPeriodText" text="" class="bsChartPeriod"/>
+                        </HBox>
+                        <!-- 자산 바 차트 — 컨트롤러 _renderBarChart("listAssetChart", ...) -->
+                        <List id="listAssetChart" showSeparators="None" class="bsBarList"/>
+                        <Title text="부채·자본 구성 비율" level="H6" class="bsChartTitle bsMt"/>
+                        <!-- 부채·자본 바 차트 — 컨트롤러 _renderBarChart("listLeChart", ...) -->
+                        <List id="listLeChart" showSeparators="None" class="bsBarList"/>
+                    </VBox>
+                    <!-- 우: 전기비교 테이블 -->
+                    <VBox class="bsChartBox" width="50%">
+                        <Title id="compareTitleText" text="전기 대비 증감" level="H6" class="bsChartTitle"/>
+                        <Table id="tblCompare"
+                            items="{compareModel>/items}"
+                            showSeparators="Inner"
+                            alternateRowColors="false"
+                            class="bsCompareTable">
+                            <columns>
+                                <Column width="24%"><Text text="항목"/></Column>
+                                <Column hAlign="End" width="26%"><Text text="전기 (KRW)"/></Column>
+                                <Column hAlign="End" width="26%"><Text text="당기 (KRW)"/></Column>
+                                <Column hAlign="End" width="24%"><Text text="증감"/></Column>
+                            </columns>
+                            <items>
+                                <!-- grpClass: 소계행이면 "bsCompareGrp", 아니면 "" -->
+                                <ColumnListItem class="{compareModel>grpClass}">
+                                    <cells>
+                                        <!-- labelClass: 소계 "bsCompareLabelGrp", 세부 "bsCompareLabel" -->
+                                        <Text text="{compareModel>label}" class="{compareModel>labelClass}"/>
+                                        <Text text="{compareModel>prev}" class="bsNumRight"/>
+                                        <Text text="{compareModel>curr}" class="bsNumRight"/>
+                                        <!-- deltaState: 증가=Success(초록), 감소=Error(빨강) -->
+                                        <ObjectStatus text="{compareModel>delta}" state="{compareModel>deltaState}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑤ KPI 카드 5개
+                        각 카드 구성:
+                          - Text (bsKpiLabel)  : 카드 제목
+                          - Text (bsKpiVal)    : 금액 숫자 (컨트롤러에서 setText)
+                          - HBox (bsKpiSubWrap): 소제목 + 퍼센트 숫자
+                        카드 ID:
+                          - kpiAsset       : 자산 총계
+                          - kpiCA          : 유동자산
+                          - kpiNCA         : 비유동자산
+                          - kpiLiab        : 부채 총계
+                          - kpiEquity      : 자본 총계
+                        소제목 숫자 ID:
+                          - kpiAssetSubNum / kpiCASubNum / kpiNCASubNum
+                            kpiLiabSubNum  / kpiEquitySubNum
+                        컨트롤러: _updateKPI()
+                        CSS: .bsKpiRow / .bsKpi / .bsKpiAccent·Warn·Ok
+                             .bsKpiLabel / .bsKpiVal / .bsKpiBlue·Red·Green
+                             .bsKpiSubWrap / .bsKpiSubTxt / .bsKpiSubNum
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsKpiRow" justifyContent="SpaceBetween">
+                    <!-- 자산 총계 카드 (파란 왼쪽 테두리) -->
+                    <VBox class="bsKpi bsKpiAccent" renderType="Bare">
+                        <Text text="자산 총계" class="bsKpiLabel"/>
+                        <Text id="kpiAsset"  text="-" class="bsKpiVal bsKpiBlue"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="총 자산 비율" class="bsKpiSubTxt"/>
+                            <Text id="kpiAssetSubNum" text="-" class="bsKpiSubNum bsKpiBlueSub"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 유동자산 카드 -->
+                    <VBox class="bsKpi" renderType="Bare">
+                        <Text text="유동자산" class="bsKpiLabel"/>
+                        <Text id="kpiCA"     text="-" class="bsKpiVal bsKpiBlue"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="자산 대비" class="bsKpiSubTxt"/>
+                            <Text id="kpiCASubNum" text="-" class="bsKpiSubNum bsKpiBlueSub"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 비유동자산 카드 -->
+                    <VBox class="bsKpi" renderType="Bare">
+                        <Text text="비유동자산" class="bsKpiLabel"/>
+                        <Text id="kpiNCA"    text="-" class="bsKpiVal bsKpiBlue"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="자산 대비" class="bsKpiSubTxt"/>
+                            <Text id="kpiNCASubNum" text="-" class="bsKpiSubNum bsKpiBlueSub"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 부채 총계 카드 (빨간 왼쪽 테두리) -->
+                    <VBox class="bsKpi bsKpiWarn" renderType="Bare">
+                        <Text text="부채 총계" class="bsKpiLabel"/>
+                        <Text id="kpiLiab"   text="-" class="bsKpiVal bsKpiRed"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="부채비율" class="bsKpiSubTxt"/>
+                            <Text id="kpiLiabSubNum" text="-" class="bsKpiSubNum bsKpiRedSub"/>
+                        </HBox>
+                    </VBox>
+                    <!-- 자본 총계 카드 (초록 왼쪽 테두리) -->
+                    <VBox class="bsKpi bsKpiOk" renderType="Bare">
+                        <Text text="자본 총계" class="bsKpiLabel"/>
+                        <Text id="kpiEquity" text="-" class="bsKpiVal bsKpiGreen"/>
+                        <HBox renderType="Bare" class="bsKpiSubWrap">
+                            <Text text="자산 대비" class="bsKpiSubTxt"/>
+                            <Text id="kpiEquitySubNum" text="-" class="bsKpiSubNum bsKpiGreenSub"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑥ BS 대조표 (자산 | 부채+자본 좌우 병렬)
+                        ─ 자산 패널 (50%) ─
+                          - txtAssetTotal   : 헤더 합계 금액 Text
+                          - listAsset       : 자산 트리 List (컨트롤러 동적 생성)
+                          - txtAssetTotalBot: 하단 총계 Text
+                        ─ 부채+자본 패널 (50%) ─
+                          - txtLeTotal      : 헤더 합계 금액 Text
+                          - listLE          : 부채+자본 트리 List
+                          - txtLeTotalBot   : 하단 총계 Text
+                        컨트롤러: _renderTreeList()
+                        클릭 이벤트: onTreeItemPress() → 드릴다운 팝업 오픈
+                        CSS: .bsWrap / .bsSideLeft / .bsHead / .bsHeadText·Num
+                             .bsTreeList / .bsLvl1·2·3Row / .bsSubtotalRow
+                             .bsL1TotalRow / .bsTotalRow
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsWrap" alignItems="Stretch">
+
+                    <!-- 자산 패널 -->
+                    <VBox class="bsSide bsSideLeft" width="50%">
+                        <HBox class="bsHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="자산 (Assets)" class="bsHeadText"/>
+                            <Text id="txtAssetTotal" text="-" class="bsHeadNum"/>
+                        </HBox>
+                        <!-- 트리 List: 컨트롤러가 _renderTreeList("listAsset",...) 로 채움 -->
+                        <List id="listAsset"
+                            showSeparators="None"
+                            mode="None"
+                            class="bsTreeList">
+                        </List>
+                        <!-- 총계 바: 자산 합계 표시 -->
+                        <HBox class="bsTotalRow" justifyContent="SpaceBetween" alignItems="Center" id="assetTotalRow">
+                            <Text text="자산 총계" class="bsTotalLabel"/>
+                            <Text id="txtAssetTotalBot" text="-" class="bsTotalNum"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- 부채+자본 패널 -->
+                    <VBox class="bsSide" width="50%">
+                        <HBox class="bsHead" justifyContent="SpaceBetween" alignItems="Center">
+                            <Text text="부채·자본 (Liabilities &amp; Equity)" class="bsHeadText"/>
+                            <Text id="txtLeTotal" text="-" class="bsHeadNum"/>
+                        </HBox>
+                        <!-- 트리 List: 컨트롤러가 _renderTreeList("listLE",...) 로 채움 -->
+                        <List id="listLE"
+                            showSeparators="None"
+                            mode="None"
+                            class="bsTreeList">
+                        </List>
+                        <!-- 총계 바: 부채+자본 합계 표시 -->
+                        <HBox class="bsTotalRow" justifyContent="SpaceBetween" alignItems="Center" id="leTotalRow">
+                            <Text text="부채·자본 총계" class="bsTotalLabel"/>
+                            <Text id="txtLeTotalBot" text="-" class="bsTotalNum"/>
+                        </HBox>
+                    </VBox>
+
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑦ 페이지 Footer
+                        - 화면 하단 우측에 OData 연결 정보 표시
+                        CSS: .bsFooter / .bsInfoBox
+                     ════════════════════════════════════════════════ -->
+                <HBox justifyContent="End" class="bsFooter">
+                    <Text text="ZI_FI_BS · OData 연동 · BSdataSet" class="bsInfoBox"/>
+                </HBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

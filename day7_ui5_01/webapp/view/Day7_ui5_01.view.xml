@@ -1,0 +1,170 @@
+<mvc:View controllerName="code.cl3.day7ui501.controller.Day7_ui5_01"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:ch="sap.suite.ui.microchart"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    >
+    <Page id="page" title="{i18n>title}">
+    <FlexBox
+        justifyContent="Center"
+        alignItems="Center"
+        class="sapUiSmallMarginTop">
+        <Panel headerText="Calculator" class="sapUiResponsiveMargin" width="14rem">
+            <VBox >
+                <Input id="input" width="12rem" editable="false"/>
+                <HBox >
+                    <Button id="7" text="7" press="setNumber('7')" width="3rem"/>
+                    <Button id="8" text="8" press="setNumber('8')" width="3rem"/>
+                    <Button id="9" text="9" press="setNumber('9')" width="3rem"/>
+                    <Button id="div" text="/" press="setNumber('/')" width="3rem" type="Accept"/>
+                </HBox>
+                <HBox >
+                    <Button id="4" text="4" press="setNumber('4')" width="3rem"/>
+                    <Button id="5" text="5" press="setNumber('5')" width="3rem"/>
+                    <Button id="6" text="6" press="setNumber('6')" width="3rem"/>
+                    <Button id="x" text="x" press="setNumber('*')" width="3rem" type="Attention"/>
+                </HBox>
+                <HBox >
+                    <Button id="1" text="1" press="setNumber('1')" width="3rem"/>
+                    <Button id="2" text="2" press="setNumber('2')" width="3rem"/>
+                    <Button id="3" text="3" press="setNumber('3')" width="3rem"/>
+                    <Button id="-" text="-" press="setNumber('-')" width="3rem" type="Emphasized"/>
+                </HBox>
+                <HBox >
+                    <Button id="ok"  text="="   press="setNumber('eq')" width="3rem" type="Unstyled"/>
+                    <Button id="clr" text="CLR" press="setNumber('')"   width="3rem" type="Unstyled"/>
+                    <Button id="zero" text="0"  press="setNumber('0')"  width="3rem"/>
+                    <Button id="plus" text="+" press="setNumber('+')" width="3rem" type="Accept"/>
+                </HBox>
+            </VBox>
+        </Panel>
+    </FlexBox>
+    <HBox>
+        <Toolbar ></Toolbar>
+    </HBox>
+        <t:Table rows="{server1>/gsberSet}"
+				selectionMode="MultiToggle"
+				paste="onPaste"
+				ariaLabelledBy="title"
+                visibleRowCountMode="Interactive"
+         >
+            <t:extension>
+                <OverflowToolbar style="Clear">
+					<Title id="data" text="뭔데이터"/>
+				</OverflowToolbar>
+            </t:extension>
+            <t:columns>
+               <t:Column width="">
+                    <Label text="Business Area" />
+                    <t:template>
+                        <Text text="{server1>Gsber}" wrapping="false" />
+                    </t:template>
+				</t:Column>
+                <t:Column width="">
+                    <Label text="Biz Area Name" />
+                    <t:template>
+                        <Text text="{server1>Gtext}" wrapping="false" />
+                    </t:template>
+				</t:Column>
+                <t:Column width="">
+                    <Label text="Product Order" />
+                    <t:template>
+                        <Text text="{server1>Acfnr}" wrapping="false" />
+                    </t:template>
+				</t:Column>
+                <t:Column width="">
+                    <Label text="Customer Id" />
+                    <t:template>
+                        <Text text="{server1>KUN1}" wrapping="false" />
+                    </t:template>
+				</t:Column>
+            </t:columns>
+        </t:Table>
+            <Panel  class="sapUiResponsiveMargin" width="auto">
+
+                <viz:VizFrame   uiConfig="{applicationSet:'fiori'}"
+                                height='10rem' 
+                                width="10rem" 
+                                vizType='donut'
+                                vizProperties="{ title: {text : 'Air fare', visible : true}}">
+
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data= "{server1>/chartSet}">
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition   name="Card Name"
+                                                                value="{server1>Cardid}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="Price"
+                                                            value="{server1>Price}"/>
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                       <viz.feeds:FeedItem  uid="color"
+                                            type="Dimension"
+                                            values="Card Name"
+                        />
+                        <viz.feeds:FeedItem uid="size"
+                                            type="Measure"
+                                            values="Price"
+                        />
+                    </viz:feeds>
+                    <viz:dependents>
+                        <viz:Popover id="idPopOve2"/>
+                    </viz:dependents>
+
+                </viz:VizFrame>
+            </Panel>
+
+            <Panel class="sapUiResponsiveMargin" width="auto">
+                <viz:VizFrame   uiConfig="{applicationSet:'fiori'}"
+                                height='30rem' 
+                                width="50rem" 
+                                vizType='bar'
+                                vizProperties="{ title: {text : '매출 추이', visible : true}}"
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{server1>/ProfitSet}" >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition   name="제품명"
+                                                                value="{server1>Prdnm}"/>
+                                <viz.data:DimensionDefinition   name="Prd 아이디값"
+                                                                value="{server1>Prdid}"/>
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="총 매출"
+                                                            value="{server1>Profit}"/>
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+                    <viz:feeds>
+                        <viz.feeds:FeedItem id="valueAxisFeed"
+                                            uid="valueAxis"
+                                            type="Measure"
+                                            values="총 매출"
+                        />
+                        <viz.feeds:FeedItem uid="categoryAxis"
+                                            type="Dimension"
+                                            values="Prd 아이디값"
+                        />
+                        <viz.feeds:FeedItem uid="categoryAxis"
+                                            type="Dimension"
+                                            values="제품명"
+                        />
+                    </viz:feeds>
+                        <viz:dependents>
+                            <viz:Popover id="idPopOve3"/>
+                        </viz:dependents>
+                </viz:VizFrame>
+            </Panel>
+            <Panel ></Panel>
+    </Page>
+</mvc:View>

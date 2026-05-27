@@ -1,0 +1,20 @@
+<mvc:View controllerName="code.cl3.day1ui501.controller.Day1View01"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <HBox >
+            <Input id="score" placeholder="Enter score"/>
+            <Button text="Button" icon="sap-icon://accept" type="Emphasized" press="oncheck()"/>
+        </HBox>
+
+        <Label text="fruits" />
+        <HBox >
+            <Input id="alpha" placeholder="enter fruits"/>
+            <Button text="button" icon="sap-icon://retail-store" press="onpress()"/>
+        </HBox>
+
+        <HBox>
+        
+        </HBox>
+    </Page>
+</mvc:View>

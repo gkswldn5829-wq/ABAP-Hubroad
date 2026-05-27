@@ -1,0 +1,8 @@
+<mvc:View controllerName="code.cl3.day9ui502.controller.day9_ui5_02"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <Input />
+        <Button />
+    </Page>
+</mvc:View>

@@ -1,0 +1,492 @@
+<!--
+    ═══════════════════════════════════════════════════════════
+    뷰      : cl3_3_fi_project_0002.view.xml
+    화면    : 전표 상세조회 (Document Detail)
+    컨트롤러: cl3_3_fi_project_0002.controller.js
+    CSS     : webapp/css/style.css
+    모델    : viewModel (JSONModel) — 컨트롤러 onInit() 에서 초기화
+
+    화면 구성 순서:
+      ① 타이틀
+      ② 필터 바 (전표번호 / 회계연도 / 회사코드 / 버튼)
+      ③ 탐색도움말 Dialogs (dependents)
+           - dlgVH      : 전표번호 탐색도움말
+           - dlgBlartVH : 전표유형 탐색도움말
+      ④ KPI 카드 5개 (전표유형 / 전기일 / 차변 / 대변 / 균형)
+      ⑤ 전표 헤더 카드 (8개 메타데이터 필드)
+      ⑥ 라인 아이템 테이블 섹션
+      ⑦ 세금계산서 섹션 (DR 전표 한정)
+      ⑧ Footer
+    ═══════════════════════════════════════════════════════════
+-->
+<mvc:View
+    controllerName="cl327ns.fiprojectmodulename.controller.cl3_3_fi_project_0002"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page showHeader="true" backgroundDesign="Solid" enableScrolling="true" class="fiPage">
+
+        <customHeader>
+            <Bar class="fiAppHeader" design="Header">
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" class="headerBackBtn" tooltip="뒤로"/>
+                    <core:Icon src="sap-icon://document-text" class="headerAppIcon"/>
+                    <HBox class="headerTitleBox" alignItems="Center">
+                        <Title text="전표 상세조회" level="H4" class="headerAppTitle"/>
+                        <Text text="Document Detail · 8282 HubRoad" class="headerAppSub"/>
+                    </HBox>
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <!-- 최외곽 VBox: CSS [2] .bsPage -->
+            <VBox class="bsPage">
+
+                <!-- ════════════════════════════════════════════════
+                     ② 필터 바
+                        - inputBelnr : 전표번호 Input
+                            showValueHelp="true" → 우측 아이콘 클릭 시 onVHOpen()
+                            submit="onSearch" → Enter 키로 바로 조회
+                        - inputGjahr : 회계연도 Input (4자리)
+                        - 회사코드   : 고정 8282 (편집 불가)
+                        - 조회 버튼  : onSearch() 호출
+                        - 인쇄 버튼  : onPrint()
+                        - 내보내기   : onExport()
+                        데이터 바인딩: viewModel>/belnr, viewModel>/gjahr
+                        CSS: .bsFilterBar / .bsFi / .bsFl / .bsMlAuto
+                     ════════════════════════════════════════════════ -->
+                <HBox alignItems="End" class="bsFilterBar" wrap="Wrap">
+                    <VBox class="bsFi">
+                        <Label text="전표번호 *" class="bsFl"/>
+                        <Input id="inputBelnr"
+                               value="{viewModel>/belnr}"
+                               placeholder="전표번호 입력"
+                               showValueHelp="true"
+                               valueHelpRequest="onVHOpen"
+                               submit="onSearch"
+                               width="160px"
+                               class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="회계연도" class="bsFl"/>
+                        <Input id="inputGjahr" value="{viewModel>/gjahr}" maxLength="4" width="80px" submit="onSearch" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="회사코드" class="bsFl"/>
+                        <Input value="8282" maxLength="4" width="70px" editable="false" class="bsFin"/>
+                    </VBox>
+                    <Button text="조회" type="Emphasized" icon="sap-icon://search" press="onSearch"/>
+                    <!-- 우측 버튼 그룹 -->
+                    <HBox class="bsMlAuto" alignItems="Center">
+                        <Button text="인쇄"    type="Transparent" icon="sap-icon://print"           press="onPrint"/>
+                        <Button text="내보내기" type="Transparent" icon="sap-icon://excel-attachment" press="onExport"/>
+                    </HBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ③ 탐색도움말 Dialogs (dependents)
+                        Page 안 dependents 에 선언 → SAP UI5 라이프사이클 관리
+
+                        [3-A] dlgVH : 전표번호 탐색도움말
+                          - 내부 필터 바: inputVHBelnr / inputVHGjahr / dpVHBudat / inputVHBlart / inputVHBktxt
+                          - 검색 버튼  : onVHSearch()
+                          - 테이블     : tblVH (viewModel>/vhItems 바인딩)
+                          - 행 선택    : onVHItemSelect() → 전표번호 inputBelnr에 입력 후 자동 조회
+                          - 닫기       : onVHClose()
+                          CSS: .bsDrillDialog / .bsFilterBarFlat / .fiVhTable
+                               .fiVhBelnr / .fiVhDate / .fiVhAmt / .fiVhSgtxt
+
+                        [3-B] dlgBlartVH : 전표유형 탐색도움말
+                          - 목록      : listBlartVH (viewModel>/blartList 바인딩)
+                          - 항목 선택 : onBlartVHItemSelect() → inputVHBlart에 코드 입력
+                          - 닫기      : onBlartVHClose()
+                          CSS: .bsDrillDialog / .fiBlartRow / .fiBlartCode / .fiBlartDesc
+                     ════════════════════════════════════════════════ -->
+                <dependents>
+                    <!-- [3-A] 전표번호 탐색도움말 -->
+                    <Dialog id="dlgVH"
+                        title="전표번호 탐색도움말"
+                        contentWidth="920px"
+                        contentHeight="480px"
+                        draggable="true"
+                        resizable="true"
+                        class="bsDrillDialog">
+                        <content>
+                            <VBox>
+                                <!-- Dialog 내부 필터 바 (상단 테두리 없는 flat 스타일) -->
+                                <HBox alignItems="End" wrap="Wrap" class="bsFilterBar bsFilterBarFlat">
+                                    <VBox class="bsFi">
+                                        <Label text="전표번호 (포함)" class="bsFl"/>
+                                        <Input id="inputVHBelnr" placeholder="번호 일부..." width="140px" submit="onVHSearch" class="bsFin"/>
+                                    </VBox>
+                                    <VBox class="bsFi">
+                                        <Label text="회계연도" class="bsFl"/>
+                                        <Input id="inputVHGjahr" value="{viewModel>/gjahr}" maxLength="4" width="76px" submit="onVHSearch" class="bsFin"/>
+                                    </VBox>
+                                    <VBox class="bsFi">
+                                        <Label text="전기일" class="bsFl"/>
+                                        <DatePicker id="dpVHBudat" displayFormat="yyyy.MM.dd" valueFormat="yyyyMMdd" width="128px" placeholder="yyyy.MM.dd" class="bsFin"/>
+                                    </VBox>
+                                    <VBox class="bsFi">
+                                        <Label text="전표유형" class="bsFl"/>
+                                        <!-- showValueHelp: 전표유형 탐색도움말(dlgBlartVH) 호출 -->
+                                        <Input id="inputVHBlart" placeholder="DR, KR…" maxLength="2" width="76px" submit="onVHSearch" class="bsFin"
+                                               showValueHelp="true" valueHelpRequest="onBlartVHOpen"/>
+                                    </VBox>
+                                    <VBox class="bsFi">
+                                        <Label text="헤더텍스트 (포함)" class="bsFl"/>
+                                        <Input id="inputVHBktxt" placeholder="텍스트 일부..." width="150px" submit="onVHSearch" class="bsFin"/>
+                                    </VBox>
+                                    <Button text="검색" type="Emphasized" icon="sap-icon://search" press="onVHSearch"/>
+                                </HBox>
+                                <!-- 전표 목록 테이블 (최대 30건씩 growing 로드) -->
+                                <Table id="tblVH"
+                                    items="{viewModel>/vhItems}"
+                                    class="fiVhTable"
+                                    showSeparators="Inner"
+                                    backgroundDesign="Transparent"
+                                    noDataText="검색 버튼을 눌러 전표 목록을 조회하세요."
+                                    growing="true"
+                                    growingThreshold="30">
+                                    <columns>
+                                        <Column width="120px"><Text text="전표번호"/></Column>
+                                        <Column width="94px"><Text text="전기일"/></Column>
+                                        <Column width="54px" hAlign="Center"><Text text="유형"/></Column>
+                                        <Column width="280px"><Text text="헤더텍스트"/></Column>
+                                        <Column width="140px" hAlign="End"><Text text="금액 (KRW)"/></Column>
+                                    </columns>
+                                    <items>
+                                        <!-- 행 클릭: onVHItemSelect() → 전표번호 자동 입력 + 조회 실행 -->
+                                        <ColumnListItem type="Active" press="onVHItemSelect">
+                                            <cells>
+                                                <Text text="{viewModel>Belnr}"     class="fiVhBelnr"/>
+                                                <Text text="{viewModel>budatFmt}"  class="fiVhDate"/>
+                                                <Text text="{viewModel>Blart}"     textAlign="Center"/>
+                                                <Text text="{viewModel>Bktxt}"     wrapping="false" class="fiVhSgtxt"/>
+                                                <Text text="{viewModel>hwrbtrFmt}" class="fiVhAmt" textAlign="End"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </VBox>
+                        </content>
+                        <beginButton>
+                            <Button text="닫기" press="onVHClose" type="Transparent"/>
+                        </beginButton>
+                    </Dialog>
+
+                    <!-- [3-B] 전표유형 탐색도움말 -->
+                    <Dialog id="dlgBlartVH"
+                        title="전표유형 탐색도움말"
+                        contentWidth="360px"
+                        contentHeight="460px"
+                        draggable="true"
+                        resizable="true"
+                        class="bsDrillDialog">
+                        <content>
+                            <!-- 전표유형 목록: viewModel>/blartList (onInit에서 고정 데이터 세팅) -->
+                            <List id="listBlartVH"
+                                  items="{viewModel>/blartList}"
+                                  mode="None"
+                                  showSeparators="Inner"
+                                  backgroundDesign="Transparent">
+                                <!-- 행 클릭: onBlartVHItemSelect() → inputVHBlart에 코드 입력 -->
+                                <CustomListItem type="Active" press="onBlartVHItemSelect">
+                                    <HBox alignItems="Center" class="fiBlartRow">
+                                        <Text text="{viewModel>code}" class="fiBlartCode"/>
+                                        <Text text="{viewModel>desc}" class="fiBlartDesc"/>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </content>
+                        <beginButton>
+                            <Button text="닫기" press="onBlartVHClose" type="Transparent"/>
+                        </beginButton>
+                    </Dialog>
+                </dependents>
+
+                <!-- ════════════════════════════════════════════════
+                     ④ KPI 카드 5개
+                        - viewModel>/hasData 가 true 일 때만 표시
+                        - 데이터 바인딩: viewModel>/kpiType·kpiDate·kpiDebit·kpiCredit·kpiBalance
+                        - 컨트롤러 _processData() 에서 값 설정
+                        카드 순서: 전표유형 / 전기일 / 차변합계 / 대변합계 / 균형
+                        CSS: .bsKpiRow / .bsKpi / .bsKpiAccent·Warn·Ok
+                             .bsKpiLabel / .bsKpiVal / .bsKpiBlue·Red·Green
+                     ════════════════════════════════════════════════ -->
+                <HBox class="bsKpiRow" justifyContent="SpaceBetween" visible="{viewModel>/hasData}">
+                    <!-- 전표 유형 카드 -->
+                    <VBox class="bsKpi bsKpiAccent" renderType="Bare">
+                        <Text text="전표 유형" class="bsKpiLabel"/>
+                        <Text text="{viewModel>/kpiType}" class="bsKpiVal bsKpiBlue"/>
+                    </VBox>
+                    <!-- 전기일 카드 -->
+                    <VBox class="bsKpi" renderType="Bare">
+                        <Text text="전기일" class="bsKpiLabel"/>
+                        <Text text="{viewModel>/kpiDate}" class="bsKpiVal bsKpiBlue"/>
+                    </VBox>
+                    <!-- 차변 합계 카드 -->
+                    <VBox class="bsKpi bsKpiAccent" renderType="Bare">
+                        <Text text="차변 합계 (KRW)" class="bsKpiLabel"/>
+                        <Text text="{viewModel>/kpiDebit}" class="bsKpiVal bsKpiBlue"/>
+                    </VBox>
+                    <!-- 대변 합계 카드 (빨간 테두리) -->
+                    <VBox class="bsKpi bsKpiWarn" renderType="Bare">
+                        <Text text="대변 합계 (KRW)" class="bsKpiLabel"/>
+                        <Text text="{viewModel>/kpiCredit}" class="bsKpiVal bsKpiRed"/>
+                    </VBox>
+                    <!-- 차대 균형 카드 (초록 테두리) -->
+                    <VBox class="bsKpi bsKpiOk" renderType="Bare">
+                        <Text text="차대 균형" class="bsKpiLabel"/>
+                        <Text text="{viewModel>/kpiBalance}" class="bsKpiVal bsKpiGreen"/>
+                    </VBox>
+                </HBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑤ 전표 헤더 카드
+                        - viewModel>/hasData 가 true 일 때만 표시
+                        ─ 헤더 바 (파란 배경) ─
+                          - 전표번호 (fiDocNum)
+                          - 상태 배지: 전기완료/반제완료/가전기/역전표
+                            각 배지는 expression binding으로 하나만 표시
+                          - 전표유형 텍스트 (fiBlartText)
+                          - 최종변경 정보 (우측, fiLastChanged)
+                        ─ 메타데이터 그리드 (fiHdrGrid) — 4열×2행 ─
+                          필드 목록 (viewModel>/header/ 하위):
+                            budatFormatted  : 전기일
+                            bldatFormatted  : 증빙일
+                            gjahrMonat      : 회계연도/기간
+                            waersAmount     : 통화/금액
+                            Bktxt           : 헤더텍스트
+                            netdtFormatted  : 순액만기일
+                            augblDisplay    : 반제전표
+                            augdtDisplay    : 반제일자
+                        컨트롤러: _processData()에서 oHeader 객체 세팅
+                        CSS: .bsWrap / .bsHead / .fiDocNum / .fiBadge / .fiB-ok·cl·pk·rv
+                             .fiBlartText / .fiLastChanged / .fiHdrGrid / .fiHc
+                             .fiLbl / .fiVal / .fiMuted / .fiBlue
+                     ════════════════════════════════════════════════ -->
+                <VBox class="bsWrap" visible="{viewModel>/hasData}">
+                    <!-- 전표 헤더 바 -->
+                    <HBox class="bsHead" alignItems="Center" justifyContent="SpaceBetween">
+                        <HBox alignItems="Center">
+                            <!-- 전표번호 -->
+                            <Text text="{viewModel>/header/Belnr}" class="fiDocNum"/>
+                            <!-- 상태 배지 — 조건에 따라 하나만 visible -->
+                            <Text text="전기완료" class="fiBadge fiB-ok" visible="{= ${viewModel>/header/status} === 'ok' }"/>
+                            <Text text="반제완료" class="fiBadge fiB-cl" visible="{= ${viewModel>/header/status} === 'cl' }"/>
+                            <Text text="가전기"   class="fiBadge fiB-pk" visible="{= ${viewModel>/header/status} === 'pk' }"/>
+                            <Text text="역전표"   class="fiBadge fiB-rv" visible="{= ${viewModel>/header/status} === 'rv' }"/>
+                            <!-- 전표유형 설명 -->
+                            <Text text="{viewModel>/header/blartText}" class="fiBlartText"/>
+                        </HBox>
+                        <!-- 최종변경 정보 (우측) -->
+                        <Text text="{viewModel>/header/lastChanged}" class="fiLastChanged"/>
+                    </HBox>
+                    <!-- 메타데이터 그리드 (4열×2행) -->
+                    <FlexBox wrap="Wrap" class="fiHdrGrid">
+                        <VBox class="fiHc">
+                            <Text text="전기일 (Posting Date)" class="fiLbl"/>
+                            <Text text="{viewModel>/header/budatFormatted}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="증빙일 (Document Date)" class="fiLbl"/>
+                            <Text text="{viewModel>/header/bldatFormatted}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="회계연도 / 기간" class="fiLbl"/>
+                            <Text text="{viewModel>/header/gjahrMonat}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="통화 / 금액" class="fiLbl"/>
+                            <Text text="{viewModel>/header/waersAmount}" class="fiVal fiBlue"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="헤더텍스트" class="fiLbl"/>
+                            <Text text="{viewModel>/header/Bktxt}" class="fiVal" wrapping="false"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="순액만기일 (Net Due Date)" class="fiLbl"/>
+                            <Text text="{viewModel>/header/netdtFormatted}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="반제전표" class="fiLbl"/>
+                            <!-- 반제전표 없으면 "—" 표시 (fiMuted = 밝은 회색) -->
+                            <Text text="{viewModel>/header/augblDisplay}" class="fiVal fiMuted"/>
+                        </VBox>
+                        <VBox class="fiHc">
+                            <Text text="반제일자" class="fiLbl"/>
+                            <Text text="{viewModel>/header/augdtDisplay}" class="fiVal fiMuted"/>
+                        </VBox>
+                    </FlexBox>
+                </VBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑥ 라인 아이템 섹션
+                        - viewModel>/hasData 가 true 일 때만 표시
+                        ─ 헤더 바 ─
+                          - "전표 라인 아이템" 제목
+                          - 차변 pill  (viewModel>/debitLabel)
+                          - 대변 pill  (viewModel>/creditLabel)
+                          - 균형 칩    (viewModel>/isBalanced 가 true일 때만)
+                        ─ 아이템 테이블 (id="itemTable") ─
+                          - 데이터: viewModel>/items
+                          - 컬럼: 항목번호 / 계정번호 / 계정명 / 차대 / 전기키 / 금액 / 적요 / CC/PC / 플랜트
+                          - 차변(S): fiAmtPos(파랑), 대변(H): fiAmtNeg(빨강)
+                          - 차대 구분: fiChipS(파랑 알약) / fiChipH(빨강 알약)
+                        ─ 합계 행 ─
+                          - itemCount  (viewModel>/itemCount)  : "N 라인"
+                          - footerTotal(viewModel>/footerTotal): 합계 금액
+                        컨트롤러: _processData() 에서 items 배열 생성
+                        CSS: .bsWrap / .bsHead / .bsHeadText / .fiHdPill·PillLast / .fiHdBal
+                             .fiDocTable / .fiAcctNum / .fiChipS·H / .fiAmtPos·Neg / .fiSgtxt
+                             .fiTblTotals / .fiTotalsCount / .fiTotalsAmt
+                     ════════════════════════════════════════════════ -->
+                <VBox class="bsWrap" visible="{viewModel>/hasData}">
+                    <!-- 섹션 헤더 -->
+                    <HBox class="bsHead" alignItems="Center" justifyContent="SpaceBetween">
+                        <Text text="전표 라인 아이템" class="bsHeadText"/>
+                        <!-- 우측: 차변/대변 pill + 균형 칩 -->
+                        <HBox alignItems="Center" class="fiHdRight">
+                            <Text text="{viewModel>/debitLabel}"  class="fiHdPill"/>
+                            <Text text="{viewModel>/creditLabel}" class="fiHdPillLast"/>
+                            <!-- 균형 칩: isBalanced가 true일 때만 표시 -->
+                            <HBox alignItems="Center" class="fiHdBal" visible="{viewModel>/isBalanced}">
+                                <core:Icon src="sap-icon://accept" class="fiHdBalIcon"/>
+                                <Text text="균형" class="fiHdBalTxt"/>
+                            </HBox>
+                        </HBox>
+                    </HBox>
+
+                    <!-- 라인 아이템 테이블 -->
+                    <Table
+                        id="itemTable"
+                        items="{viewModel>/items}"
+                        class="fiDocTable"
+                        showSeparators="Inner"
+                        backgroundDesign="Transparent"
+                        noDataText="조회 결과가 없습니다.">
+                        <columns>
+                            <Column width="44px" ><Text text="항목"/></Column>
+                            <Column width="100px"><Text text="계정번호"/></Column>
+                            <Column hAlign="Begin" ><Text text="계정명"/></Column>
+                            <Column width="68px" ><Text text="차/대"/></Column>
+                            <Column hAlign="Center" width="48px" ><Text text="전기키"/></Column>
+                            <Column hAlign="End" width="130px"><Text text="금액 (KRW)"/></Column>
+                            <Column hAlign="Left" width="180px"><Text text="적요"/></Column>
+                            <Column hAlign="Center" width="80px" ><Text text="CC / PC"/></Column>
+                            <Column hAlign="Center" width="60px" ><Text text="플랜트"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <!-- 항목번호 (회색) -->
+                                    <Text text="{viewModel>Buzei}" class="fiMuted"/>
+                                    <!-- 계정번호 (모노스페이스) -->
+                                    <Text text="{viewModel>Saknr}" class="fiAcctNum" wrapping="false"/>
+                                    <!-- 계정명 -->
+                                    <Text text="{viewModel>SaknrTxt50}" wrapping="false"/>
+                                    <!-- 차/대 칩: S=차변(파랑), H=대변(빨강) -->
+                                    <HBox>
+                                        <Text text="S 차변" class="fiChipS" visible="{= ${viewModel>Shkzg} === 'S' }"/>
+                                        <Text text="H 대변" class="fiChipH" visible="{= ${viewModel>Shkzg} !== 'S' }"/>
+                                    </HBox>
+                                    <!-- 전기키 (회색) -->
+                                    <Text text="{viewModel>Bschl}" class="fiMuted" textAlign="Right"/>
+                                    <!-- 금액: 차변이면 파랑(fiAmtPos), 대변이면 빨강(fiAmtNeg) -->
+                                    <HBox justifyContent="End">
+                                        <Text text="{viewModel>iWrbtrFormatted}" class="fiAmtPos" wrapping="false"
+                                              visible="{= ${viewModel>Shkzg} === 'S' }"/>
+                                        <Text text="{viewModel>iWrbtrFormatted}" class="fiAmtNeg" wrapping="false"
+                                              visible="{= ${viewModel>Shkzg} !== 'S' }"/>
+                                    </HBox>
+                                    <!-- 적요 (1줄, 넘치면 잘림) -->
+                                    <Text text="{viewModel>Sgtxt}"        class="fiSgtxt" wrapping="false"/>
+                                    <!-- 코스트센터/이익센터 -->
+                                    <Text text="{viewModel>ccPc}"         class="fiMuted"  wrapping="false"/>
+                                    <!-- 플랜트 -->
+                                    <Text text="{viewModel>werksDisplay}" class="fiMuted"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+
+                    <!-- 테이블 합계 행 (라인 수 + 총 금액) -->
+                    <HBox class="fiTblTotals" justifyContent="SpaceBetween" alignItems="Center">
+                        <Text text="{viewModel>/itemCount}" class="fiTotalsCount"/>
+                        <Text text="{viewModel>/footerTotal}" class="fiTotalsAmt"/>
+                    </HBox>
+                </VBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑦ 세금계산서 섹션 (DR 전표 전용)
+                        - viewModel>/showTax 가 true 일 때만 표시
+                          (컨트롤러: o.Blart === "DR" 일 때 true)
+                        ─ 헤더 바 ─
+                          - "세금계산서 정보" 제목 + "DR 매출 송장 전표 전용" 태그
+                        ─ 안내 힌트 바 ─
+                          - 파란 아이콘 + 안내 텍스트
+                        ─ 세금계산서 5개 필드 (fiTaxCard) ─
+                          - taxBelnr        : 세금계산서번호
+                          - taxDateFormatted: 발행일자
+                          - fwbasFormatted  : 공급가액
+                          - wmwstFormatted  : 세액
+                          - totalFormatted  : 합계금액
+                        컨트롤러: _processData()에서 oTax 객체 세팅
+                        CSS: .bsWrap / .bsHead / .fiHdTag / .fiTypeHint / .fiHintIcon·Text
+                             .fiTaxCard / .fiTcF / .fiLbl / .fiVal / .fiBlue
+                     ════════════════════════════════════════════════ -->
+                <VBox class="bsWrap" visible="{viewModel>/showTax}">
+                    <!-- 섹션 헤더 -->
+                    <HBox class="bsHead" alignItems="Center" justifyContent="SpaceBetween">
+                        <Text text="세금계산서 정보" class="bsHeadText"/>
+                        <!-- 우측 태그: DR 전표 전용임을 표시 -->
+                        <Text text="DR 매출 송장 전표 전용" class="fiHdTag"/>
+                    </HBox>
+                    <!-- 안내 힌트 바 -->
+                    <HBox class="fiTypeHint" alignItems="Center">
+                        <core:Icon src="sap-icon://information" class="fiHintIcon"/>
+                        <Text text=" 고객 매출 송장(DR) 유형 전표에 한하여 세금계산서 정보가 제공됩니다." class="fiHintText"/>
+                    </HBox>
+                    <!-- 세금계산서 5개 필드 수평 배치 -->
+                    <HBox class="fiTaxCard" wrap="Wrap">
+                        <VBox class="fiTcF">
+                            <Text text="세금계산서번호" class="fiLbl"/>
+                            <Text text="{viewModel>/tax/taxBelnr}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiTcF">
+                            <Text text="발행일자" class="fiLbl"/>
+                            <Text text="{viewModel>/tax/taxDateFormatted}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiTcF">
+                            <Text text="공급가액" class="fiLbl"/>
+                            <Text text="{viewModel>/tax/fwbasFormatted}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiTcF">
+                            <Text text="세액" class="fiLbl"/>
+                            <Text text="{viewModel>/tax/wmwstFormatted}" class="fiVal"/>
+                        </VBox>
+                        <VBox class="fiTcF">
+                            <!-- 합계금액: fiBlue = 파란 모노스페이스 강조 -->
+                            <Text text="합계금액" class="fiLbl"/>
+                            <Text text="{viewModel>/tax/totalFormatted}" class="fiVal fiBlue"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑧ 페이지 Footer
+                        - OData 연결 정보 안내 텍스트
+                        CSS: .bsFooter / .bsInfoBox
+                     ════════════════════════════════════════════════ -->
+                <HBox justifyContent="End" class="bsFooter">
+                    <Text text="CL3 3조 FI" class="bsInfoBox"/>
+                </HBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

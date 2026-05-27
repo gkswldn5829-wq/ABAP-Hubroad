@@ -1,0 +1,99 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "code.cl3.day6ui502",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.1",
+      "toolsId": "172acec0-ed81-4727-b42c-65eb29e7f8c2"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ui.table": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "code.cl3.day6ui502.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "code.cl3.day6ui502.view",
+        "async": true,
+        "viewPath": "code.cl3.day6ui502.view"
+      },
+      "routes": [
+        {
+          "name": "RouteDay6_ui5_02",
+          "pattern": ":?query:",
+          "target": [
+            "TargetDay6_ui5_02"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetDay6_ui5_02": {
+          "id": "Day6_ui5_02",
+          "name": "Day6_ui5_02"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "code.cl3.day6ui502.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

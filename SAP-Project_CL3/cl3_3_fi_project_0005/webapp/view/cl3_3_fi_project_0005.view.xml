@@ -1,0 +1,389 @@
+<mvc:View
+    controllerName="zc33approval.cl33fiproject0005.controller.cl3_3_fi_project_0005"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true">
+
+    <Page
+        id="mainPage"
+        showHeader="false"
+        enableScrolling="false"
+        class="approvalMainPage sapUiNoContentPadding"
+        busy="{view>/busy}"
+        busyIndicatorDelay="0">
+
+        <!-- ══════════════════════════════════════════
+             커스텀 헤더 바 (0001~0004 동일 스타일)
+             ══════════════════════════════════════════ -->
+        <customHeader>
+            <Bar id="appHeaderBar" class="fiAppHeader" design="Header">
+                <contentLeft>
+                    <HBox class="headerTitleBox" alignItems="Center">
+                        <core:Icon src="sap-icon://document-text" class="headerAppIcon"/>
+                        <Title text="전표 결재 통제 모듈" level="H5" class="headerAppTitle"/>
+                        <Text text="ZRC3FI_APPROVAL" class="headerAppSub"/>
+                    </HBox>
+                </contentLeft>
+                <contentRight>
+                    <HBox class="aprHeaderRight" alignItems="Center">
+                        <ObjectStatus
+                            text="중앙 백엔드 제어 프로세스"
+                            state="Warning"
+                            class="aprBadge"/>
+                        <core:Icon src="sap-icon://person-placeholder" class="aprUserIcon"/>
+                        <Text text="결재자" class="aprUserText"/>
+                    </HBox>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <!-- ══════════════════════════════════════════
+             메인 컨텐츠: Splitter 분할 레이아웃
+             ══════════════════════════════════════════ -->
+        <content>
+            <layout:Splitter id="mainSplitter" class="approvalSplitter">
+
+                <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                     LEFT : 전표 마스터 목록 (380px)
+                     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+                <VBox class="listPanel" height="100%">
+                    <layoutData>
+                        <layout:SplitterLayoutData size="380px" resizable="false" minSize="280"/>
+                    </layoutData>
+
+                    <!-- 목록 헤더 -->
+                    <Toolbar class="listHead" height="44px">
+                        <Title text="전표 마스터 내역" level="H6" class="listTitle"/>
+                        <ToolbarSpacer/>
+                        <ObjectStatus
+                            text="{= ${view>/listCount} + '건'}"
+                            state="Warning"
+                            inverted="true"
+                            class="cntBadge"/>
+                    </Toolbar>
+
+                    <!-- 검색창 -->
+                    <SearchField
+                        id="searchField"
+                        placeholder="전표번호, 적요, 기안자 검색..."
+                        search="onSearch"
+                        liveChange="onSearch"
+                        width="100%"
+                        class="listSearch"/>
+
+                    <!-- 전표 목록 스크롤 래퍼 -->
+                    <ScrollContainer
+                        id="listScrollContainer"
+                        vertical="true"
+                        horizontal="false"
+                        height="100%"
+                        class="listScrollArea">
+                        <List
+                            id="approvalList"
+                            class="approvalList"
+                            items="{path: '/ApprovalHeaderSetSet', filters: [{path: 'Zstat', operator: 'EQ', value1: '01'}]}"
+                            mode="None"
+                            itemPress="onVoucherPress"
+                            updateFinished="onListUpdateFinished"
+                            noDataText="결재 대기 전표가 없습니다"
+                            showSeparators="Inner">
+                            <ObjectListItem
+                                type="Active"
+                                title="{Belnr}"
+                                number="{path: 'Wrbtr', formatter: '.formatCurrency'}"
+                                numberUnit="{Waers}"
+                                intro="{Bktxt}"
+                                class="voucherItem">
+                                <firstStatus>
+                                    <ObjectStatus
+                                        text="{path: 'Zstat', formatter: '.formatStatText'}"
+                                        state="{path: 'Zstat', formatter: '.formatStatState'}"/>
+                                </firstStatus>
+                                <secondStatus>
+                                    <ObjectStatus text="{Blart}" state="None"/>
+                                </secondStatus>
+                                <attributes>
+                                    <ObjectAttribute text="{Budat}" title="전기일자"/>
+                                    <ObjectAttribute text="{Ernam}" title="기안자"/>
+                                    <ObjectAttribute text="{= (${Monat} || '') + '월 회계'}"/>
+                                </attributes>
+                            </ObjectListItem>
+                        </List>
+                    </ScrollContainer>
+                </VBox>
+
+                <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                     RIGHT : 상세 뷰 컨테이너
+                     ★ 이 VBox는 항상 visible → display:flex !important 안전
+                     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+                <VBox id="detailContainer" class="detailContainer" height="100%">
+                    <layoutData>
+                        <layout:SplitterLayoutData minSize="500"/>
+                    </layoutData>
+
+                    <!-- ── Empty State ──
+                         ※ visible 바인딩 대상 → CSS에 display !important 절대 금지 -->
+                    <VBox
+                        id="emptyStateBox"
+                        class="emptyStateBox"
+                        visible="{= !${view>/hasSelection}}"
+                        alignItems="Center"
+                        justifyContent="Center"
+                        height="100%">
+                        <core:Icon
+                            src="sap-icon://document"
+                            size="4rem"
+                            class="emptyIcon"/>
+                        <Title
+                            text="좌측 목록에서 결재할 전표를 선택하세요"
+                            level="H5"
+                            class="emptyTitle"/>
+                        <Text
+                            text="전표번호를 클릭하면 헤더 · 라인 아이템 · 결재 버튼이 표시됩니다"
+                            class="emptyDesc"/>
+                    </VBox>
+
+                    <!-- ── 상세 툴바 (선택 후) ──
+                         ※ visible 바인딩 대상 → CSS에 display !important 절대 금지 -->
+                    <Toolbar
+                        id="detailHeadBar"
+                        class="detailHead"
+                        visible="{view>/hasSelection}">
+                        <VBox class="dhTitleBlock" justifyContent="Center">
+                            <Title
+                                text="{parts: ['view>/selectedHeader/Belnr','view>/selectedHeader/Gjahr'],
+                                       formatter: '.formatBelnrTitle'}"
+                                level="H5"
+                                class="dhBelnr"/>
+                            <HBox class="dhMeta" alignItems="Center">
+                                <ObjectStatus
+                                    text="{path: 'view>/selectedHeader/Zstat', formatter: '.formatStatText'}"
+                                    state="{path: 'view>/selectedHeader/Zstat', formatter: '.formatStatState'}"
+                                    class="statBadge"/>
+                                <Text
+                                    text="{parts: ['view>/selectedHeader/Budat',
+                                                   'view>/selectedHeader/Ernam',
+                                                   'view>/selectedHeader/Monat'],
+                                           formatter: '.formatHeaderMeta'}"
+                                    class="dhMetaText"/>
+                            </HBox>
+                        </VBox>
+                        <ToolbarSpacer/>
+                        <Button
+                            class="btnReject"
+                            text="반려"
+                            type="Reject"
+                            icon="sap-icon://decline"
+                            press="onReject"
+                            visible="{path: 'view>/selectedHeader/Zstat', formatter: '.isRejectVisible'}"/>
+                        <Button
+                            class="btnApprove"
+                            text="{path: 'view>/selectedHeader/Zstat', formatter: '.formatApproveText'}"
+                            type="Accept"
+                            icon="sap-icon://accept"
+                            press="onApprove"
+                            visible="{path: 'view>/selectedHeader/Zstat', formatter: '.isApproveVisible'}"/>
+                    </Toolbar>
+
+                    <!-- ── 상세 스크롤 본문 (선택 후) ──
+                         height = calc(100vh - appHeader56 - detailHead60) = calc(100vh - 116px)
+                         ※ 명시적 calc 높이 사용: flex height:0 트릭 제거 -->
+                    <ScrollContainer
+                        id="detailScrollContainer"
+                        class="detailScrollArea"
+                        vertical="true"
+                        horizontal="false"
+                        height="100%"
+                        visible="{view>/hasSelection}">
+
+                        <VBox class="detailBodyInner">
+
+                            <!-- ▶ 전표 진행 타임라인 -->
+                            <Panel class="tlPanel" expanded="true">
+                                <HBox class="statusTimeline" alignItems="Center" justifyContent="SpaceAround">
+                                    <!-- ★ class 속성은 addStyleClass() 매핑 → 바인딩 갱신 불가
+                                         → ID 부여 후 컨트롤러에서 toggleStyleClass()로 제어 -->
+                                    <VBox id="tlStep01" alignItems="Center" class="tlStep">
+                                        <Text text="01" class="tlIconText"/>
+                                        <Text text="결재대기" class="tlLabel"/>
+                                    </VBox>
+                                    <core:HTML content="&lt;div class='tl-connector'&gt;&lt;/div&gt;"/>
+                                    <VBox id="tlStep05" alignItems="Center" class="tlStep">
+                                        <Text text="05" class="tlIconText"/>
+                                        <Text text="반려/수정" class="tlLabel"/>
+                                    </VBox>
+                                    <core:HTML content="&lt;div class='tl-connector'&gt;&lt;/div&gt;"/>
+                                    <VBox id="tlStep02" alignItems="Center" class="tlStep">
+                                        <Text text="02" class="tlIconText"/>
+                                        <Text text="승인(전기)" class="tlLabel"/>
+                                    </VBox>
+                                    <core:HTML content="&lt;div class='tl-connector'&gt;&lt;/div&gt;"/>
+                                    <VBox id="tlStep03" alignItems="Center" class="tlStep">
+                                        <Text text="03" class="tlIconText"/>
+                                        <Text text="반제완료" class="tlLabel"/>
+                                    </VBox>
+                                </HBox>
+                            </Panel>
+
+                            <!-- ▶ 전표 헤더 정보 (ZTC3FI0001) -->
+                            <VBox class="detailSection">
+                                <HBox class="bsHead" alignItems="Center">
+                                    <Text text="전표 헤더 정보 (ZTC3FI0001)" class="bsHeadText"/>
+                                </HBox>
+                                <VBox class="sectionBody">
+                                    <layout:Grid defaultSpan="XL3 L3 M6 S12" class="headerFieldGrid">
+                                        <layout:content>
+                                            <VBox class="fieldItem">
+                                                <Label text="전표번호" class="fieldLabel"/>
+                                                <Text text="{view>/selectedHeader/Belnr}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="전표유형" class="fieldLabel"/>
+                                                <Text text="{view>/selectedHeader/Blart}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="전기일자" class="fieldLabel"/>
+                                                <Text text="{view>/selectedHeader/Budat}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="증빙일자" class="fieldLabel"/>
+                                                <Text text="{view>/selectedHeader/Bldat}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="회사코드" class="fieldLabel"/>
+                                                <Text text="{view>/selectedHeader/Bukrs}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="기간 (Period)" class="fieldLabel"/>
+                                                <Text text="{= (${view>/selectedHeader/Monat} || '') + '월'}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="통화단위" class="fieldLabel"/>
+                                                <Text text="{view>/selectedHeader/Waers}" class="fieldValue mono"/>
+                                            </VBox>
+                                            <VBox class="fieldItem">
+                                                <Label text="백엔드 상태값" class="fieldLabel"/>
+                                                <ObjectStatus
+                                                    text="{= 'ZSTAT : ' + (${view>/selectedHeader/Zstat} || '-')}"
+                                                    state="{path: 'view>/selectedHeader/Zstat', formatter: '.formatStatState'}"/>
+                                            </VBox>
+                                        </layout:content>
+                                    </layout:Grid>
+                                    <VBox class="fieldItem fieldFull">
+                                        <Label text="헤더 텍스트 적요 (BKTXT)" class="fieldLabel"/>
+                                        <Text text="{view>/selectedHeader/Bktxt}" class="fieldValue" wrapping="true"/>
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+
+                            <!-- ▶ 차대변 균형 검증 -->
+                            <VBox class="detailSection">
+                                <HBox class="bsHead" alignItems="Center">
+                                    <Text text="차대변 디스플레이 균형 검증" class="bsHeadText"/>
+                                </HBox>
+                                <VBox class="sectionBody">
+                                    <HBox class="balanceBar" alignItems="Center">
+                                        <VBox class="balItem" alignItems="Start">
+                                            <Label text="차변 총합 (Debit · S)" class="balLabel"/>
+                                            <ObjectNumber
+                                                number="{path: 'view>/totalDebit', formatter: '.formatCurrency'}"
+                                                unit="KRW"
+                                                emphasized="true"
+                                                class="debitAmt"/>
+                                        </VBox>
+                                        <Text text=" = " class="balSep"/>
+                                        <VBox class="balItem" alignItems="Start">
+                                            <Label text="대변 총합 (Credit · H)" class="balLabel"/>
+                                            <ObjectNumber
+                                                number="{path: 'view>/totalCredit', formatter: '.formatCurrency'}"
+                                                unit="KRW"
+                                                emphasized="true"
+                                                class="creditAmt"/>
+                                        </VBox>
+                                        <ToolbarSpacer/>
+                                        <ObjectStatus
+                                            text="{path: 'view>/balanced', formatter: '.formatBalancedText'}"
+                                            state="{path: 'view>/balanced', formatter: '.formatBalancedState'}"
+                                            icon="{= ${view>/balanced} ? 'sap-icon://accept' : 'sap-icon://warning2'}"
+                                            inverted="true"
+                                            class="balStatus"/>
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+
+                            <!-- ▶ 세부 라인 아이템 (ZTC3FI0002) -->
+                            <VBox class="detailSection">
+                                <HBox class="bsHead" alignItems="Center">
+                                    <Text text="세부 라인 아이템 정보 (ZTC3FI0002)" class="bsHeadText"/>
+                                </HBox>
+                                <Table
+                                    id="itemsTable"
+                                    class="itemsTable"
+                                    items="{view>/items}"
+                                    noDataText="라인 아이템 데이터가 없습니다"
+                                    sticky="ColumnHeaders"
+                                    alternateRowColors="true"
+                                    fixedLayout="false">
+                                    <columns>
+                                        <Column width="3.5rem" hAlign="Center"><Text text="Item"/></Column>
+                                        <Column width="8rem"><Text text="계정코드"/></Column>
+                                        <Column width="5rem" hAlign="Center"><Text text="차대구분"/></Column>
+                                        <Column width="4rem" hAlign="Center"><Text text="전기키"/></Column>
+                                        <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true">
+                                            <Text text="금액 (원화)"/>
+                                        </Column>
+                                        <Column width="8rem" minScreenWidth="Desktop" demandPopin="true">
+                                            <Text text="코스트센터"/>
+                                        </Column>
+                                        <Column minScreenWidth="Tablet" demandPopin="true">
+                                            <Text text="항목 텍스트"/>
+                                        </Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem vAlign="Middle" class="itemRow">
+                                            <cells>
+                                                <Text text="{view>Buzei}" class="mono muted" textAlign="Center"/>
+                                                <Text text="{view>Saknr}" class="mono"/>
+                                                <ObjectStatus
+                                                    text="{view>Shkzg}"
+                                                    state="{path: 'view>Shkzg', formatter: '.formatShkzgState'}"/>
+                                                <Text text="{view>Bschl}" class="mono muted" textAlign="Center"/>
+                                                <ObjectNumber
+                                                    number="{path: 'view>Wrbtr', formatter: '.formatCurrency'}"
+                                                    unit="{view>Waers}"
+                                                    textAlign="Right"
+                                                    class="mono"/>
+                                                <Text text="{view>Kostl}" class="mono muted"/>
+                                                <Text text="{view>Sgtxt}"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </VBox>
+
+                            <!-- ▶ 결재 의견 입력 -->
+                            <VBox class="detailSection commentPanel">
+                                <HBox class="bsHead" alignItems="Center">
+                                    <Text text="결재 프로세스 통제 오피니언 (Gateway 전송)" class="bsHeadText"/>
+                                </HBox>
+                                <VBox class="sectionBody commentContent">
+                                    <TextArea
+                                        id="commentInput"
+                                        placeholder="승인 또는 반려 시 결재 의견을 입력하세요 (선택사항)"
+                                        rows="3"
+                                        width="100%"
+                                        class="commentInput"/>
+                                </VBox>
+                            </VBox>
+
+                        </VBox>
+                    </ScrollContainer>
+
+                </VBox><!-- /detailContainer -->
+
+            </layout:Splitter>
+        </content>
+    </Page>
+</mvc:View>

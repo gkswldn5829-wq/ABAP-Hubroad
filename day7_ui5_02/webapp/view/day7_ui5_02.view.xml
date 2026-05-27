@@ -1,0 +1,49 @@
+<mvc:View
+    controllerName="code.cl3.day7ui501.controller.Day7_ui5_01" 
+    xmlns:m="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+
+    <m:Panel headerText="계산기 (Calculator)" class="sapUiResponsiveMargin" width="14rem">
+        <m:VBox>
+            <m:Input
+                id="input"
+                value="{calcModel>/display}"
+                width="12rem"
+                editable="false"
+                textAlign="Right"
+                class="sapUiSmallMarginBottom" />
+
+            <m:VBox fitContainer="true">
+                
+                <m:HBox class="sapUiTinyMarginBottom">
+                    <m:Button text="7" press="onCalcPress" width="3rem"><core:CustomData key="val" value="7"/></m:Button>
+                    <m:Button text="8" press="onCalcPress" width="3rem"><core:CustomData key="val" value="8"/></m:Button>
+                    <m:Button text="9" press="onCalcPress" width="3rem"><core:CustomData key="val" value="9"/></m:Button>
+                    <m:Button text="/" press="onCalcPress" width="3rem" type="Accept"><core:CustomData key="val" value="/" /></m:Button>
+                </m:HBox>
+
+                <m:HBox class="sapUiTinyMarginBottom">
+                    <m:Button text="4" press="onCalcPress" width="3rem"><core:CustomData key="val" value="4"/></m:Button>
+                    <m:Button text="5" press="onCalcPress" width="3rem"><core:CustomData key="val" value="5"/></m:Button>
+                    <m:Button text="6" press="onCalcPress" width="3rem"><core:CustomData key="val" value="6"/></m:Button>
+                    <m:Button text="x" press="onCalcPress" width="3rem" type="Attention"><core:CustomData key="val" value="*" /></m:Button>
+                </m:HBox>
+
+                <m:HBox class="sapUiTinyMarginBottom">
+                    <m:Button text="1" press="onCalcPress" width="3rem"><core:CustomData key="val" value="1"/></m:Button>
+                    <m:Button text="2" press="onCalcPress" width="3rem"><core:CustomData key="val" value="2"/></m:Button>
+                    <m:Button text="3" press="onCalcPress" width="3rem"><core:CustomData key="val" value="3"/></m:Button>
+                    <m:Button text="-" press="onCalcPress" width="3rem" type="Emphasized"><core:CustomData key="val" value="-" /></m:Button>
+                </m:HBox>
+
+                <m:HBox>
+                    <m:Button text="=" press="onCalcPress" width="3rem" type="Unstyled"><core:CustomData key="val" value="=" /></m:Button>
+                    <m:Button text="CLR" press="onCalcPress" width="3rem" type="Unstyled"><core:CustomData key="val" value="C"/></m:Button>
+                    <m:Button text="0" press="onCalcPress" width="3rem"><core:CustomData key="val" value="0"/></m:Button>
+                    <m:Button text="+" press="onCalcPress" width="3rem" type="Accept"><core:CustomData key="val" value="+" /></m:Button>
+                </m:HBox>
+            </m:VBox>
+        </m:VBox>
+    </m:Panel>
+</mvc:View>

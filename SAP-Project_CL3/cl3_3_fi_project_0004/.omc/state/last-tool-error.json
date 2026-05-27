@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"Get-ChildItem -Path \\\"C:\\\\Users\\\\pc\\\\Desktop\\\\fiori-main\\\\SAP-Project_CL3\\\" -Directory | Select-Object Name\",\"description\":\"List directories in the SAP-Project_CL3 folder\"}",
+  "error": "Exit code 127\n/usr/bin/bash: line 1: Get-ChildItem: command not found\n/usr/bin/bash: line 1: Select-Object: command not found",
+  "timestamp": "2026-05-26T01:00:23.049Z",
+  "retry_count": 1
+}

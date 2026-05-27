@@ -1,0 +1,98 @@
+<mvc:View
+    controllerName="code.cl3.teamprojectui501.controller.airlineView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="false"
+>
+    <Page title="✈️ Flight Schedule" class="Vpage" showHeader="false">
+        
+            <content>
+               <HBox>
+            <l:VerticalLayout width="100%"
+                                class="loginContainer"
+              >
+                  <l:VerticalLayout
+                  width="100%"
+                  class="logoSection"
+                  >
+                    <Image
+                      src="../image/SAP.png"
+                      width="125px"
+                      class="sapLogo"
+                    />
+                      <Title
+                        text="✈️ Airline Information"
+                        level="H2"
+                        class="appTitle2"
+                      />
+                    <f:SimpleForm class="loginForm2">
+                <t:Table
+                    id="airline3"
+                    rows="{/AirlineSet}"
+                    selectionMode="None"
+                    width="auto"
+                >
+                    <!-- <t:extension>
+                        <OverflowToolbar>
+                            <Title text="Airline Master" />
+                            <ToolbarSpacer />
+                            <ToolbarSeparator />
+                            <SearchField
+                                placeholder="Filter"
+                                search="onSearch"
+                                width="15rem"
+                            />
+                        </OverflowToolbar>
+                    </t:extension> -->
+                    <t:columns>
+                        <t:Column width="auto">
+                            <Label text="Airline" />
+                            <t:template>
+                                <Text text="{Carrid}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="Airline Name" />
+                            <t:template>
+                                <Text text="{Carrname}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="Local Currency" />
+                            <t:template>
+                                <Text text="{Currcode}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="auto">
+                            <Label text="Airline URL" />
+                            <t:template>
+                                <Text text="{Url}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="8rem">
+                            <Label text="Action" />
+                            <t:template>
+                                <Button
+                                    icon="sap-icon://search"
+                                    text="Schedule"
+                                    press="onGoSchedule"
+                                />
+                            </t:template>
+                        </t:Column>
+                    </t:columns>
+                </t:Table>
+                </f:SimpleForm>
+                    </l:VerticalLayout>
+              </l:VerticalLayout>  
+            
+            </HBox>
+            </content>      
+
+            
+        
+        </Page>
+</mvc:View>
