@@ -742,3 +742,30 @@
     background: #FFFFFF !important;
     padding: 8px 14px !important;
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * 공통 유리글래스 액션 버튼 — PDF · EXCEL · PRINT · SAVE
+ * 0005 승인/반려 버튼 스타일 기반, 전 프로그램 공통 적용
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 필터바용 : 파란 유리글래스 (밝은 배경 위에서도 가시성 보장) */
+.btnGlass.sapMBtn .sapMBtnInner {
+    background: linear-gradient(135deg, rgba(0,64,139,0.88) 0%, rgba(0,100,217,0.90) 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,64,139,0.30);
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+}
+.btnGlass.sapMBtn .sapMBtnInner:hover {
+    background: linear-gradient(135deg, rgba(0,50,110,0.96) 0%, rgba(0,80,179,0.96) 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,64,139,0.42);
+}
+.btnGlass.sapMBtn .sapMBtnIcon,
+.btnGlass.sapMBtn .sapMBtnText { color: #ffffff !important; }

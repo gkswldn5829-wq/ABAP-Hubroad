@@ -167,8 +167,8 @@
                     <!-- 우측 버튼 그룹 -->
                     <HBox class="bsMlAuto" alignItems="Center">
                         <Text id="isStatusText" text="" class="bsBalanceBadge"/>
-                        <Button icon="sap-icon://pdf-attachment"   type="Transparent" tooltip="PDF"   press=".onPressPdf"/>
-                        <Button icon="sap-icon://excel-attachment" type="Transparent" tooltip="Excel" press=".onPressExcel"/>
+                        <Button text="PDF"   icon="sap-icon://pdf-attachment"   class="btnGlass" press=".onPressPdf"/>
+                        <Button text="EXCEL" icon="sap-icon://excel-attachment"  class="btnGlass" press=".onPressExcel"/>
                     </HBox>
                 </HBox>
 

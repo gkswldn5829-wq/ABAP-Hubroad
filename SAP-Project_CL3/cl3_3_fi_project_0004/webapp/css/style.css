@@ -648,6 +648,32 @@
   .headerWaersTag.sapMText { display: none; }
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+ * 공통 유리글래스 액션 버튼 — RESET · SAVE (헤더 바용)
+ * 0005 승인/반려 버튼 스타일 기반 (흰색 반투명 유리글래스)
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 헤더 바용 : 흰색 유리글래스 (파란 배경 위, 0005 스타일과 동일) */
+.btnGlassHeader.sapMBtn .sapMBtnInner {
+    background: rgba(255,255,255,0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.40) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+    height: 32px !important;
+}
+.btnGlassHeader.sapMBtn .sapMBtnInner:hover {
+    background: rgba(255,255,255,0.28) !important;
+    transform: translateY(-1px);
+}
+.btnGlassHeader.sapMBtn .sapMBtnIcon,
+.btnGlassHeader.sapMBtn .sapMBtnText { color: #ffffff !important; }
+
 @media (max-width: 640px) {
   .headerTitleBox .headerAppSub { display: none; }
 }

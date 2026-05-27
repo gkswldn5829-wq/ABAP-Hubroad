@@ -27,8 +27,8 @@
                 </contentMiddle>
                 <contentRight>
                     <Text text="{viewModel>/waers}" class="headerWaersTag"/>
-                    <Button text="초기화" icon="sap-icon://refresh" press="onReset" class="headerResetBtn"/>
-                    <Button text="전표 저장" icon="sap-icon://save" type="Emphasized" press="onSave" class="headerSaveBtn"/>
+                    <Button text="RESET" icon="sap-icon://refresh" press="onReset" class="btnGlassHeader headerResetBtn"/>
+                    <Button text="SAVE"  icon="sap-icon://save"    press="onSave"  class="btnGlassHeader headerSaveBtn"/>
                 </contentRight>
             </Bar>
         </customHeader>

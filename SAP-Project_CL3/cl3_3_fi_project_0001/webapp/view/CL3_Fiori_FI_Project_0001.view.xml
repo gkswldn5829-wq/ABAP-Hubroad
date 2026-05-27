@@ -71,8 +71,8 @@
                         <ObjectStatus id="statusBalance" text="균형 확인 전" state="None" class="bsBalanceBadge"/>
                         <Button text="전체 펼치기"  type="Transparent" icon="sap-icon://expand-group"   press=".onExpandAll"/>
                         <Button text="전체 접기"    type="Transparent" icon="sap-icon://collapse-group" press=".onCollapseAll"/>
-                        <Button icon="sap-icon://pdf-attachment"   type="Transparent" tooltip="PDF"   press=".onPressPdf"/>
-                        <Button icon="sap-icon://excel-attachment" type="Transparent" tooltip="Excel" press=".onPressExcel"/>
+                        <Button text="PDF"   icon="sap-icon://pdf-attachment"   class="btnGlass" press=".onPressPdf"/>
+                        <Button text="EXCEL" icon="sap-icon://excel-attachment"  class="btnGlass" press=".onPressExcel"/>
                     </HBox>
                 </HBox>
 
