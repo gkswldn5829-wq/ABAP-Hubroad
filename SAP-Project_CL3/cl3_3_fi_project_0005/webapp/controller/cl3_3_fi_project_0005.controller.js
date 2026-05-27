@@ -179,11 +179,27 @@ sap.ui.define([
                 Gjahr: oHeader.Gjahr
             });
 
+            // 오늘 날짜를 YYYYMMDD 포맷 문자열로 생성
+            var oNow    = new Date();
+            var sToday  = oNow.getFullYear().toString()
+                        + String(oNow.getMonth() + 1).padStart(2, "0")
+                        + String(oNow.getDate()).padStart(2, "0");
+
+            // 결재자 ID: SAP Fiori Shell 환경이면 UserInfo 서비스에서,
+            // 아닐 경우 빈 문자열(백엔드 sy-uname 사용)
+            var sApprBy = "";
+            try {
+                sApprBy = sap.ushell.Container.getService("UserInfo").getId() || "";
+            } catch (e) { /* Shell 미사용 환경 – 백엔드에서 처리 */ }
+
             var oPayload = {
-                Bukrs  : oHeader.Bukrs,
-                Belnr  : oHeader.Belnr,
-                Gjahr  : oHeader.Gjahr,
-                Action : sAction
+                Bukrs       : oHeader.Bukrs,
+                Belnr       : oHeader.Belnr,
+                Gjahr       : oHeader.Gjahr,
+                Action      : sAction,
+                Appr_remark : oCommentCtl ? oCommentCtl.getValue() : "",
+                Appr_by     : sApprBy,
+                Appr_date   : sToday
             };
 
             oVM.setProperty("/busy", true);
