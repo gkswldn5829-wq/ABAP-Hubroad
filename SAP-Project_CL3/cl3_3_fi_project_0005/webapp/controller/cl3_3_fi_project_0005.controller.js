@@ -5,8 +5,12 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
-    "sap/ui/core/Fragment"
-], function (Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast, Fragment) {
+    "sap/ui/core/Fragment",
+    "sap/m/Image",
+    "sap/m/VBox",
+    "sap/m/Text"
+], function (Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast, Fragment,
+    MImage, MVBox, MText) {
     "use strict";
 
     return Controller.extend("zc33approval.cl33fiproject0005.controller.cl3_3_fi_project_0005", {
@@ -16,13 +20,15 @@ sap.ui.define([
            ═══════════════════════════════════════════════════════ */
         onInit: function () {
             var oViewModel = new JSONModel({
-                hasSelection : false,
-                busy         : false,
-                listCount    : 0,
-                selectedHeader: {},
-                items        : [],
-                totalDebit   : 0,
-                totalCredit  : 0,
+                hasSelection   : false,
+                busy           : false,
+                listCount      : 0,
+                selectedHeader : {},
+                items          : [],
+                totalDebit     : 0,
+                totalCredit    : 0,
+                hasAttachments : false,
+                vhItems        : [],
                 balanced     : true,
                 tlActive01   : false,
                 tlActive02   : false,
@@ -60,6 +66,7 @@ sap.ui.define([
 
             this._updateTimelineClasses(oHeader.Zstat);
             this._loadLineItems(oHeader.Bukrs, oHeader.Belnr, oHeader.Gjahr);
+            this._loadAttachments(oHeader.Bukrs, oHeader.Belnr, oHeader.Gjahr);
         },
 
         // 검색창 입력 → 클라이언트 측 필터 (Input으로 변경되어 query와 value 모두 대응)
@@ -89,9 +96,9 @@ sap.ui.define([
            VALUE HELP (SEARCH HELP)
            ═══════════════════════════════════════════════════════ */
 
-        onValueHelpRequest: function (oEvent) {
+        // 탐색도움말 오픈: 필터 초기화 후 기본 목록 로드
+        onValueHelpRequest: function () {
             var oView = this.getView();
-
             if (!this._pValueHelpDialog) {
                 this._pValueHelpDialog = Fragment.load({
                     id: oView.getId(),
@@ -99,68 +106,110 @@ sap.ui.define([
                     controller: this
                 }).then(function (oDialog) {
                     oView.addDependent(oDialog);
+                    this._oVHDialog = oDialog;
                     return oDialog;
-                });
+                }.bind(this));
             }
             this._pValueHelpDialog.then(function (oDialog) {
-                // 다이얼로그 열 때 내부 필터 초기화 (XML의 Zstat 필터는 유지됨)
-                var oBinding = oDialog.getBinding("items");
-                if (oBinding) {
-                    oBinding.filter([]);
-                }
+                ["vhInBelnr", "vhInGjahr", "vhInErnam", "vhInBktxt"].forEach(function (sId) {
+                    var o = oView.byId(sId);
+                    if (o) { o.setValue(""); }
+                });
                 oDialog.open();
+                this._loadVHData(); // 팝업 열릴 때 기본 목록 로드
+            }.bind(this));
+        },
+
+        // 검색 버튼 / Enter
+        onValueHelpSearch: function () {
+            this._loadVHData();
+        },
+
+        // OData 조회 → view>/vhItems 세팅 (0002 _loadVHData 방식 동일)
+        _loadVHData: function () {
+            var oView  = this.getView();
+            var oVM    = oView.getModel("view");
+            var oModel = oView.getModel();
+
+            var val = function (sId) {
+                var o = oView.byId(sId);
+                return o ? (o.getValue() || "").trim() : "";
+            };
+            var sBelnr = val("vhInBelnr");
+            var sGjahr = val("vhInGjahr");
+            var sErnam = val("vhInErnam");
+            var sBktxt = val("vhInBktxt");
+
+            var aFilters = [new Filter("Zstat", FilterOperator.EQ, "01")];
+            if (sBelnr) { aFilters.push(new Filter("Belnr", FilterOperator.Contains, sBelnr)); }
+            if (sGjahr) { aFilters.push(new Filter("Gjahr", FilterOperator.EQ,       sGjahr)); }
+            if (sErnam) { aFilters.push(new Filter("Ernam", FilterOperator.Contains, sErnam)); }
+            if (sBktxt) { aFilters.push(new Filter("Bktxt", FilterOperator.Contains, sBktxt)); }
+
+            oVM.setProperty("/vhItems", []);
+
+            oModel.read("/ApprovalHeaderSetSet", {
+                filters: [new Filter({ filters: aFilters, and: true })],
+                success: function (oData) {
+                    var aVH = (oData.results || []).map(function (r) {
+                        return {
+                            Belnr:    r.Belnr,
+                            Gjahr:    r.Gjahr,
+                            Budat:    r.Budat,
+                            Blart:    r.Blart || "—",
+                            Bktxt:    (r.Bktxt && r.Bktxt.trim()) ? r.Bktxt.trim() : "—",
+                            Ernam:    r.Ernam || "—",
+                            Wrbtr:    r.Wrbtr,
+                            Waers:    r.Waers,
+                            Bukrs:    r.Bukrs,
+                            Zstat:    r.Zstat
+                        };
+                    });
+                    oVM.setProperty("/vhItems", aVH);
+                },
+                error: function () {
+                    MessageToast.show("전표 목록 조회 중 오류가 발생했습니다.");
+                }
             });
         },
 
-        onValueHelpSearch: function (oEvent) {
-            var sValue = oEvent.getParameter("value");
-            var oFilter = new Filter({
-                filters: [
-                    new Filter("Belnr", FilterOperator.Contains, sValue),
-                    new Filter("Gjahr", FilterOperator.Contains, sValue),
-                    new Filter("Bktxt", FilterOperator.Contains, sValue),
-                    new Filter("Ernam", FilterOperator.Contains, sValue)
-                ],
-                and: false
-            });
-            oEvent.getSource().getBinding("items").filter([oFilter]);
-        },
+        // 행 클릭 → 디테일 패널 즉시 로드
+        onValueHelpItemSelect: function (oEvent) {
+            var oCtx    = oEvent.getSource().getBindingContext("view");
+            if (!oCtx) { return; }
+            var oRow    = oCtx.getObject();
 
-        onValueHelpConfirm: function (oEvent) {
-            var oSelectedItem = oEvent.getParameter("selectedItem");
-            if (!oSelectedItem) {
-                return;
-            }
+            if (this._oVHDialog) { this._oVHDialog.close(); }
 
-            // 선택된 전표번호와 회계연도를 가져오기 (컬럼 순서 0, 1)
-            var sBelnr = oSelectedItem.getCells()[0].getText();
-            var sGjahr = oSelectedItem.getCells()[1].getText();
-
-            // 검색창에 전표번호 세팅 (사용자 편의성)
             var oSearchField = this.getView().byId("searchField");
-            oSearchField.setValue(sBelnr);
+            if (oSearchField) { oSearchField.setValue(oRow.Belnr); }
 
-            // 기존 리스트에 전표번호 + 회계연도 조건을 모두 걸어 정확히 1건만 필터링
             var oList = this.getView().byId("approvalList");
             var oBinding = oList.getBinding("items");
             if (oBinding) {
-                oBinding.filter([
-                    new Filter({
-                        filters: [
-                            new Filter("Belnr", FilterOperator.EQ, sBelnr),
-                            new Filter("Gjahr", FilterOperator.EQ, sGjahr)
-                        ],
-                        and: true
-                    })
-                ]);
+                oBinding.filter([new Filter({
+                    filters: [
+                        new Filter("Belnr", FilterOperator.EQ, oRow.Belnr),
+                        new Filter("Gjahr", FilterOperator.EQ, oRow.Gjahr)
+                    ],
+                    and: true
+                })]);
             }
+
+            var oVM = this.getView().getModel("view");
+            oVM.setProperty("/selectedHeader", oRow);
+            oVM.setProperty("/hasSelection",   true);
+            oVM.setProperty("/items",          []);
+            oVM.setProperty("/totalDebit",     0);
+            oVM.setProperty("/totalCredit",    0);
+            oVM.setProperty("/balanced",       true);
+            this._updateTimelineClasses(oRow.Zstat);
+            this._loadLineItems(oRow.Bukrs, oRow.Belnr, oRow.Gjahr);
+            this._loadAttachments(oRow.Bukrs, oRow.Belnr, oRow.Gjahr);
         },
 
-        onValueHelpCancel: function (oEvent) {
-            var oBinding = oEvent.getSource().getBinding("items");
-            if (oBinding) {
-                oBinding.filter([]);
-            }
+        onValueHelpCancel: function () {
+            if (this._oVHDialog) { this._oVHDialog.close(); }
         },
 
         /* ═══════════════════════════════════════════════════════
@@ -243,6 +292,65 @@ sap.ui.define([
                     oVM.setProperty("/busy", false);
                     MessageBox.error("라인 아이템 조회 중 오류가 발생했습니다.");
                 }
+            });
+        },
+
+        // 첨부파일 조회 (ZGWC3FI0001_SRV / AttachmentSet) — image/* 파일만 표시
+        _loadAttachments: function (sBukrs, sBelnr, sGjahr) {
+            var oVM  = this.getView().getModel("view");
+            var oBox = this.getView().byId("attachmentBox5");
+            oBox.destroyItems();
+            oVM.setProperty("/hasAttachments", false);
+
+            var sBase   = "/sap/opu/odata/sap/ZGWC3FI0001_SRV/";
+            var sFilter = encodeURIComponent(
+                "Bukrs eq '" + sBukrs + "' and Belnr eq '" + sBelnr + "' and Gjahr eq '" + sGjahr + "'"
+            );
+            var sUrl = sBase + "AttachmentSet"
+                + "?$filter=" + sFilter
+                + "&$select=Bukrs,Belnr,Gjahr,Seqno,Filename,Mimetype"
+                + "&$format=json";
+
+            jQuery.ajax({
+                url: sUrl,
+                headers: { "Accept": "application/json" },
+                success: function (oData) {
+                    var aResults = (oData.d && oData.d.results) || [];
+                    var aImages  = aResults.filter(function (r) {
+                        return (r.Mimetype || "").toLowerCase().indexOf("image/") === 0;
+                    });
+                    if (!aImages.length) { return; }
+
+                    aImages.forEach(function (r) {
+                        var sKey = "Bukrs='" + r.Bukrs + "',Belnr='" + r.Belnr
+                                 + "',Gjahr='" + r.Gjahr + "',Seqno='" + r.Seqno + "'";
+                        var sSrc = sBase + "AttachmentSet(" + sKey + ")/Filedata/$value";
+
+                        var oImg = new MImage({
+                            src: sSrc,
+                            densityAware: false,
+                            press: (function (url) {
+                                return function () { window.open(url, "_blank"); };
+                            }(sSrc))
+                        });
+                        oImg.addStyleClass("fiAttachImg");
+
+                        var oLabel = new MText({
+                            text: (r.Filename || ("첨부 " + r.Seqno)),
+                            wrapping: false
+                        });
+                        oLabel.addStyleClass("fiAttachName");
+
+                        var oItem = new MVBox({ alignItems: "Center" });
+                        oItem.addStyleClass("fiAttachItem");
+                        oItem.addItem(oImg);
+                        oItem.addItem(oLabel);
+                        oBox.addItem(oItem);
+                    });
+
+                    oVM.setProperty("/hasAttachments", true);
+                }.bind(this),
+                error: function () { /* 첨부파일 없으면 조용히 무시 */ }
             });
         },
 

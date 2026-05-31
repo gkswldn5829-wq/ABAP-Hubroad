@@ -386,6 +386,17 @@
                                 </VBox>
                             </VBox>
 
+                            <!-- ▶ 첨부파일 증빙 자료 -->
+                            <VBox class="detailSection" visible="{view>/hasAttachments}">
+                                <HBox class="bsHead" alignItems="Center">
+                                    <core:Icon src="sap-icon://attachment" class="bsHeadIcon"/>
+                                    <Text text="첨부파일 증빙 자료" class="bsHeadText fiAttachTitle"/>
+                                </HBox>
+                                <VBox class="sectionBody">
+                                    <HBox id="attachmentBox5" wrap="Wrap" class="fiAttachRow"/>
+                                </VBox>
+                            </VBox>
+
                         </VBox>
                     </ScrollContainer>
 

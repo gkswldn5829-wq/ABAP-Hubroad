@@ -712,3 +712,127 @@
 @media (max-width: 768px) {
     .headerAppSub.sapMText { display: none !important; }
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * 탐색도움말 Dialog + 필터바 + 전표 목록 테이블 (0002와 동일)
+ * ══════════════════════════════════════════════════════════════ */
+.bsFilterBar   { background:#FFFFFF; border:1px solid #D9D9D9; border-radius:4px;
+                 padding:10px 14px; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.bsFi          { margin-right:4px; }
+.bsFl          { font-size:11px !important; color:#6A6D70 !important; margin-bottom:3px; }
+.bsFin.sapMInputBase .sapMInputBaseInner { font-size:13px; }
+.bsFilterBarFlat { border-radius:0 !important; margin-bottom:0 !important;
+                   border-left:none !important; border-right:none !important;
+                   border-top:none !important; gap:8px !important; }
+
+.bsDrillDialog.sapMDialog {
+    border:none !important; border-radius:6px !important;
+    box-shadow:0 12px 40px rgba(0,23,60,.22),0 2px 8px rgba(0,0,0,.12) !important;
+    overflow:visible !important;
+}
+.bsDrillDialog .sapMDialogHeader {
+    background:linear-gradient(135deg, #0050b3 0%, #0091ff 100%) !important;
+    border-bottom:none !important; min-height:44px !important;
+    border-radius:6px 6px 0 0 !important; overflow:hidden !important;
+}
+.bsDrillDialog .sapMDialogHeader .sapMBar { background:transparent !important; border:none !important; }
+.bsDrillDialog .sapMDialogTitle .sapMTitle,
+.bsDrillDialog .sapMDialogTitle .sapMTitle .sapMTitleDomRef {
+    color:#fff !important; font-size:16px !important; font-weight:600 !important;
+}
+.bsDrillDialog .sapMDialogScrollCont { padding:0 !important; padding-bottom:8px !important; overflow-y:auto !important; }
+.bsDrillDialog .sapMDialogFooter {
+    border-top:1px solid #D9D9D9 !important; background:#fff !important; padding:8px 14px !important;
+    border-radius:0 0 6px 6px !important; overflow:hidden !important;
+}
+
+.fiVhTable.sapMList { border:none; }
+.fiVhTable .sapMListTblHeaderCell {
+    background:#F0F4F8 !important; border-bottom:2px solid #0070D2 !important; padding:7px 10px !important;
+}
+.fiVhTable .sapMListTblHeaderCell .sapMText,
+.fiVhTable .sapMListTblHeaderCell span {
+    font-size:11px !important; font-weight:700 !important; color:#32363A !important;
+    text-transform:uppercase; letter-spacing:0.5px;
+}
+.fiVhTable .sapMLIBContent { padding:0 !important; }
+.fiVhTable td.sapMListTblCell { padding:7px 10px !important; border-bottom:1px solid #F0F0F0 !important; }
+.fiVhTable .sapMListTblRow:nth-child(even) td { background:#FAFBFF; }
+.fiVhTable .sapMLIB:hover td { background:#F0F6FF !important; }
+
+.fiVhBelnr,
+.fiVhBelnr .sapMText,
+.fiVhBelnr span {
+    font-size:13px !important; font-weight:700 !important; color:#0070D2 !important;
+    font-family:Consolas,monospace !important; cursor:pointer;
+}
+.fiVhDate,
+.fiVhDate .sapMText,
+.fiVhDate span { font-family:Consolas,"Lucida Console",monospace !important; font-size:12px !important; color:#32363A !important; }
+.fiVhSgtxt,
+.fiVhSgtxt .sapMText,
+.fiVhSgtxt span {
+    font-size:13px !important; color:#32363A !important;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:260px; display:block;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * 첨부파일 증빙 자료 섹션 (0002와 동일한 스타일)
+ * ══════════════════════════════════════════════════════════════ */
+.fiAttachTitle,
+.fiAttachTitle .sapMText,
+.fiAttachTitle span { margin-left: 6px !important; color: #ffffff !important; }
+
+.fiAttachRow.sapMFlexBox {
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    gap: 16px;
+    padding: 12px 0 4px;
+}
+.fiAttachItem.sapMFlexBox {
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+    width: auto !important;
+    max-width: 320px;
+    background: #FAFBFF;
+    border: 1px solid #E0E8F5;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.fiAttachItem.sapMFlexBox:hover {
+    box-shadow: 0 4px 14px rgba(0, 64, 139, 0.18);
+    transform: translateY(-2px);
+}
+.fiAttachImg.sapMImg {
+    width: auto !important;
+    max-width: 300px !important;
+    display: block !important;
+}
+.fiAttachImg.sapMImg img {
+    max-width: 300px !important;
+    max-height: 240px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #D0D8E8;
+    display: block;
+    margin: 0 auto;
+}
+.fiAttachName,
+.fiAttachName .sapMText,
+.fiAttachName span {
+    font-size: 11px !important;
+    color: #6A6D70 !important;
+    margin-top: 6px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}

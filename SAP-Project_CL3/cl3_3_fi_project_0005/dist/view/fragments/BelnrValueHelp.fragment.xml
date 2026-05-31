@@ -1,54 +1,72 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <TableSelectDialog
-        id="belnrValueHelpDialog"
-        title="전표 탐색 도움말 (결재 대기)"
-        items="{
-            path: '/ApprovalHeaderSetSet',
-            filters: [{path: 'Zstat', operator: 'EQ', value1: '01'}]
-        }"
-        search=".onValueHelpSearch"
-        confirm=".onValueHelpConfirm"
-        cancel=".onValueHelpCancel"
-        contentHeight="60%"
-        contentWidth="750px"
-        class="customValueHelpDialog">
-        <columns>
-            <Column width="8rem">
-                <header>
-                    <Text text="전표번호" />
-                </header>
-            </Column>
-            <Column width="5rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
-                <header>
-                    <Text text="회계연도" />
-                </header>
-            </Column>
-            <Column minScreenWidth="Tablet" demandPopin="true">
-                <header>
-                    <Text text="헤더 텍스트 적요 (BKTXT)" />
-                </header>
-            </Column>
-            <Column width="5rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
-                <header>
-                    <Text text="기안자" />
-                </header>
-            </Column>
-            <Column width="8rem" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                <header>
-                    <Text text="금액" />
-                </header>
-            </Column>
-        </columns>
-        <ColumnListItem>
-            <cells>
-                <Text text="{Belnr}" class="sapMObjLTitle" />
-                <Text text="{Gjahr}" />
-                <Text text="{Bktxt}" />
-                <Text text="{Ernam}" />
-                <ObjectNumber number="{path: 'Wrbtr', formatter: '.formatCurrency'}" unit="{Waers}" />
-            </cells>
-        </ColumnListItem>
-    </TableSelectDialog>
+
+    <Dialog id="belnrValueHelpDialog"
+        title="전표 탐색 도움말"
+        contentWidth="920px"
+        contentHeight="480px"
+        draggable="true"
+        resizable="true"
+        class="bsDrillDialog">
+        <content>
+            <VBox>
+                <!-- 필터 바 (0002 dlgVH 동일 구조) -->
+                <HBox alignItems="End" wrap="Wrap" class="bsFilterBar bsFilterBarFlat">
+                    <VBox class="bsFi">
+                        <Label text="전표번호 (포함)" class="bsFl"/>
+                        <Input id="vhInBelnr" placeholder="번호 일부..." width="140px" submit=".onValueHelpSearch" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="회계연도" class="bsFl"/>
+                        <Input id="vhInGjahr" maxLength="4" width="76px" submit=".onValueHelpSearch" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="기안자" class="bsFl"/>
+                        <Input id="vhInErnam" placeholder="기안자명..." width="100px" submit=".onValueHelpSearch" class="bsFin"/>
+                    </VBox>
+                    <VBox class="bsFi">
+                        <Label text="헤더텍스트 (포함)" class="bsFl"/>
+                        <Input id="vhInBktxt" placeholder="텍스트 일부..." width="150px" submit=".onValueHelpSearch" class="bsFin"/>
+                    </VBox>
+                    <Button text="검색" type="Emphasized" icon="sap-icon://search" press=".onValueHelpSearch"/>
+                </HBox>
+                <!-- 전표 목록 테이블 — JSONModel(view>/vhItems) 바인딩 -->
+                <Table id="vhTable"
+                    items="{view>/vhItems}"
+                    class="fiVhTable"
+                    showSeparators="Inner"
+                    backgroundDesign="Transparent"
+                    noDataText="검색 버튼을 눌러 전표 목록을 조회하세요."
+                    growing="true"
+                    growingThreshold="30">
+                    <columns>
+                        <Column width="120px"><Text text="전표번호"/></Column>
+                        <Column width="72px"  hAlign="Center"><Text text="회계연도"/></Column>
+                        <Column width="94px"><Text text="전기일자"/></Column>
+                        <Column width="54px"  hAlign="Center"><Text text="유형"/></Column>
+                        <Column><Text text="헤더텍스트"/></Column>
+                        <Column width="80px"><Text text="기안자"/></Column>
+                        <Column width="130px" hAlign="End"><Text text="금액 (KRW)"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active" press=".onValueHelpItemSelect">
+                            <cells>
+                                <Text text="{view>Belnr}"    class="fiVhBelnr"/>
+                                <Text text="{view>Gjahr}"    textAlign="Center"/>
+                                <Text text="{view>Budat}"    class="fiVhDate"/>
+                                <Text text="{view>Blart}"    textAlign="Center"/>
+                                <Text text="{view>Bktxt}"    wrapping="false" class="fiVhSgtxt"/>
+                                <Text text="{view>Ernam}"/>
+                                <ObjectNumber number="{path: 'view>Wrbtr', formatter: '.formatCurrency'}" unit="{view>Waers}" textAlign="End"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="닫기" press=".onValueHelpCancel" type="Transparent"/>
+        </beginButton>
+    </Dialog>
 </core:FragmentDefinition>
