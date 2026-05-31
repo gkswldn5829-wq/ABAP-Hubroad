@@ -45,11 +45,10 @@ sap.ui.define([
         cd   : (k, v)  => new CustomData({ key:k, value:v })
     };
 
-    /* ════ 프리뷰 환경 0002 URL 설정 ════════════════════════════════
-     * 0002 앱을 별도 서버(npm run start)로 실행하는 경우,
-     * 실제 포트/URL을 아래에 지정하세요.
-     * 예: "http://localhost:8082"
-     * 비워두면 현재 URL 경로에서 자동 추정합니다.
+    /* ════ 로컬 개발 시 0002 URL 설정 ════════════════════════════════
+     * npm run start 로 0002 앱을 별도 실행할 때의 URL을 입력하세요.
+     * 예: "http://localhost:8081"
+     * 배포 환경(bgissap1...)에서는 이 값을 사용하지 않습니다.
      * ══════════════════════════════════════════════════════════════ */
     const PREVIEW_0002_BASE = "";
 
@@ -602,62 +601,31 @@ sap.ui.define([
 
         /* ══════════════════════════════════════════════════════════
          * 0002 전표조회로 이동
-         *   배포(Fiori Launchpad): isNavigationSupported → true
-         *     → CrossApplicationNavigation.toExternal 사용
-         *   프리뷰(FLP sandbox 타겟 미등록 or FLP 없음): isNavigationSupported → false
-         *     → _get0002PreviewUrl()로 window.open fallback
+         *   로컬(localhost): PREVIEW_0002_BASE URL로 window.open (같은 로컬 환경)
+         *   배포(bgissap1...): CrossApplicationNavigation.toExternal (같은 배포 환경)
          *
          *   ※ 수정 포인트:
+         *     - 로컬 0002 URL: 파일 상단 PREVIEW_0002_BASE 상수 설정
          *     - 배포 SemanticObject/Action: target 객체 수정
-         *     - 프리뷰 URL: 파일 상단 PREVIEW_0002_BASE 상수 수정
          * ══════════════════════════════════════════════════════════ */
         _navigateToFI0002(sBelnr, sGjahr) {
-            const sHashParam = "#?Belnr=" + encodeURIComponent(sBelnr) + "&Gjahr=" + encodeURIComponent(sGjahr);
+            const enc = s => encodeURIComponent(s);
+            const hash = "#?Belnr=" + enc(sBelnr) + "&Gjahr=" + enc(sGjahr);
 
-            if (sap.ushell && sap.ushell.Container) {
-                const oCrossNav = sap.ushell.Container.getService("CrossApplicationNavigation");
-                // isNavigationSupported: 배포 FLP → true / 프리뷰 sandbox → false
-                oCrossNav.isNavigationSupported([{
-                    target: { semanticObject: "CL3FIDoc", action: "display" }
-                }]).done((aResults) => {
-                    if (aResults[0].supported) {
-                        // [배포 Fiori Launchpad] CrossApplicationNavigation으로 이동
-                        oCrossNav.toExternal({
-                            target: { semanticObject: "CL3FIDoc", action: "display" },
-                            params: { Belnr: sBelnr, Gjahr: sGjahr }
-                        });
-                    } else {
-                        // [프리뷰 FLP sandbox] 타겟 미등록 → window.open fallback
-                        window.open(this._get0002PreviewUrl(sHashParam), "_blank");
-                    }
-                }).fail(() => {
-                    window.open(this._get0002PreviewUrl(sHashParam), "_blank");
-                });
+            // 로컬 개발 환경: PREVIEW_0002_BASE 설정 시에만 이동
+            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+                if (PREVIEW_0002_BASE) {
+                    window.open(PREVIEW_0002_BASE + "/index.html" + hash, "_blank");
+                }
                 return;
             }
 
-            // [FLP 없음 — 직접 실행] window.open fallback
-            window.open(this._get0002PreviewUrl(sHashParam), "_blank");
-        },
-
-        /* 프리뷰 환경 0002 URL 생성
-         *   1순위: PREVIEW_0002_BASE 설정값 (파일 상단 상수)
-         *   2순위: 현재 URL 경로에서 0001 → 0002 치환
-         *   3순위: SAP 배포 경로 fallback
-         */
-        _get0002PreviewUrl(sHashParam) {
-            if (PREVIEW_0002_BASE) {
-                return PREVIEW_0002_BASE + "/index.html" + sHashParam;
-            }
-            const sPath = window.location.pathname;
-            if (sPath.includes("cl3_3_fi_project_0001")) {
-                return window.location.origin
-                    + sPath.replace("cl3_3_fi_project_0001", "cl3_3_fi_project_0002")
-                    + sHashParam;
-            }
-            return window.location.origin
-                + "/sap/bc/ui5_ui5/sap/zcl3_3_fi/index.html"
-                + sHashParam;
+            // 배포 환경: 0002 FLP URL로 직접 이동
+            window.open(
+                window.location.origin + "/sap/bc/ui2/flp?sap-client=100&sap-language=KO#ZCDS_C3_FI_0005_CDS-display?Belnr="
+                + enc(sBelnr) + "&Gjahr=" + enc(sGjahr),
+                "_blank"
+            );
         },
 
         /* ══════════════════════════════════════════════════════════
