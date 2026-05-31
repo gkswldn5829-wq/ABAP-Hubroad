@@ -29,7 +29,7 @@
                     <Text text="{viewModel>/waers}" class="headerWaersTag"/>
                     <Button text="ATTACH" icon="sap-icon://attachment" press="onSelectFiles" class="btnGlassHeader headerAttachBtn"/>
                     <Button text="RESET"  icon="sap-icon://refresh"    press="onReset"       class="btnGlassHeader headerResetBtn"/>
-                    <Button text="SAVE"   icon="sap-icon://save"       press="onSave"        class="btnGlassHeader headerSaveBtn"/>
+                    <Button text="상신"   icon="sap-icon://save"       press="onSave"        class="btnGlassHeader headerSaveBtn"/>
                 </contentRight>
             </Bar>
         </customHeader>

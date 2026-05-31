@@ -85,6 +85,28 @@
                 <Property Name="Aenam" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Changed By"/>
                 <Property Name="Aezet" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Time of change"/>
             </EntityType>
+            <EntityType Name="Attachment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bukrs"/>
+                    <PropertyRef Name="Belnr"/>
+                    <PropertyRef Name="Gjahr"/>
+                    <PropertyRef Name="Seqno"/>
+                </Key>
+                <Property Name="Bukrs"    Type="Edm.String"  Nullable="false" MaxLength="4"   sap:unicode="false" sap:label="회사 코드"           sap:updatable="false"/>
+                <Property Name="Belnr"    Type="Edm.String"  Nullable="false" MaxLength="10"  sap:unicode="false" sap:label="전표 번호"           sap:updatable="false"/>
+                <Property Name="Gjahr"    Type="Edm.String"  Nullable="false" MaxLength="4"   sap:unicode="false" sap:label="회계연도"            sap:updatable="false"/>
+                <Property Name="Seqno"    Type="Edm.String"  Nullable="false" MaxLength="4"   sap:unicode="false" sap:label="카운터"              sap:updatable="false"/>
+                <Property Name="Filename" Type="Edm.String"  MaxLength="128"                  sap:unicode="false" sap:label="128문자"/>
+                <Property Name="Mimetype" Type="Edm.String"  MaxLength="128"                  sap:unicode="false" sap:label="128문자"/>
+                <Property Name="Filesize" Type="Edm.Int32"                                    sap:unicode="false" sap:label="파일길이"/>
+                <Property Name="Filedata" Type="Edm.Binary"                                   sap:unicode="false" sap:label="파일데이터엘리먼트"/>
+                <Property Name="Erdat"    Type="Edm.String"  MaxLength="10"                   sap:unicode="false" sap:label="생성일"/>
+                <Property Name="Ernam"    Type="Edm.String"  MaxLength="12"                   sap:unicode="false" sap:label="생성자"/>
+                <Property Name="Erzet"    Type="Edm.String"  MaxLength="8"                    sap:unicode="false" sap:label="시간"/>
+                <Property Name="Aedat"    Type="Edm.String"  MaxLength="10"                   sap:unicode="false" sap:label="변경일"/>
+                <Property Name="Aenam"    Type="Edm.String"  MaxLength="12"                   sap:unicode="false" sap:label="변경자"/>
+                <Property Name="Aezet"    Type="Edm.String"  MaxLength="8"                    sap:unicode="false" sap:label="변경시간"/>
+            </EntityType>
             <Association Name="VoucherHeader_To_Items" sap:content-version="1">
                 <End Type="ZGWC3FI0001_SRV.VoucherHeader" Multiplicity="1" Role="FromRole_VoucherHeader_To_Items"/>
                 <End Type="ZGWC3FI0001_SRV.VoucherItem" Multiplicity="*" Role="ToRole_VoucherHeader_To_Items"/>

@@ -18,7 +18,7 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "npm run build",
+    "buildCommand": "cd \"C:\\Users\\pc\\Desktop\\fiori-main\\SAP-Project_CL3\\cl3_3_fi_project_0004\" && git add webapp/controller/cl_3_fi_project_0004.controller.js dist/controller/cl_3_fi_project_0004.controller.js dist/controller/cl_3_fi_project_0004-dbg.controller.js dist/controller/cl_3_fi_project_0004.controller.js.map dist/Component-preload.js dist/Component-preload.js.map && git commit -m \"fix(0004): Ernam 페이로드 제거 + 저장 전 페이로드 콘솔 로그 추가\n\n- oHeader에서 Ernam 필드 제거\n  → ABAP DPC CREATE_ENTITY가 sy-uname으로 자동 설정\n  → 프론트에서 전송 시 DPC 내부 충돌로 500 유발 가능\n- 저장 호출 직전 console.log('[GL 전표] CREATE 페이로드') 추가\n  → 브라우저 콘솔에서 실제 전송 페이로드 확인 가능\n- npm run build: dist/ 재빌드 완료\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\"",
     "testCommand": null,
     "lintCommand": null,
     "devCommand": "npm run start",
@@ -89,8 +89,8 @@
   "hotPaths": [
     {
       "path": "webapp\\controller\\cl_3_fi_project_0004.controller.js",
-      "accessCount": 31,
-      "lastAccessed": 1779872707887,
+      "accessCount": 60,
+      "lastAccessed": 1779886123992,
       "type": "file"
     },
     {
@@ -101,14 +101,32 @@
     },
     {
       "path": "webapp\\view\\cl_3_fi_project_0004.view.xml",
-      "accessCount": 16,
-      "lastAccessed": 1779872841256,
+      "accessCount": 17,
+      "lastAccessed": 1779875603998,
       "type": "file"
     },
     {
       "path": "",
+      "accessCount": 10,
+      "lastAccessed": 1779885943283,
+      "type": "directory"
+    },
+    {
+      "path": "webapp\\localService\\mainService\\metadata.xml",
+      "accessCount": 7,
+      "lastAccessed": 1779886143611,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\manifest.json",
       "accessCount": 6,
-      "lastAccessed": 1779797474159,
+      "lastAccessed": 1779876351090,
+      "type": "file"
+    },
+    {
+      "path": "webapp",
+      "accessCount": 5,
+      "lastAccessed": 1779885942579,
       "type": "directory"
     },
     {
@@ -124,33 +142,15 @@
       "type": "file"
     },
     {
-      "path": "webapp\\manifest.json",
+      "path": "package.json",
       "accessCount": 3,
-      "lastAccessed": 1779797471873,
+      "lastAccessed": 1779875959367,
       "type": "file"
-    },
-    {
-      "path": "webapp",
-      "accessCount": 2,
-      "lastAccessed": 1779711347955,
-      "type": "directory"
     },
     {
       "path": "ui5-mock.yaml",
       "accessCount": 2,
       "lastAccessed": 1779781750158,
-      "type": "file"
-    },
-    {
-      "path": "package.json",
-      "accessCount": 2,
-      "lastAccessed": 1779797436910,
-      "type": "file"
-    },
-    {
-      "path": "webapp\\localService\\mainService\\metadata.xml",
-      "accessCount": 1,
-      "lastAccessed": 1779710896853,
       "type": "file"
     },
     {
@@ -170,6 +170,12 @@
       "accessCount": 1,
       "lastAccessed": 1779797623436,
       "type": "directory"
+    },
+    {
+      "path": "webapp\\test\\unit\\controller\\cl_3_fi_project_0004.controller.js",
+      "accessCount": 1,
+      "lastAccessed": 1779875628292,
+      "type": "file"
     }
   ],
   "userDirectives": []

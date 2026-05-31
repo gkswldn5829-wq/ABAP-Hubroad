@@ -211,7 +211,7 @@ sap.ui.define([
             var oInput = document.createElement("input");
             oInput.type     = "file";
             oInput.multiple = true;
-            oInput.accept   = ".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.zip,.txt";
+            oInput.accept   = "image/*,.pdf,.xlsx,.xls,.doc,.docx,.zip,.txt";
             oInput.style.display = "none";
             oInput.addEventListener("change", this._onFilesSelected.bind(this));
             document.body.appendChild(oInput);
@@ -685,6 +685,14 @@ sap.ui.define([
 
             var sWaers = oModel.getProperty("/waers");
             var sStodt = oModel.getProperty("/stodt") || "";
+
+            // 헤더 Wrbtr = 차변(S) 아이템 금액 합계 (SAP BKPF-WRBTR 표준 계산)
+            var nHeaderWrbtr = aItems.reduce(function (sum, item) {
+                return item.shkzg === "S"
+                    ? sum + (parseFloat((item.wrbtrInput || "").replace(/,/g, "")) || 0)
+                    : sum;
+            }, 0);
+
             var oHeader = {
                 Bukrs:  "8282",
                 Blart:  oModel.getProperty("/blart") || "SA",
@@ -694,7 +702,8 @@ sap.ui.define([
                 Waers:  sWaers,
                 Gjahr:  oModel.getProperty("/gjahr"),
                 Monat:  oModel.getProperty("/monat"),
-                Zstat:  "01"
+                Zstat:  "01",
+                Wrbtr:  nHeaderWrbtr.toFixed(2)   // 차변 합계 = 전표 총액
                 // Ernam: ABAP이 sy-uname으로 자동 설정 — 프론트에서 보내면 DPC 충돌 가능
                 // Stodt: 값이 있을 때만 아래서 추가 (빈 문자열 → ABAP 날짜 변환 오류 방지)
             };
@@ -740,16 +749,25 @@ sap.ui.define([
                     var sBelnr = oData.Belnr || "";
                     var sGjahr = oData.Gjahr || "";
 
-                    // 첨부파일 업로드 (전표번호 확정 후 즉시 시작)
-                    if (sBelnr && sGjahr) {
-                        that._uploadAttachments(sBelnr, sGjahr);
-                    }
+                    var fnShowResult = function (iOk, iFail) {
+                        var sAttachMsg = "";
+                        if (iOk > 0 && iFail === 0) {
+                            sAttachMsg = "\n첨부파일 " + iOk + "개 업로드 완료 ✓";
+                        } else if (iFail > 0) {
+                            sAttachMsg = "\n첨부파일 " + iFail + "개 업로드 실패 — 전표는 생성됨";
+                        }
+                        MessageBox.success(
+                            "전표가 상신되었습니다.\n전표번호: " + (sBelnr || "—") + "  회계연도: " + (sGjahr || "—") + sAttachMsg,
+                            { title: "상신 완료", onClose: function () { that._resetForm(); } }
+                        );
+                    };
 
-                    // _resetForm을 onClose 콜백 안에서 호출 → 비동기 첨부 업로드와 충돌 방지 + 전표번호 확인 후 폼 초기화
-                    MessageBox.success(
-                        "전표가 생성되었습니다.\n전표번호: " + (sBelnr || "—") + "  회계연도: " + (sGjahr || "—"),
-                        { title: "전표 생성 완료", onClose: function () { that._resetForm(); } }
-                    );
+                    // 첨부파일 있으면 모두 업로드 완료 후 성공 메시지 표시 (단일 트랜잭션 UX)
+                    if (sBelnr && sGjahr) {
+                        that._uploadAttachments(sBelnr, sGjahr, fnShowResult);
+                    } else {
+                        fnShowResult(0, 0);
+                    }
                 },
                 error: function (oError) {
                     var sMsg = "전표 생성 중 오류가 발생했습니다.";
@@ -905,20 +923,51 @@ sap.ui.define([
 
             var oModel       = this.getView().getModel("viewModel");
             var aAttachments = oModel.getProperty("/attachments") || [];
+            var that         = this;
 
             aFiles.forEach(function (oFile) {
-                aAttachments.push({
+                // MIME 타입이 없는 모바일 파일 처리 (Android 일부 카메라)
+                var sMime = oFile.type || (oFile.name.match(/\.(jpg|jpeg)$/i) ? "image/jpeg"
+                          : oFile.name.match(/\.png$/i)  ? "image/png"
+                          : oFile.name.match(/\.pdf$/i)  ? "application/pdf"
+                          : "application/octet-stream");
+
+                var oItem = {
                     filename:    oFile.name,
                     size:        oFile.size,
-                    metaText:    this._formatFileSize(oFile.size) + "  ·  " + (oFile.type || "파일"),
-                    mimetype:    oFile.type || "application/octet-stream",
-                    fileIcon:    this._getFileIcon(oFile.name),
-                    statusText:  "대기중",
-                    statusState: "None",
-                    removable:   true,
-                    _file:       oFile
-                });
-            }.bind(this));
+                    metaText:    that._formatFileSize(oFile.size) + "  ·  " + sMime,
+                    mimetype:    sMime,
+                    fileIcon:    that._getFileIcon(oFile.name),
+                    statusText:  "읽는 중...",
+                    statusState: "Warning",
+                    removable:   false,
+                    _file:       oFile,
+                    _base64:     ""
+                };
+                aAttachments.push(oItem);
+
+                // 파일 선택 즉시 base64 읽기 → 모바일 메모리/타이밍 문제 사전 차단
+                var oReader = new FileReader();
+                oReader.onload = function (e) {
+                    var sBase64 = (e.target.result || "").split(",")[1] || "";
+                    oItem._base64      = sBase64;
+                    oItem.statusText   = "대기중";
+                    oItem.statusState  = "None";
+                    oItem.removable    = true;
+                    // 모델 갱신 (참조 복사이므로 재세팅으로 UI 갱신)
+                    var aList = oModel.getProperty("/attachments");
+                    oModel.setProperty("/attachments", aList.slice());
+                };
+                oReader.onerror = function () {
+                    oItem.statusText   = "읽기 실패";
+                    oItem.statusState  = "Error";
+                    oItem.removable    = true;
+                    var aList = oModel.getProperty("/attachments");
+                    oModel.setProperty("/attachments", aList.slice());
+                    sap.m.MessageToast.show(oFile.name + " — 파일 읽기 실패 (지원하지 않는 형식일 수 있습니다)");
+                };
+                oReader.readAsDataURL(oFile);
+            });
 
             oModel.setProperty("/attachments", aAttachments);
             this._updateAttachCount();
@@ -936,58 +985,60 @@ sap.ui.define([
         },
 
         // ── 첨부파일: Gateway로 업로드 ──────────────────────
-        _uploadAttachments: function (sBelnr, sGjahr) {
+        // fnAllDone: 모든 업로드 완료(성공+실패 합산) 시 호출되는 콜백 → 트랜잭션 완료 시점 통보
+        _uploadAttachments: function (sBelnr, sGjahr, fnAllDone) {
             var oModel       = this.getView().getModel("viewModel");
             var aAttachments = oModel.getProperty("/attachments") || [];
+            // _base64가 준비된 대기중 파일만 업로드
             var aPending     = aAttachments.filter(function (a) {
-                return a.statusText === "대기중" && a._file;
+                return a.statusText === "대기중" && a._base64;
             });
-            if (!aPending.length) { return; }
+            if (!aPending.length) {
+                if (fnAllDone) { fnAllDone(0, 0); }
+                return;
+            }
 
             var oODataModel = this.getView().getModel();
             var that        = this;
             var iTotal      = aPending.length;
             var iDone       = 0;
+            var iFail       = 0;
 
-            aPending.forEach(function (oAttach) {
-                // 상태: 업로드중
+            aPending.forEach(function (oAttach, iSeq) {
                 var iGlobalIdx = aAttachments.indexOf(oAttach);
                 that._setAttachStatus(iGlobalIdx, "업로드 중", "Warning", false);
 
-                var oReader   = new FileReader();
-                oReader.onload = function (e) {
-                    // data:mimetype;base64,XXXXX → base64 부분만 추출
-                    var sBase64 = (e.target.result || "").split(",")[1] || "";
+                // Seqno: 파일 순서대로 "0001","0002"… (PK 충돌 방지)
+                var sSeqno = String(iSeq + 1).padStart(4, "0");
 
-                    oODataModel.create("/AttachmentSet", {
-                        Bukrs:    "8282",
-                        Belnr:    sBelnr,
-                        Gjahr:    sGjahr,
-                        Seqno:    "0000",
-                        Filename: oAttach.filename,
-                        Mimetype: oAttach.mimetype,
-                        Filesize: String(oAttach.size),
-                        Filedata: sBase64
-                    }, {
-                        success: function () {
-                            iDone++;
-                            that._setAttachStatus(iGlobalIdx, "완료", "Success", false);
-                            if (iDone === iTotal) {
-                                MessageToast.show(iTotal + "개 첨부파일 업로드 완료 ✓");
-                            }
-                        },
-                        error: function (oErr) {
-                            iDone++;
-                            var sMsg = "업로드 실패";
-                            try {
-                                sMsg = JSON.parse(oErr.responseText).error.message.value || sMsg;
-                            } catch (x) { /* ignore */ }
-                            that._setAttachStatus(iGlobalIdx, "실패", "Error", true);
-                            MessageToast.show(oAttach.filename + " — " + sMsg);
+                oODataModel.create("/AttachmentSet", {
+                    Bukrs:    "8282",
+                    Belnr:    sBelnr,
+                    Gjahr:    sGjahr,
+                    Seqno:    sSeqno,
+                    Filename: oAttach.filename,
+                    Mimetype: oAttach.mimetype,
+                    Filesize: oAttach.size,
+                    Filedata: oAttach._base64   // 파일 선택 시 미리 읽은 base64
+                }, {
+                    success: function () {
+                        iDone++;
+                        that._setAttachStatus(iGlobalIdx, "완료", "Success", false);
+                        if (iDone + iFail === iTotal && fnAllDone) {
+                            fnAllDone(iDone, iFail);
                         }
-                    });
-                };
-                oReader.readAsDataURL(oAttach._file);
+                    },
+                    error: function (oErr) {
+                        iFail++;
+                        var sMsg = "업로드 실패";
+                        try { sMsg = JSON.parse(oErr.responseText).error.message.value || sMsg; } catch (x) {}
+                        that._setAttachStatus(iGlobalIdx, "실패", "Error", true);
+                        MessageToast.show(oAttach.filename + " — " + sMsg);
+                        if (iDone + iFail === iTotal && fnAllDone) {
+                            fnAllDone(iDone, iFail);
+                        }
+                    }
+                });
             });
         },
 
