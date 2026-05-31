@@ -54,11 +54,10 @@ sap.ui.define([
         nonop   : ["영업외손익", "영업외수익", "영업외비용", "기타영업외", "법인세", "이자비용", "이자수익", "금융비용", "금융수익", "기타수익", "기타비용", "지분법", "세전이익"]
     };
 
-    /* ════ 프리뷰 환경 0002 URL 설정 ════════════════════════════════
-     * 0002 앱을 별도 서버(npm run start)로 실행하는 경우,
-     * 실제 포트/URL을 아래에 지정하세요.
-     * 예: "http://localhost:8082"
-     * 비워두면 현재 URL 경로에서 자동 추정합니다.
+    /* ════ 로컬 개발 시 0002 URL 설정 ════════════════════════════════
+     * npm run start 로 0002 앱을 별도 실행할 때의 URL을 입력하세요.
+     * 예: "http://localhost:8081"
+     * 배포 환경(bgissap1...)에서는 이 값을 사용하지 않습니다.
      * ══════════════════════════════════════════════════════════════ */
     const PREVIEW_0002_BASE = "";
 
@@ -959,42 +958,23 @@ sap.ui.define([
         },
 
         _navigateToFI0002(sBelnr, sGjahr) {
-            /* FLP 환경: CrossApplicationNavigation으로 직접 이동
-             *   Semantic Object : CL3FIDoc
-             *   Action          : display
-             *   (피오리 런치패드 URL: #CL3FIDoc-display?Belnr=xxx&Gjahr=xxx)
-             */
-            if (sap.ushell && sap.ushell.Container) {
-                sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-                    target: { semanticObject: "CL3FIDoc", action: "display" },
-                    params: { Belnr: sBelnr, Gjahr: sGjahr, "sap-app-origin-hint": "" }
-                });
+            const enc = s => encodeURIComponent(s);
+            const hash = "#?Belnr=" + enc(sBelnr) + "&Gjahr=" + enc(sGjahr);
+
+            // 로컬 개발 환경: PREVIEW_0002_BASE 설정 시에만 이동
+            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+                if (PREVIEW_0002_BASE) {
+                    window.open(PREVIEW_0002_BASE + "/index.html" + hash, "_blank");
+                }
                 return;
             }
-            /* FLP 밖(로컬 npm run start 또는 단독 배포): URL 직접 생성 */
-            window.open(this._get0002PreviewUrl(sBelnr, sGjahr), "_blank");
-        },
 
-        /* 0002 URL 생성 (FLP 없는 환경 전용)
-         *   1순위: PREVIEW_0002_BASE 상수 (로컬 개발 시 직접 설정)
-         *   2순위: npm run start — 경로 내 0003 → 0002 치환
-         *   3순위: 배포 서버 — window.location.origin 기반 FLP URL 구성
-         */
-        _get0002PreviewUrl(sBelnr, sGjahr) {
-            const enc = s => encodeURIComponent(s);
-            if (PREVIEW_0002_BASE) {
-                return PREVIEW_0002_BASE + "/index.html#?Belnr=" + enc(sBelnr) + "&Gjahr=" + enc(sGjahr);
-            }
-            const sPath = window.location.pathname;
-            if (sPath.includes("cl3_3_fi_project_0003")) {
-                return window.location.origin
-                    + sPath.replace("cl3_3_fi_project_0003", "cl3_3_fi_project_0002")
-                    + "#?Belnr=" + enc(sBelnr) + "&Gjahr=" + enc(sGjahr);
-            }
-            /* 배포 서버: FLP URL 직접 구성 */
-            return window.location.origin
-                + "/sap/bc/ui2/flp?sap-client=100&sap-language=KO#CL3FIDoc-display?Belnr="
-                + enc(sBelnr) + "&Gjahr=" + enc(sGjahr) + "&sap-app-origin-hint=";
+            // 배포 환경: 0002 FLP URL로 직접 이동
+            window.open(
+                window.location.origin + "/sap/bc/ui2/flp?sap-client=100&sap-language=KO#ZCDS_C3_FI_0005_CDS-display?Belnr="
+                + enc(sBelnr) + "&Gjahr=" + enc(sGjahr),
+                "_blank"
+            );
         },
 
         /* ══════════════════════════════════════════════════════════
