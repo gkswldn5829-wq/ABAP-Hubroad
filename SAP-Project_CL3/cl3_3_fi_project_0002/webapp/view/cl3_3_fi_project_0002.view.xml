@@ -478,7 +478,23 @@
                 </VBox>
 
                 <!-- ════════════════════════════════════════════════
-                     ⑧ 페이지 Footer
+                     ⑧ 첨부파일 섹션
+                        - viewModel>/hasAttachments 가 true 일 때만 표시
+                        - _loadAttachments() 에서 image/* 파일만 동적으로 추가
+                        - 이미지 클릭 시 새 탭으로 원본 열람
+                        CSS: .bsWrap / .bsHead / .fiAttachRow / .fiAttachItem
+                             .fiAttachImg / .fiAttachName
+                     ════════════════════════════════════════════════ -->
+                <VBox class="bsWrap" visible="{viewModel>/hasAttachments}">
+                    <HBox class="bsHead" alignItems="Center">
+                        <core:Icon src="sap-icon://attachment" class="fiHintIcon"/>
+                        <Text text="첨부파일" class="bsHeadText fiAttachTitle"/>
+                    </HBox>
+                    <HBox id="attachmentBox" wrap="Wrap" class="fiAttachRow"/>
+                </VBox>
+
+                <!-- ════════════════════════════════════════════════
+                     ⑨ 페이지 Footer
                         - OData 연결 정보 안내 텍스트
                         CSS: .bsFooter / .bsInfoBox
                      ════════════════════════════════════════════════ -->

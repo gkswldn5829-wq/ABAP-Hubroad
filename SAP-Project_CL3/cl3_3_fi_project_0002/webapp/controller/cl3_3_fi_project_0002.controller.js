@@ -18,9 +18,13 @@ sap.ui.define([
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/format/NumberFormat",
     "sap/ui/core/routing/History",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/m/Image",
+    "sap/m/VBox",
+    "sap/m/Text"
 ], function (Controller, JSONModel, Filter, FilterOperator, Sorter,
-    DateFormat, NumberFormat, History, MessageBox) {
+    DateFormat, NumberFormat, History, MessageBox,
+    MImage, MVBox, MText) {
     "use strict";
 
     /* ══════════════════════════════════════════════════════════════
@@ -175,6 +179,9 @@ sap.ui.define([
                 kpiDebit: "38,500,000",
                 kpiCredit: "38,500,000",
                 kpiBalance: "✓  균형",
+                /* 첨부파일 */
+                attachments: [],
+                hasAttachments: false,
                 /* 탐색도움말 */
                 vhItems: [],
                 /* 전표유형 고정 목록 — _blartMap과 동기화 유지 */
@@ -297,6 +304,7 @@ sap.ui.define([
                         return;
                     }
                     this._processData(aRes);
+                    this._loadAttachments(sBelnr, sGjahr);
                 }.bind(this),
                 error: function () {
                     oVM.setProperty("/busy", false);
@@ -328,6 +336,71 @@ sap.ui.define([
             oVM.setProperty("/kpiCredit",   "38,500,000");
             oVM.setProperty("/kpiBalance",  "✓  균형");
             oVM.setProperty("/hasData",     true);
+        },
+
+        /* ══════════════════════════════════════════════════════════
+         * [섹션 5-1] 첨부파일 조회 (_loadAttachments)
+         *   서비스: ZGWC3FI0001_SRV / AttachmentSet
+         *   필터 : Bukrs(고정8282) / Belnr / Gjahr
+         *   이미지 mimetype(image/*) 파일만 attachmentBox HBox에 동적 추가
+         *   각 이미지 클릭 시 새 탭으로 원본 열람 가능
+         * ══════════════════════════════════════════════════════════ */
+        _loadAttachments: function (sBelnr, sGjahr) {
+            var oVM  = this.getView().getModel("viewModel");
+            var oBox = this.byId("attachmentBox");
+            oBox.destroyItems();
+            oVM.setProperty("/hasAttachments", false);
+
+            var sBase   = "/sap/opu/odata/sap/ZGWC3FI0001_SRV/";
+            var sFilter = encodeURIComponent(
+                "Bukrs eq '" + _BUKRS + "' and Belnr eq '" + sBelnr + "' and Gjahr eq '" + sGjahr + "'"
+            );
+            var sUrl = sBase + "AttachmentSet"
+                + "?$filter=" + sFilter
+                + "&$select=Bukrs,Belnr,Gjahr,Seqno,Filename,Mimetype"
+                + "&$format=json";
+
+            jQuery.ajax({
+                url: sUrl,
+                headers: { "Accept": "application/json" },
+                success: function (oData) {
+                    var aResults = (oData.d && oData.d.results) || [];
+                    var aImages  = aResults.filter(function (r) {
+                        return (r.Mimetype || "").toLowerCase().indexOf("image/") === 0;
+                    });
+                    if (!aImages.length) { return; }
+
+                    aImages.forEach(function (r) {
+                        var sKey = "Bukrs='" + r.Bukrs + "',Belnr='" + r.Belnr
+                                 + "',Gjahr='" + r.Gjahr + "',Seqno='" + r.Seqno + "'";
+                        var sSrc = sBase + "AttachmentSet(" + sKey + ")/Filedata/$value";
+
+                        var oImg = new MImage({
+                            src: sSrc,
+                            densityAware: false,
+                            press: (function (url) {
+                                return function () { window.open(url, "_blank"); };
+                            }(sSrc))
+                        });
+                        oImg.addStyleClass("fiAttachImg");
+
+                        var oLabel = new MText({
+                            text: (r.Filename || ("첨부 " + r.Seqno)),
+                            wrapping: false
+                        });
+                        oLabel.addStyleClass("fiAttachName");
+
+                        var oItem = new MVBox({ alignItems: "Center" });
+                        oItem.addStyleClass("fiAttachItem");
+                        oItem.addItem(oImg);
+                        oItem.addItem(oLabel);
+                        oBox.addItem(oItem);
+                    });
+
+                    oVM.setProperty("/hasAttachments", true);
+                }.bind(this),
+                error: function () { /* 첨부파일 없으면 조용히 무시 */ }
+            });
         },
 
         /* ══════════════════════════════════════════════════════════

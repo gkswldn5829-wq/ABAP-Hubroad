@@ -6,7 +6,6 @@
  * 수정 시  : 아래 섹션 번호를 참고하여 해당 구역만 수정하세요.
  * ================================================================ */
 
-
 /* ══════════════════════════════════════════════════════════════
  * [1] 페이지 헤더
  *     - SAP UI5 기본 Page 헤더를 그대로 표시
@@ -636,3 +635,74 @@
 }
 .btnGlass.sapMBtn .sapMBtnIcon,
 .btnGlass.sapMBtn .sapMBtnText { color: #ffffff !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [18] 첨부파일 섹션
+ * ══════════════════════════════════════════════════════════════ */
+/* 헤더 아이콘/텍스트 흰색 */
+.bsWrap .bsHead .fiHintIcon { color: #ffffff !important; }
+.fiAttachTitle,
+.fiAttachTitle .sapMText,
+.fiAttachTitle span { margin-left: 6px !important; color: #ffffff !important; }
+
+/* 이미지 카드 가로 나열 */
+.fiAttachRow.sapMFlexBox {
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 16px;
+    padding: 16px 14px 8px;
+}
+
+/* 개별 카드: 내용 크기에 맞게 축소 */
+.fiAttachItem.sapMFlexBox {
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+    width: auto !important;
+    max-width: 320px;
+    background: #FAFBFF;
+    border: 1px solid #E0E8F5;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.fiAttachItem.sapMFlexBox:hover {
+    box-shadow: 0 4px 14px rgba(0, 64, 139, 0.18);
+    transform: translateY(-2px);
+}
+
+/* Image outer 엘리먼트 */
+.fiAttachImg.sapMImg {
+    width: auto !important;
+    max-width: 300px !important;
+    display: block !important;
+}
+/* 실제 img 태그 */
+.fiAttachImg.sapMImg img {
+    max-width: 300px !important;
+    max-height: 240px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #D0D8E8;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 파일명 */
+.fiAttachName,
+.fiAttachName .sapMText,
+.fiAttachName span {
+    font-size: 11px !important;
+    color: #6A6D70 !important;
+    margin-top: 6px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
