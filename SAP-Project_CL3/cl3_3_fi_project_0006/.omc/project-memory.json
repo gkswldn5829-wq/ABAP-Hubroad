@@ -1,0 +1,121 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1780203466800,
+  "projectRoot": "C:\\Users\\pc\\Desktop\\fiori-main\\SAP-Project_CL3\\cl3_3_fi_project_0006",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "start": "fiori run --open \"test/flp.html#app-preview\"",
+      "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flp.html#app-preview\"",
+      "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+      "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flp.html#app-preview\"",
+      "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml",
+      "deploy-config": "fiori add deploy-config",
+      "start-noflp": "fiori run --open \"/index.html?sap-ui-xx-viewCache=false\"",
+      "int-test": "fiori run --config ./ui5-mock.yaml --open \"/test/integration/opaTests.qunit.html\"",
+      "start-variants-management": "fiori run --open \"/preview.html#app-preview\"",
+      "undeploy": "npm run build && fiori undeploy --config ui5-deploy.yaml",
+      "deploy-test": "npm run build && fiori deploy --config ui5-deploy.yaml --testMode true"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 7,
+      "lastAccessed": 1780203466760,
+      "keyFiles": [
+        "Component-dbg.js",
+        "Component-preload.js",
+        "Component-preload.js.map",
+        "Component.js",
+        "Component.js.map"
+      ]
+    },
+    "webapp": {
+      "path": "webapp",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1780203466761,
+      "keyFiles": [
+        "Component.js",
+        "index.html",
+        "manifest.json"
+      ]
+    },
+    "webapp\\test": {
+      "path": "webapp\\test",
+      "purpose": "Test files",
+      "fileCount": 2,
+      "lastAccessed": 1780203466769,
+      "keyFiles": [
+        "testsuite.qunit.html",
+        "testsuite.qunit.js"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "webapp\\manifest.json",
+      "accessCount": 6,
+      "lastAccessed": 1780205566733,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\annotations\\annotation.xml",
+      "accessCount": 4,
+      "lastAccessed": 1780205019396,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\i18n\\i18n.properties",
+      "accessCount": 3,
+      "lastAccessed": 1780205025502,
+      "type": "file"
+    },
+    {
+      "path": "webapp",
+      "accessCount": 1,
+      "lastAccessed": 1780203496486,
+      "type": "directory"
+    },
+    {
+      "path": "webapp\\localService\\mainService\\metadata.xml",
+      "accessCount": 1,
+      "lastAccessed": 1780203506055,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
