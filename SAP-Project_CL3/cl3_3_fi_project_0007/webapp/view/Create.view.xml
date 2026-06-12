@@ -1,0 +1,267 @@
+<mvc:View controllerName="zc3fiasset27.assetmanagement.controller.Create"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <!--
+        SCREEN 3: Create — 드래프트 모드
+        rap_asset_ui_spec.html Screen 3 기준
+        - 상단: 신규 자산 등록 / 드래프트 — 아직 저장되지 않음
+        - 폼: 기본정보 / 감가상각 설정 / 조직정보 (3열 그리드)
+        - 하단 고정 Footer: [드래프트 무시] [생성]
+        - 데이터: JSONModel(form) → POST /Asset → Activate
+    -->
+
+    <Page id="createPage"
+        title="신규 자산 등록"
+        showNavButton="true"
+        navButtonPress="onDiscard">
+
+        <!-- ── 하단 고정 Footer ── -->
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button text="무시"
+                        icon="sap-icon://decline"
+                        press="onDiscard"/>
+                    <Button text="등록"
+                        type="Emphasized"
+                        icon="sap-icon://save"
+                        press="onSave"/>
+                </contentRight>
+            </Bar>
+        </footer>
+
+        <content>
+
+            <!-- ════════════════════════════════════
+                 섹션 1: 기본정보
+                 3열 그리드 레이아웃 (HBox wrap + VBox cell)
+            ════════════════════════════════════ -->
+            <Panel headerText="기본정보" expandable="false" class="fiCreatePanel">
+                <content>
+                    <HBox wrap="Wrap" class="fiCreateGrid">
+
+                        <!-- 행 1: 회사코드 | 취득일 | 매입처 -->
+                        <VBox class="fiCreateCell">
+                            <Label text="회사코드" design="Bold"/>
+                            <Input value="{form>/Bukrs}" editable="false" width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="취득일" required="true" design="Bold"/>
+                            <DatePicker id="dpAktiv"
+                                displayFormat="yyyy.MM.dd"
+                                valueFormat="yyyy-MM-dd"
+                                value="{form>/Aktiv}"
+                                placeholder="취득일 선택"
+                                width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="매입처" design="Bold"/>
+                            <Input value="{form>/Lifnr}"
+                                placeholder="공급업체 코드"
+                                maxLength="10"
+                                width="100%"/>
+                        </VBox>
+
+                        <!-- 행 2: 자산번호 | 취득가액 | 자산상태 -->
+                        <VBox class="fiCreateCell">
+                            <Label text="자산번호" design="Bold"/>
+                            <Input value="{form>/Anlnr}"
+                                editable="true"
+                                placeholder="자산번호 입력"
+                                width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="취득가액" required="true" design="Bold"/>
+                            <Input id="inputAnschw"
+                                value="{form>/Anschw}"
+                                placeholder="0"
+                                textAlign="End"
+                                description="KRW"
+                                width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="자산상태" design="Bold"/>
+                            <Input value="{form>/Status}"
+                                placeholder="자산상태"
+                                maxLength="1"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+
+                        <!-- 행 3: 자산명칭 | 잔존가치 | 통화 -->
+                        <VBox class="fiCreateCell">
+                            <Label text="자산명칭" required="true" design="Bold"/>
+                            <Input id="inputCreateAnltx"
+                                value="{form>/Anltx}"
+                                placeholder="자산 이름 입력"
+                                maxLength="20"
+                                width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="잔존가치" design="Bold"/>
+                            <Input value="{form>/Salvage}"
+                                placeholder="0"
+                                textAlign="End"
+                                description="KRW"
+                                width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="통화" design="Bold"/>
+                            <Input value="{form>/Waers}" 
+                                placeholder="KRW"
+                                width="100%"/>
+                        </VBox>
+
+                        <!-- 행 4: 자산분류 | 자산G/L계정 | (빈칸) -->
+                        <VBox class="fiCreateCell">
+                            <Label text="자산분류" required="true" design="Bold"/>
+                            <Input id="inputAnlkl"
+                                value="{form>/Anlkl}"
+                                placeholder="자산분류"
+                                maxLength="8"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="자산 G/L 계정" design="Bold"/>
+                            <Input value="{form>/Saknr}"
+                                placeholder="계정번호"
+                                maxLength="10"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <!-- 레이아웃 균형용 빈 셀 -->
+                        </VBox>
+
+                    </HBox>
+                </content>
+            </Panel>
+
+            <!-- ════════════════════════════════════
+                 섹션 2: 감가상각 설정
+            ════════════════════════════════════ -->
+            <Panel headerText="감가상각 설정" expandable="false" class="fiCreatePanel">
+                <content>
+                    <HBox wrap="Wrap" class="fiCreateGrid">
+
+                        <!-- 행 1: 감가상각누계계정 | 내용연수 | (빈칸) -->
+                        <VBox class="fiCreateCell">
+                            <Label text="감가상각누계 계정" design="Bold"/>
+                            <Input value="{form>/Afaknr}"
+                                placeholder="계정번호"
+                                maxLength="10"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="내용연수 (년)" required="true" design="Bold"/>
+                            <Input id="inputNdjar"
+                                value="{form>/Ndjar}"
+                                placeholder="예: 10"
+                                maxLength="3"
+                                width="100%"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <!-- 빈 셀 -->
+                        </VBox>
+
+                        <!-- 행 2: 감가상각비계정 | 상각방법 | (빈칸) -->
+                        <VBox class="fiCreateCell">
+                            <Label text="감가상각비 계정" design="Bold"/>
+                            <Input value="{form>/Aufaknr}"
+                                placeholder="계정번호"
+                                maxLength="10"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="상각방법" required="true" design="Bold"/>
+                            <Input id="inputAfamid"
+                                value="{form>/Afamid}"
+                                placeholder="상각방법"
+                                maxLength="2"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <!-- 빈 셀 -->
+                        </VBox>
+
+                    </HBox>
+                </content>
+            </Panel>
+
+            <!-- ════════════════════════════════════
+                 섹션 3: 조직정보
+            ════════════════════════════════════ -->
+            <Panel headerText="조직정보" expandable="false" class="fiCreatePanel">
+                <content>
+                    <HBox wrap="Wrap" class="fiCreateGrid">
+
+                        <VBox class="fiCreateCell">
+                            <Label text="플랜트" required="true" design="Bold"/>
+                            <Input value="{form>/Werks}"
+                                placeholder="플랜트 코드"
+                                maxLength="4"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="코스트센터" design="Bold"/>
+                            <Input value="{form>/Kostl}"
+                                placeholder="코스트센터"
+                                maxLength="10"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+                        <VBox class="fiCreateCell">
+                            <Label text="손익센터" design="Bold"/>
+                            <Input value="{form>/Prctr}"
+                                placeholder="손익센터"
+                                maxLength="10"
+                                width="100%"
+                                showValueHelp="true"
+                                valueHelpRequest="onValueHelpRequest"/>
+                        </VBox>
+
+                    </HBox>
+                </content>
+            </Panel>
+
+            <!-- ════════════════════════════════════
+                 섹션 4: 거래 이력
+            ════════════════════════════════════ -->
+            <Panel headerText="거래 이력" expandable="false" class="fiCreatePanel">
+                <content>
+                    <Table noDataText="저장 후 거래 이력이 생성됩니다" class="sapUiSmallMarginTop">
+                        <columns>
+                            <Column width="4rem"><Text text="순번"/></Column>
+                            <Column><Text text="거래유형"/></Column>
+                            <Column><Text text="회계연도"/></Column>
+                            <Column><Text text="전기일"/></Column>
+                            <Column hAlign="End"><Text text="거래금액"/></Column>
+                            <Column><Text text="전표번호"/></Column>
+                            <Column><Text text="적요"/></Column>
+                        </columns>
+                    </Table>
+                </content>
+            </Panel>
+
+            <!-- Footer 가림 방지 여백 -->
+            <VBox height="4rem"/>
+
+        </content>
+    </Page>
+</mvc:View>

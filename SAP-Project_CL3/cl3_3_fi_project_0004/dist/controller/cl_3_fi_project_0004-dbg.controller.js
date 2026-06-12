@@ -1018,7 +1018,7 @@ sap.ui.define([
                     Seqno:    sSeqno,
                     Filename: oAttach.filename,
                     Mimetype: oAttach.mimetype,
-                    Filesize: oAttach.size,
+                    Filesize: String(oAttach.size),
                     Filedata: oAttach._base64   // 파일 선택 시 미리 읽은 base64
                 }, {
                     success: function () {
@@ -1031,7 +1031,17 @@ sap.ui.define([
                     error: function (oErr) {
                         iFail++;
                         var sMsg = "업로드 실패";
-                        try { sMsg = JSON.parse(oErr.responseText).error.message.value || sMsg; } catch (x) {}
+                        try {
+                            var sBody = oErr.responseText || "";
+                            if (sBody.indexOf("{") > -1) {
+                                sMsg = JSON.parse(sBody).error.message.value || sMsg;
+                            } else if (sBody.indexOf("<") > -1) {
+                                var oMatch = sBody.match(/<message[^>]*>([^<]+)<\/message>/i)
+                                          || sBody.match(/<[Mm]essage>([^<]+)<\/[Mm]essage>/);
+                                if (oMatch) { sMsg = oMatch[1]; }
+                            }
+                        } catch (x) {}
+                        console.error("[첨부파일] 업로드 오류:", oErr.statusCode, oErr.statusText, oErr.responseText);
                         that._setAttachStatus(iGlobalIdx, "실패", "Error", true);
                         MessageToast.show(oAttach.filename + " — " + sMsg);
                         if (iDone + iFail === iTotal && fnAllDone) {

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1779791106863,
+  "lastScanned": 1780899382776,
   "projectRoot": "C:\\Users\\pc\\Desktop\\fiori-main\\SAP-Project_CL3\\cl3_3_fi_project_0005",
   "techStack": {
     "languages": [
@@ -51,11 +51,24 @@
   },
   "customNotes": [],
   "directoryMap": {
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 7,
+      "lastAccessed": 1780899382740,
+      "keyFiles": [
+        "Component-dbg.js",
+        "Component-preload.js",
+        "Component-preload.js.map",
+        "Component.js",
+        "Component.js.map"
+      ]
+    },
     "webapp": {
       "path": "webapp",
       "purpose": null,
       "fileCount": 3,
-      "lastAccessed": 1779791106823,
+      "lastAccessed": 1780899382749,
       "keyFiles": [
         "Component.js",
         "index.html",
@@ -66,7 +79,7 @@
       "path": "webapp\\test",
       "purpose": "Test files",
       "fileCount": 2,
-      "lastAccessed": 1779791106829,
+      "lastAccessed": 1780899382750,
       "keyFiles": [
         "testsuite.qunit.html",
         "testsuite.qunit.js"
@@ -75,87 +88,81 @@
   },
   "hotPaths": [
     {
-      "path": "webapp\\css\\style.css",
-      "accessCount": 51,
-      "lastAccessed": 1779855786322,
+      "path": "webapp",
+      "accessCount": 6,
+      "lastAccessed": 1780899875800,
+      "type": "directory"
+    },
+    {
+      "path": "",
+      "accessCount": 5,
+      "lastAccessed": 1780899626385,
+      "type": "directory"
+    },
+    {
+      "path": "webapp\\controller\\cl3_3_fi_project_0005.controller.js",
+      "accessCount": 2,
+      "lastAccessed": 1780899708223,
       "type": "file"
     },
     {
       "path": "webapp\\view\\cl3_3_fi_project_0005.view.xml",
-      "accessCount": 26,
-      "lastAccessed": 1779855785781,
-      "type": "file"
-    },
-    {
-      "path": "webapp\\controller\\cl3_3_fi_project_0005.controller.js",
-      "accessCount": 8,
-      "lastAccessed": 1779801396471,
-      "type": "file"
-    },
-    {
-      "path": "webapp\\manifest.json",
-      "accessCount": 4,
-      "lastAccessed": 1779801317321,
-      "type": "file"
-    },
-    {
-      "path": "webapp",
-      "accessCount": 3,
-      "lastAccessed": 1779800513339,
-      "type": "directory"
-    },
-    {
-      "path": "webapp\\i18n\\i18n.properties",
       "accessCount": 2,
-      "lastAccessed": 1779792635043,
+      "lastAccessed": 1780899708959,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\view\\fragments\\BelnrValueHelp.fragment.xml",
+      "accessCount": 2,
+      "lastAccessed": 1780899709292,
       "type": "file"
     },
     {
       "path": "webapp\\localService\\mainService\\metadata.xml",
       "accessCount": 2,
-      "lastAccessed": 1779800768155,
+      "lastAccessed": 1780899876356,
       "type": "file"
     },
     {
-      "path": "webapp\\Component.js",
+      "path": "webapp\\css\\style.css",
       "accessCount": 2,
-      "lastAccessed": 1779801029389,
+      "lastAccessed": 1780899880942,
       "type": "file"
     },
     {
-      "path": "webapp\\view\\App.view.xml",
-      "accessCount": 2,
-      "lastAccessed": 1779801029405,
-      "type": "file"
-    },
-    {
-      "path": "",
+      "path": "webapp\\manifest.json",
       "accessCount": 1,
-      "lastAccessed": 1779791351286,
-      "type": "directory"
+      "lastAccessed": 1780899628796,
+      "type": "file"
     },
     {
       "path": "webapp\\controller\\App.controller.js",
       "accessCount": 1,
-      "lastAccessed": 1779791369400,
+      "lastAccessed": 1780899629326,
       "type": "file"
     },
     {
-      "path": "webapp\\index.html",
+      "path": "webapp\\view\\App.view.xml",
       "accessCount": 1,
-      "lastAccessed": 1779791701676,
+      "lastAccessed": 1780899630062,
       "type": "file"
     },
     {
-      "path": "ui5.yaml",
+      "path": "webapp\\i18n\\i18n.properties",
       "accessCount": 1,
-      "lastAccessed": 1779791702655,
+      "lastAccessed": 1780899630808,
       "type": "file"
     },
     {
-      "path": "package.json",
+      "path": "webapp\\Component.js",
       "accessCount": 1,
-      "lastAccessed": 1779791702954,
+      "lastAccessed": 1780899639096,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\model\\models.js",
+      "accessCount": 1,
+      "lastAccessed": 1780899639456,
       "type": "file"
     }
   ],

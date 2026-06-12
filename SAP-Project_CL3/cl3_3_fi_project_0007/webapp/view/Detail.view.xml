@@ -1,0 +1,513 @@
+<mvc:View controllerName="zc3fiasset27.assetmanagement.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:uxap="sap.uxap"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <uxap:ObjectPageLayout id="objectPage" useIconTabBar="false" upperCaseAnchorBar="false" showHeaderContent="true" alwaysShowContentHeader="false">
+
+        <!-- ════════════════════════════════════
+             헤더 타이틀
+        ════════════════════════════════════ -->
+        <uxap:headerTitle>
+            <uxap:ObjectPageHeader
+                objectTitle="{= (${Anlnr} || '') !== '' ? ${Anlnr} : '신규 고정자산 등록'}"
+                objectSubtitle="{= (${Anlnr} || '') !== '' ? ${Anltx} : '기본 정보를 입력하세요'}"
+                showTitleSelector="false"
+                showMarkers="false"
+                isObjectIconAlwaysVisible="false">
+
+                <uxap:breadCrumbsLinks>
+                    <Link text="고정자산 목록" press="onNavBack"/>
+                </uxap:breadCrumbsLinks>
+
+                <uxap:actions>
+                    <!-- 드래프트(편집) 모드 버튼 -->
+                    <uxap:ObjectPageHeaderActionButton
+                        text="저장"
+                        icon="sap-icon://save"
+                        press="onSave"
+                        visible="{= !${IsActiveEntity} }"
+                        hideText="false"
+                        importance="High"
+                        class="btnGlass"/>
+                    <uxap:ObjectPageHeaderActionButton
+                        text="취소"
+                        icon="sap-icon://decline"
+                        press="onCancel"
+                        visible="{= !${IsActiveEntity} }"
+                        hideText="false"
+                        importance="High"
+                        class="btnGlass"/>
+                    <!-- 활성(조회) 모드 버튼 -->
+                    <uxap:ObjectPageHeaderActionButton
+                        text="수정"
+                        icon="sap-icon://edit"
+                        press="onEdit"
+                        visible="{= !!${IsActiveEntity} }"
+                        hideText="false"
+                        importance="High"
+                        class="btnGlass"/>
+                    <uxap:ObjectPageHeaderActionButton
+                        text="감가상각"
+                        icon="sap-icon://process"
+                        press="onDepreciate"
+                        visible="{= !!${IsActiveEntity} }"
+                        enabled="{= !!${IsActiveEntity} }"
+                        hideText="false"
+                        importance="High"
+                        class="btnGlass"/>
+                    <uxap:ObjectPageHeaderActionButton
+                        text="처분"
+                        icon="sap-icon://outbox"
+                        press="onDispose"
+                        visible="{= !!${IsActiveEntity} }"
+                        enabled="{= !!${IsActiveEntity} }"
+                        hideText="false"
+                        importance="High"
+                        class="btnGlass"/>
+                </uxap:actions>
+            </uxap:ObjectPageHeader>
+        </uxap:headerTitle>
+
+        <!-- ════════════════════════════════════
+             KPI 헤더 + DraftIndicator
+        ════════════════════════════════════ -->
+        <uxap:headerContent>
+            <VBox class="sapUiSmallMarginBottom">
+                <!-- 드래프트 상태 표시 -->
+                <DraftIndicator id="draftIndicator"
+                    displayType="IconAndText"
+                    visible="{= !${IsActiveEntity} }"
+                    class="sapUiSmallMarginBottom"/>
+
+                <HBox wrap="Wrap" alignItems="End" class="fiHeaderKpiContainer">
+                    <VBox class="fiKpiItem">
+                        <ObjectNumber
+                            number="{
+                                path: 'Anschw',
+                                type: 'sap.ui.model.odata.type.Decimal',
+                                formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                            }"
+                            unit="{Waers}"
+                            emphasized="true"/>
+                        <Label text="취득가액" design="Bold"/>
+                    </VBox>
+                    <VBox class="fiKpiItem">
+                        <ObjectNumber
+                            number="{
+                                path: 'Kansw',
+                                type: 'sap.ui.model.odata.type.Decimal',
+                                formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                            }"
+                            unit="{Waers}"
+                            state="Warning"/>
+                        <Label text="감가상각누계" design="Bold"/>
+                    </VBox>
+                    <VBox class="fiKpiItem">
+                        <ObjectNumber
+                            number="{
+                                path: 'Bchwrt',
+                                type: 'sap.ui.model.odata.type.Decimal',
+                                formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                            }"
+                            unit="{Waers}"
+                            emphasized="true"
+                            state="Success"/>
+                        <Label text="장부가액" design="Bold"/>
+                    </VBox>
+                    <VBox>
+                        <ObjectAttribute title="자산분류" text="{path: 'Anlkl', formatter: '.formatter.anlklToText'}"/>
+                        <ObjectAttribute title="플랜트" text="{Werks}"/>
+                        <ObjectAttribute title="코스트센터" text="{Kostl}"/>
+                        <ObjectStatus
+                            text="{StatusText}"
+                            state="{path: 'StatusCriticality', formatter: '.formatter.criticalityToState'}"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </uxap:headerContent>
+
+        <uxap:sections>
+
+            <!-- ════════════════════════════════════
+                 섹션 1: 기본정보
+                 @UI.identification 기준 순서
+            ════════════════════════════════════ -->
+            <uxap:ObjectPageSection id="secBasicInfo" title="기본정보">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="">
+                        <uxap:blocks>
+                            <f:SimpleForm
+                                id="formBasicInfo"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                                columnsXL="2" columnsL="2" columnsM="1">
+                                <f:content>
+
+                                    <!-- pos10: 자산번호 (키, 항상 읽기 전용) -->
+                                    <Label text="자산번호" design="Bold"/>
+                                    <HBox alignItems="Center">
+                                        <Text text="{= (${Anlnr} || '') !== '' ? ${Anlnr} : '(자동 채번)'}"/>
+                                        <ObjectStatus
+                                            icon="sap-icon://pending"
+                                            text="초안"
+                                            state="Information"
+                                            visible="{= !${IsActiveEntity} }"
+                                            class="sapUiSmallMarginBegin"/>
+                                    </HBox>
+
+                                    <!-- pos20: 자산명칭 * -->
+                                    <Label text="자산명칭 *" design="Bold"/>
+                                    <Input
+                                        id="inputAnltx"
+                                        value="{Anltx}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        placeholder="자산명칭을 입력하세요"
+                                        maxLength="20"/>
+
+                                    <!-- pos30: 자산분류 * -->
+                                    <Label text="자산분류 *" design="Bold"/>
+                                    <HBox>
+                                        <!-- 편집 모드: Input with VH -->
+                                        <Input
+                                            value="{Anlkl}"
+                                            visible="{= !${IsActiveEntity} }"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onValueHelpRequest"
+                                            placeholder="자산분류"
+                                            maxLength="8"
+                                            width="14rem"/>
+                                        <!-- 조회 모드: ObjectStatus -->
+                                        <ObjectStatus
+                                            text="{path: 'Anlkl', formatter: '.formatter.anlklToText'}"
+                                            state="{path: 'Anlkl', formatter: '.formatter.anlklToState'}"
+                                            visible="{= !!${IsActiveEntity} }"/>
+                                    </HBox>
+
+                                    <!-- pos40: 자산 G/L 계정 -->
+                                    <Label text="자산 G/L 계정" design="Bold"/>
+                                    <Input
+                                        value="{Saknr}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequest"
+                                        placeholder="G/L 계정번호"
+                                        maxLength="10"/>
+
+                                    <!-- pos50: 취득일 -->
+                                    <Label text="취득일" design="Bold"/>
+                                    <DatePicker
+                                        value="{
+                                            path: 'Aktiv',
+                                            type: 'sap.ui.model.odata.type.Date',
+                                            formatOptions: {pattern: 'yyyy.MM.dd'}
+                                        }"
+                                        editable="{= !${IsActiveEntity} }"
+                                        placeholder="취득일 선택"/>
+
+                                    <!-- pos60: 취득가액 -->
+                                    <Label text="취득가액" design="Bold"/>
+                                    <Input
+                                        value="{
+                                            path: 'Anschw',
+                                            type: 'sap.ui.model.odata.type.Decimal',
+                                            formatOptions: {groupingEnabled: true, maxFractionDigits: 2}
+                                        }"
+                                        editable="{= !${IsActiveEntity} }"
+                                        description="{Waers}"
+                                        textAlign="End"
+                                        placeholder="0.00"/>
+
+                                    <!-- pos70: 장부가액 (서버 계산값, 항상 읽기전용) -->
+                                    <Label text="장부가액" design="Bold"/>
+                                    <ObjectNumber
+                                        number="{
+                                            path: 'Bchwrt',
+                                            type: 'sap.ui.model.odata.type.Decimal',
+                                            formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                                        }"
+                                        unit="{Waers}"
+                                        emphasized="true"
+                                        state="Success"/>
+
+                                    <!-- pos80: 잔존가치 -->
+                                    <Label text="잔존가치" design="Bold"/>
+                                    <Input
+                                        value="{
+                                            path: 'Salvage',
+                                            type: 'sap.ui.model.odata.type.Decimal',
+                                            formatOptions: {groupingEnabled: true, maxFractionDigits: 2}
+                                        }"
+                                        editable="{= !${IsActiveEntity} }"
+                                        description="{Waers}"
+                                        textAlign="End"
+                                        placeholder="0.00"/>
+
+                                    <!-- pos90: 매입처 -->
+                                    <Label text="매입처 (LIFNR)" design="Bold"/>
+                                    <Input
+                                        value="{Lifnr}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        placeholder="공급업체 코드"
+                                        maxLength="10"/>
+
+                                    <!-- pos100: 자산상태 -->
+                                    <Label text="자산상태" design="Bold"/>
+                                    <HBox>
+                                        <Input
+                                            value="{Status}"
+                                            visible="{= !${IsActiveEntity} }"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onValueHelpRequest"
+                                            placeholder="자산상태"
+                                            maxLength="1"
+                                            width="10rem"/>
+                                        <ObjectStatus
+                                            text="{StatusText}"
+                                            state="{path: 'StatusCriticality', formatter: '.formatter.criticalityToState'}"
+                                            visible="{= !!${IsActiveEntity} }"/>
+                                    </HBox>
+
+                                    <!-- pos110: 폐기일 -->
+                                    <Label text="폐기일" design="Bold"/>
+                                    <DatePicker
+                                        value="{
+                                            path: 'Deakt',
+                                            type: 'sap.ui.model.odata.type.Date',
+                                            formatOptions: {pattern: 'yyyy.MM.dd'}
+                                        }"
+                                        editable="{= !${IsActiveEntity} }"
+                                        placeholder="폐기일 선택"/>
+
+                                </f:content>
+                            </f:SimpleForm>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+            <!-- ════════════════════════════════════
+                 섹션 2: 감가상각 설정
+                 @UI.fieldGroup qualifier='DeprecGrp'
+            ════════════════════════════════════ -->
+            <uxap:ObjectPageSection id="secDeprSetting" title="감가상각 설정">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="">
+                        <uxap:blocks>
+                            <f:SimpleForm
+                                id="formDeprSetting"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                                columnsXL="2" columnsL="2" columnsM="1">
+                                <f:content>
+
+                                    <!-- pos40: 상각방법 * -->
+                                    <Label text="상각방법 *" design="Bold"/>
+                                    <HBox>
+                                        <Input
+                                            value="{Afamid}"
+                                            visible="{= !${IsActiveEntity} }"
+                                            showValueHelp="true"
+                                            valueHelpRequest="onValueHelpRequest"
+                                            placeholder="상각방법"
+                                            maxLength="2"
+                                            width="12rem"/>
+                                        <Text
+                                            text="{path: 'Afamid', formatter: '.formatter.afamidToText'}"
+                                            visible="{= !!${IsActiveEntity} }"/>
+                                    </HBox>
+
+                                    <!-- pos30: 내용연수 -->
+                                    <Label text="내용연수 (년)" design="Bold"/>
+                                    <Input
+                                        value="{Ndjar}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        placeholder="예: 5"
+                                        maxLength="3"/>
+
+                                    <!-- pos10: 감가상각누계 계정 -->
+                                    <Label text="감가상각누계 계정" design="Bold"/>
+                                    <Input
+                                        value="{Afaknr}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequest"
+                                        placeholder="G/L 계정번호"
+                                        maxLength="10"/>
+
+                                    <!-- pos20: 감가상각비 계정 -->
+                                    <Label text="감가상각비 계정" design="Bold"/>
+                                    <Input
+                                        value="{Aufaknr}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequest"
+                                        placeholder="G/L 계정번호"
+                                        maxLength="10"/>
+
+                                    <!-- 감가상각누계 (서버 계산, 읽기 전용) -->
+                                    <Label text="감가상각누계" design="Bold"/>
+                                    <ObjectNumber
+                                        number="{
+                                            path: 'Kansw',
+                                            type: 'sap.ui.model.odata.type.Decimal',
+                                            formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                                        }"
+                                        unit="{Waers}"
+                                        state="Warning"/>
+
+                                    <!-- 잔존가치 -->
+                                    <Label text="잔존가치" design="Bold"/>
+                                    <ObjectNumber
+                                        number="{
+                                            path: 'Salvage',
+                                            type: 'sap.ui.model.odata.type.Decimal',
+                                            formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                                        }"
+                                        unit="{Waers}"/>
+
+                                </f:content>
+                            </f:SimpleForm>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+            <!-- ════════════════════════════════════
+                 섹션 3: 조직정보
+                 @UI.fieldGroup qualifier='OrgGrp'
+            ════════════════════════════════════ -->
+            <uxap:ObjectPageSection id="secOrgInfo" title="조직정보">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="">
+                        <uxap:blocks>
+                            <f:SimpleForm
+                                id="formOrgInfo"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                                columnsXL="2" columnsL="2" columnsM="1">
+                                <f:content>
+
+                                    <Label text="회사코드" design="Bold"/>
+                                    <Text text="{Bukrs}"/>
+
+                                    <!-- pos10: 플랜트 * -->
+                                    <Label text="플랜트 *" design="Bold"/>
+                                    <Input
+                                        value="{Werks}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequest"
+                                        placeholder="플랜트 코드"
+                                        maxLength="4"/>
+
+                                    <!-- pos20: 코스트센터 -->
+                                    <Label text="코스트센터" design="Bold"/>
+                                    <Input
+                                        value="{Kostl}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequest"
+                                        placeholder="코스트센터 코드"
+                                        maxLength="10"/>
+
+                                    <!-- pos30: 손익센터 -->
+                                    <Label text="손익센터" design="Bold"/>
+                                    <Input
+                                        value="{Prctr}"
+                                        editable="{= !${IsActiveEntity} }"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequest"
+                                        placeholder="손익센터 코드"
+                                        maxLength="10"/>
+
+                                </f:content>
+                            </f:SimpleForm>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+            <!-- ════════════════════════════════════
+                 섹션 4: 거래 이력 (Composition Child)
+                 @UI.lineItem on ZCDS_PV_C3_FI_0006
+            ════════════════════════════════════ -->
+            <uxap:ObjectPageSection id="secHistory" title="거래 이력">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="">
+                        <uxap:blocks>
+                            <Table id="histTable"
+                                noDataText="거래 이력이 없습니다"
+                                busyIndicatorDelay="0"
+                                items="{
+                                    path: '_AssetHist',
+                                    parameters: {
+                                        $$ownRequest: true,
+                                        $select: 'Lnran,Trtyp,Gjahr,Monat,Budat,Anbtr,Belnr,Bktxt,Waers'
+                                    }
+                                }">
+
+                                <columns>
+                                    <Column width="4rem"><Text text="순번"/></Column>
+                                    <Column width="9rem"><Text text="거래유형"/></Column>
+                                    <Column width="5rem"><Text text="회계연도"/></Column>
+                                    <Column width="5rem"><Text text="전기기간"/></Column>
+                                    <Column width="9rem" minScreenWidth="Tablet" demandPopin="true">
+                                        <Text text="전기일"/>
+                                    </Column>
+                                    <Column width="11rem" hAlign="End"><Text text="거래금액"/></Column>
+                                    <Column width="9rem">
+                                        <Text text="전표번호"/>
+                                    </Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true">
+                                        <Text text="적요"/>
+                                    </Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{Lnran}"/>
+                                            <ObjectStatus
+                                                text="{path: 'Trtyp', formatter: '.formatter.trtypToText'}"
+                                                state="{path: 'Trtyp', formatter: '.formatter.trtypToState'}"/>
+                                            <Text text="{Gjahr}"/>
+                                            <Text text="{Monat}"/>
+                                            <Text text="{
+                                                path: 'Budat',
+                                                type: 'sap.ui.model.odata.type.Date',
+                                                formatOptions: {pattern: 'yyyy.MM.dd'}
+                                            }"/>
+                                            <ObjectNumber
+                                                number="{
+                                                    path: 'Anbtr',
+                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                    formatOptions: {groupingEnabled: true, maxFractionDigits: 0}
+                                                }"
+                                                unit="{Waers}"/>
+                                            <Text text="{Belnr}"/>
+                                            <Text text="{Bktxt}"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+        </uxap:sections>
+    </uxap:ObjectPageLayout>
+</mvc:View>

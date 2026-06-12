@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <Dialog id="detailDialog" title="납품오더 상세 — {ui>/detail/header/Dlvno}"
+        contentWidth="920px" contentHeight="600px" draggable="true" resizable="true"
+        class="detailDialogTitle sdDetailDialog">
+        <content>
+            <VBox id="detailHeaderBox" class="sapUiSmallMargin">
+                <HBox id="detailStatusRow" alignItems="Center" class="detailHeaderContainer">
+                    <ObjectStatus id="detailStatusBadge" inverted="true"
+                        text="{parts: ['ui>/detail/header/DashStep', 'ui>/detail/header/Pkqt'], formatter: '.formatter.stepText'}"
+                        state="{path: 'ui>/detail/header/DashStep', formatter: '.formatter.stepState'}"
+                        class="sapUiSmallMarginEnd"/>
+                    <ObjectStatus id="detailNoVehicle" text="⚠ 미배차" state="Warning"
+                        visible="{= ${ui>/detail/header/NoVehicleFlg} === 'X' }" class="sapUiSmallMarginEnd"/>
+                    <ObjectStatus id="detailVhcIssue" text="⚠ 차량이상" state="Error"
+                        visible="{= ${ui>/detail/header/VhcIssueFlg} === 'X' }"/>
+                </HBox>
+                <f:SimpleForm id="detailForm" editable="false" layout="ColumnLayout" columnsM="2" columnsL="2">
+                    <f:content>
+                        <Label id="detailShiptoLabel" text="납품처"/>
+                        <Text id="detailShipto" text="{path: 'ui>/detail/header/Shipto', formatter: '.formatter.dash'}"/>
+                        <Label id="detailAdrnrLabel" text="주소"/>
+                        <Text id="detailAdrnr" text="{path: 'ui>/detail/header/Adrnr', formatter: '.formatter.dash'}"/>
+                        <Label id="detailKunnrLabel" text="고객번호"/>
+                        <Text id="detailKunnr" text="{path: 'ui>/detail/header/Kunnr', formatter: '.formatter.dash'}"/>
+                        <Label id="detailDlvdatLabel" text="배송일"/>
+                        <Text id="detailDlvdat" text="{path: 'ui>/detail/header/Dlvdat', formatter: '.formatter.date'}"/>
+                        <Label id="detailVhcplLabel" text="차량"/>
+                        <Text id="detailVhcpl" text="{path: 'ui>/detail/header/Vhcpl', formatter: '.formatter.dash'}"/>
+                        <Label id="detailDriverLabel" text="기사"/>
+                        <Text id="detailDriver" text="{= ${ui>/detail/header/Drvnm} ? ${ui>/detail/header/Drvnm} + ' · ' + ${ui>/detail/header/Drvph} : '-' }"/>
+                        <Label id="detailDepLabel" text="출발시간"/>
+                        <Text id="detailDep" text="{path: 'ui>/detail/header/Schtm', formatter: '.formatter.timeOrDash'}"/>
+                        <Label id="detailArrLabel" text="도착예정(계획)"/>
+                        <Text id="detailArr" text="{path: 'ui>/detail/header/Arrtm', formatter: '.formatter.timeOrDash'}"/>
+                        <Label id="detailTotprLabel" text="최종합계금액"/>
+                        <ObjectNumber id="detailTotpr" number="{path: 'ui>/detail/header/Totpr', formatter: '.formatter.currency'}"
+                            emphasized="true" class="detailTotalAmount"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+            <Table id="itemTable" items="{ui>/detail/items}" noDataText="아이템이 없습니다"
+                class="detailItemTable">
+                <headerToolbar>
+                    <Toolbar id="itemTableToolbar">
+                        <Title id="itemTableTitle" text="납품 아이템" level="H3" class="itemTableLabel"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <!-- FI_0002 탐색도움말 패턴: 전 컬럼 px 고정폭, 합계(870px) < contentWidth(920px) → 잘림 원천 차단 -->
+                    <Column id="colItemPosnr" width="60px">
+                        <Text id="colItemPosnrText" text="품목"/>
+                    </Column>
+                    <Column id="colItemMat" width="240px">
+                        <Text id="colItemMatText" text="자재"/>
+                    </Column>
+                    <Column id="colItemQty" width="100px" hAlign="End">
+                        <Text id="colItemQtyText" text="수량"/>
+                    </Column>
+                    <Column id="colItemPkqt" width="100px">
+                        <Text id="colItemPkqtText" text="피킹/패킹"/>
+                    </Column>
+                    <Column id="colItemScode" width="110px">
+                        <Text id="colItemScodeText" text="창고"/>
+                    </Column>
+                    <Column id="colItemIce" width="110px" hAlign="End">
+                        <Text id="colItemIceText" text="드라이아이스"/>
+                    </Column>
+                    <Column id="colItemBrtwr" width="150px" hAlign="End">
+                        <Text id="colItemBrtwrText" text="금액"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="itemRow">
+                        <cells>
+                            <Text id="cellItemPosnr" text="{ui>Posnr}"/>
+                            <VBox id="cellItemMat">
+                                <Text id="cellItemMatnm" text="{ui>Matnm}" class="cellMainText"/>
+                                <Text id="cellItemMatcode" text="{ui>Matcode}" class="cellSubText"/>
+                            </VBox>
+                            <Text id="cellItemQty" text="{parts: ['ui>Dlvqt', 'ui>Unit'], formatter: '.formatter.quantity'}"/>
+                            <ObjectStatus id="cellItemPkqt" text="{path: 'ui>Pkqt', formatter: '.formatter.itemPkqt'}"
+                                state="{path: 'ui>Pkqt', formatter: '.formatter.itemPkqtState'}"/>
+                            <Text id="cellItemScode" text="{ui>Scode}"/>
+                            <Text id="cellItemIce" text="{parts: ['ui>PkIce', 'ui>IceUnit'], formatter: '.formatter.quantity'}"/>
+                            <ObjectNumber id="cellItemBrtwr" number="{path: 'ui>Brtwr', formatter: '.formatter.currency'}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+        <endButton>
+            <Button id="detailCloseButton" text="닫기" press=".onCloseDetail"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

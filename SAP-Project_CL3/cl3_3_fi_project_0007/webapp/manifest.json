@@ -1,0 +1,142 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "zc3fiasset27.assetmanagement",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.6",
+      "toolsId": "8559244f-9013-4e84-89d4-9e601d3a3444"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zrap_cl3_3_fi_01_bind/srvd/sap/zrap_cl3_fi_01_srv/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.43",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.uxap": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zc3fiasset27.assetmanagement.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "zc3fiasset27.assetmanagement.view",
+        "async": true,
+        "viewPath": "zc3fiasset27.assetmanagement.view"
+      },
+      "routes": [
+        {
+          "name": "Routecl3_3_fi_project_0007",
+          "pattern": ":?query:",
+          "target": [
+            "Targetcl3_3_fi_project_0007"
+          ]
+        },
+        {
+          "name": "RouteDetail",
+          "pattern": "detail/{Bukrs}/{Anlnr}/{IsActiveEntity}",
+          "target": [
+            "TargetDetail"
+          ]
+        },
+        {
+          "name": "RouteCreate",
+          "pattern": "create/{Bukrs}/{Anlnr}",
+          "target": [
+            "TargetCreate"
+          ]
+        }
+      ],
+      "targets": {
+        "Targetcl3_3_fi_project_0007": {
+          "id": "cl3_3_fi_project_0007",
+          "name": "cl3_3_fi_project_0007"
+        },
+        "TargetDetail": {
+          "id": "Detail",
+          "name": "Detail"
+        },
+        "TargetCreate": {
+          "id": "Create",
+          "name": "Create"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "zc3fiasset27.assetmanagement.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

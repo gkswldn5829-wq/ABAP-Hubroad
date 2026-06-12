@@ -1,0 +1,169 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1781232466235,
+  "projectRoot": "C:\\Users\\pc\\Desktop\\fiori-main\\SAP-Project_CL3\\cl3_3_sd_project_0001",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "start": "fiori run --open \"test/flp.html#app-preview\"",
+      "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flp.html#app-preview\"",
+      "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+      "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml",
+      "deploy-config": "fiori add deploy-config",
+      "start-noflp": "fiori run --open \"/index.html?sap-ui-xx-viewCache=false\"",
+      "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flp.html#app-preview\"",
+      "int-test": "fiori run --config ./ui5-mock.yaml --open \"test/integration/opaTests.qunit.html\"",
+      "start-variants-management": "fiori run --open \"/preview.html#app-preview\"",
+      "unit-test": "fiori run --config ./ui5-mock.yaml --open \"test/unit/unitTests.qunit.html\"",
+      "undeploy": "npm run build && fiori undeploy --config ui5-deploy.yaml",
+      "deploy-test": "npm run build && fiori deploy --config ui5-deploy.yaml --testMode true"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "webapp": {
+      "path": "webapp",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1781232466190,
+      "keyFiles": [
+        "Component.js",
+        "index.html",
+        "manifest.json"
+      ]
+    },
+    "webapp\\test": {
+      "path": "webapp\\test",
+      "purpose": "Test files",
+      "fileCount": 2,
+      "lastAccessed": 1781232466191,
+      "keyFiles": [
+        "testsuite.qunit.html",
+        "testsuite.qunit.js"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "webapp\\css\\style.css",
+      "accessCount": 19,
+      "lastAccessed": 1781244732391,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\view\\DetailDialog.fragment.xml",
+      "accessCount": 13,
+      "lastAccessed": 1781243989458,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\view\\cl3_3_sd_project_0001.view.xml",
+      "accessCount": 10,
+      "lastAccessed": 1781244731642,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\manifest.json",
+      "accessCount": 5,
+      "lastAccessed": 1781233209888,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\controller\\cl3_3_sd_project_0001.controller.js",
+      "accessCount": 4,
+      "lastAccessed": 1781242875597,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\model\\formatter.js",
+      "accessCount": 3,
+      "lastAccessed": 1781237451265,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\i18n\\i18n.properties",
+      "accessCount": 2,
+      "lastAccessed": 1781232816337,
+      "type": "file"
+    },
+    {
+      "path": "webapp",
+      "accessCount": 2,
+      "lastAccessed": 1781244706575,
+      "type": "directory"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1781232510718,
+      "type": "directory"
+    },
+    {
+      "path": "webapp\\Component.js",
+      "accessCount": 1,
+      "lastAccessed": 1781232514973,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\index.html",
+      "accessCount": 1,
+      "lastAccessed": 1781232515582,
+      "type": "file"
+    },
+    {
+      "path": "ui5.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1781232515995,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\view\\App.view.xml",
+      "accessCount": 1,
+      "lastAccessed": 1781232520191,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\controller\\App.controller.js",
+      "accessCount": 1,
+      "lastAccessed": 1781232521197,
+      "type": "file"
+    },
+    {
+      "path": "webapp\\localService\\mainService\\metadata.xml",
+      "accessCount": 1,
+      "lastAccessed": 1781232630010,
+      "type": "directory"
+    }
+  ],
+  "userDirectives": []
+}

@@ -1,0 +1,192 @@
+<mvc:View controllerName="zc3fiasset27.assetmanagement.controller.cl3_3_fi_project_0007"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page id="listPage"
+        showHeader="false"
+        enableScrolling="true"
+        class="fiPage sapUiSizeCompact">
+
+        <customHeader>
+            <Bar class="fiAppHeader" design="Header">
+                <contentLeft>
+                    <core:Icon src="sap-icon://factory" class="headerAppIcon"/>
+                    <HBox class="headerTitleBox" alignItems="Center">
+                        <Title text="고정자산 관리" level="H4" class="headerAppTitle"/>
+                        <Text text="Fixed Asset Management · HBL1" class="headerAppSub"/>
+                    </HBox>
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="bsPage">
+
+                <!-- ═══════════════════════════════════════════
+                     조회조건 (고정자산 목록과 동일 bsHead 패턴)
+                ═══════════════════════════════════════════ -->
+                <VBox class="bsTablePanel">
+                    <HBox class="bsHead" alignItems="Center">
+                        <Text text="조회조건" class="bsHeadText"/>
+                    </HBox>
+                    <HBox alignItems="End" class="bsFilterBar bsFilterBarInner" wrap="Wrap">
+                        <VBox class="bsFi">
+                            <Label text="자산분류" class="bsFl"/>
+                            <Select id="filterAnlkl" width="140px">
+                                <core:Item key="" text="전체"/>
+                                <core:Item key="1000" text="1000 건물"/>
+                                <core:Item key="2000" text="2000 구축물"/>
+                                <core:Item key="3000" text="3000 기계장치"/>
+                                <core:Item key="4000" text="4000 차량운반구"/>
+                                <core:Item key="5000" text="5000 비품"/>
+                                <core:Item key="6000" text="6000 냉장냉동설비"/>
+                                <core:Item key="7000" text="7000 전산장비"/>
+                            </Select>
+                        </VBox>
+                        <VBox class="bsFi">
+                            <Label text="플랜트" class="bsFl"/>
+                            <Select id="filterWerks" width="100px">
+                                <core:Item key="" text="전체"/>
+                                <core:Item key="1000" text="1000 오산"/>
+                                <core:Item key="2000" text="2000 파주"/>
+                            </Select>
+                        </VBox>
+                        <VBox class="bsFi">
+                            <Label text="상태" class="bsFl"/>
+                            <Select id="filterStatus" width="80px">
+                                <core:Item key="" text="전체"/>
+                                <core:Item key="1" text="활성"/>
+                                <core:Item key="0" text="폐기"/>
+                            </Select>
+                        </VBox>
+                        <VBox class="bsFi">
+                            <Label text="자산명" class="bsFl"/>
+                            <SearchField id="searchField" placeholder="자산명 검색" width="180px" search="onFilter"/>
+                        </VBox>
+                        <Button text="조회" type="Emphasized" icon="sap-icon://search" press="onFilter" class="bsFiBtn"/>
+                    </HBox>
+                </VBox>
+
+                <!-- ═══════════════════════════════════════════
+                     고정자산 목록
+                     - IsActiveEntity eq true 만 조회 (RAP Draft 규칙)
+                     - DraftAdministrativeData expand → DraftIsCreatedByMe 확인용
+                     - itemPress + ColumnListItem press 이중 등록 (fallback)
+                ═══════════════════════════════════════════ -->
+                <VBox class="bsTablePanel">
+                    <HBox class="bsHead" justifyContent="SpaceBetween" alignItems="Center">
+                        <Text text="고정자산 목록" class="bsHeadText"/>
+                        <Text id="countText" text="" class="bsHeadAnnot"/>
+                    </HBox>
+
+                    <Table id="assetTable"
+                        itemPress="onSelectAsset"
+                        mode="MultiSelect"
+                        growing="true"
+                        growingThreshold="20"
+                        fixedLayout="false"
+                        sticky="ColumnHeaders"
+                        busyIndicatorDelay="0"
+                        noDataText="{i18n>msgNoData}"
+                        updateFinished="onTableUpdateFinished"
+                        items="{
+                            path: '/Asset',
+                            parameters: {
+                                $filter: 'IsActiveEntity eq true or (IsActiveEntity eq false and HasActiveEntity eq false)',
+                                $select: 'Bukrs,Anlnr,Anltx,Anlkl,Werks,Aktiv,Anschw,Kansw,Bchwrt,Afamid,Ndjar,StatusText,StatusCriticality,Waers,IsActiveEntity,HasDraftEntity,HasActiveEntity',
+                                $expand: 'DraftAdministrativeData($select=DraftIsCreatedByMe)'
+                            }
+                        }">
+
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <ToolbarSpacer/>
+                                <Button id="btnCreate" text="자산등록" icon="sap-icon://add" class="btnGlass" press="onCreateAsset"/>
+                                <Button id="btnDelete" text="삭제" icon="sap-icon://delete" class="btnGlass" press="onDeleteAsset"/>
+                                <Button id="btnDepreciate" text="감가상각" icon="sap-icon://process" class="btnGlass" press="onBulkDepreciate"/>
+                                <Button id="btnDispose" text="처분" icon="sap-icon://outbox" class="btnGlass" press="onBulkDispose"/>
+                                <Button id="btnExport" text="Excel" icon="sap-icon://excel-attachment" class="btnGlass" press="onExport"/>
+                                <Button id="btnColSettings" icon="sap-icon://action-settings" tooltip="컬럼 표시 설정" type="Transparent" press="onColumnSettings"/>
+                            </OverflowToolbar>
+                        </headerToolbar>
+
+                        <columns>
+                            <Column id="colAnlnr" width="8rem" hAlign="Center"><Text text="자산번호" wrapping="false"/></Column>
+                            <Column id="colAnltx" minScreenWidth="Phone"><Text text="자산명" wrapping="false"/></Column>
+                            <Column id="colAnlkl" width="5rem" hAlign="Center" minScreenWidth="Tablet" demandPopin="true"><Text text="분류" wrapping="false"/></Column>
+                            <Column id="colWerks" width="5rem" hAlign="Center" minScreenWidth="Tablet" demandPopin="true"><Text text="플랜트" wrapping="false"/></Column>
+                            <Column id="colAktiv" width="7rem" hAlign="Center" minScreenWidth="Desktop" demandPopin="true"><Text text="취득일" wrapping="false"/></Column>
+                            <Column id="colAnschw" width="11rem" hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="취득가액" wrapping="false"/></Column>
+                            <Column id="colKansw" width="11rem" hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="감가상각누계" wrapping="false"/></Column>
+                            <Column id="colBchwrt" width="11rem" hAlign="End"><Text text="장부가액" wrapping="false"/></Column>
+                            <Column id="colAfamid" width="6rem" hAlign="Center" minScreenWidth="Desktop" demandPopin="true"><Text text="상각방법" wrapping="false"/></Column>
+                            <Column id="colNdjar" width="5.5rem" hAlign="Center" minScreenWidth="Desktop" demandPopin="true"><Text text="내용연수" wrapping="false"/></Column>
+                            <Column id="colStatus" width="7rem" hAlign="Center"><Text text="상태" wrapping="false"/></Column>
+                        </columns>
+
+                        <items>
+                            <ColumnListItem type="Navigation" vAlign="Middle">
+                                <cells>
+                                    <Text text="{Anlnr}" wrapping="false" textAlign="Center" class="mono"/>
+                                    <Text text="{Anltx}" wrapping="false" tooltip="{Anltx}"/>
+                                    <Text text="{path: 'Anlkl', formatter: '.formatter.anlklToName'}" wrapping="false" textAlign="Center"/>
+                                    <Text text="{path: 'Werks', formatter: '.formatter.werksToText'}" wrapping="false" textAlign="Center"/>
+                                    <Text text="{
+                                        path: 'Aktiv',
+                                        type: 'sap.ui.model.odata.type.Date',
+                                        formatOptions: {pattern: 'yyyy.MM.dd'}
+                                    }" wrapping="false" textAlign="Center"/>
+                                    <Text text="{
+                                        parts: [{path: 'Anschw'}, {path: 'Waers'}],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {showMeasure: true, groupingEnabled: true}
+                                    }" wrapping="false" textAlign="End" class="mono"/>
+                                    <Text text="{
+                                        parts: [{path: 'Kansw'}, {path: 'Waers'}],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {showMeasure: true, groupingEnabled: true}
+                                    }" wrapping="false" textAlign="End" class="mono"/>
+                                    <Text text="{
+                                        parts: [{path: 'Bchwrt'}, {path: 'Waers'}],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {showMeasure: true, groupingEnabled: true}
+                                    }" wrapping="false" textAlign="End" class="mono fiBookValueCell"/>
+                                    <Text text="{path: 'Afamid', formatter: '.formatter.afamidToText'}" wrapping="false" textAlign="Center"/>
+                                    <Text text="{path: 'Ndjar', formatter: '.formatter.ndjarToText'}" wrapping="false" textAlign="Center"/>
+                                    <ObjectStatus
+                                        text="{StatusText}"
+                                        icon="{path: 'StatusCriticality', formatter: '.formatter.criticalityToIcon'}"
+                                        state="{path: 'StatusCriticality', formatter: '.formatter.criticalityToState'}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+
+                    </Table>
+
+                    <!-- ═══════ 집계 행 (최하단) ═══════ -->
+                    <HBox id="summaryRow" class="fiSummaryRow" justifyContent="SpaceBetween" alignItems="Center">
+                        <Text id="summaryCount" text="" class="fiSummaryLabel"/>
+                        <HBox class="fiSumValues">
+                            <VBox class="fiSumItem">
+                                <Label text="취득가액 합계" class="bsFl"/>
+                                <Text id="sumAnschw" text="-" class="mono"/>
+                            </VBox>
+                            <VBox class="fiSumItem">
+                                <Label text="감가상각누계 합계" class="bsFl"/>
+                                <Text id="sumKansw" text="-" class="mono"/>
+                            </VBox>
+                            <VBox class="fiSumItem">
+                                <Label text="장부가액 합계" class="bsFl"/>
+                                <Text id="sumBchwrt" text="-" class="mono fiBookValueCell"/>
+                            </VBox>
+                        </HBox>
+                    </HBox>
+
+                </VBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

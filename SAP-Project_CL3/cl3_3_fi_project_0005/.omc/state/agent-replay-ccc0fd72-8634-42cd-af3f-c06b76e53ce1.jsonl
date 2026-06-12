@@ -1,0 +1,12 @@
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"ccg"}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"oh-my-claudecode:ccg"}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":100867}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":105922}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":109167}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":112963}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":114774}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":117025}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":119240}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":120781}
+{"t":0,"agent":"a5f1f12","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":122415}

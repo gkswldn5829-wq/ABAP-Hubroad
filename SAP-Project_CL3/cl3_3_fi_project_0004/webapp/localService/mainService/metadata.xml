@@ -126,6 +126,7 @@
             <EntityContainer Name="ZGWC3FI0001_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="VoucherHeaderSet" EntityType="ZGWC3FI0001_SRV.VoucherHeader" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
                 <EntitySet Name="VoucherItemSet" EntityType="ZGWC3FI0001_SRV.VoucherItem" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AttachmentSet" EntityType="ZGWC3FI0001_SRV.Attachment" sap:creatable="true" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
                 <AssociationSet Name="VoucherHeader_To_ItemsSet" Association="ZGWC3FI0001_SRV.VoucherHeader_To_Items" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="VoucherHeaderSet" Role="FromRole_VoucherHeader_To_Items"/>
                     <End EntitySet="VoucherItemSet" Role="ToRole_VoucherHeader_To_Items"/>

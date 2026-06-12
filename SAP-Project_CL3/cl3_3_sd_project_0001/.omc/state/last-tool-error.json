@@ -1,0 +1,7 @@
+{
+  "tool_name": "PowerShell",
+  "tool_input_preview": "{\"command\":\"Remove-Item -Recurse -Force node_modules; npm install --no-audit --no-fund\",\"timeout\":600000,\"description\":\"Clean reinstall of node_modules\"}",
+  "error": "Exit code 1\nnpm error Invalid Version: \nnpm error A complete log of this run can be found in: C:\\Users\\pc\\AppData\\Local\\npm-cache\\_logs\\2026-06-12T02_58_53_998Z-debug-0.log",
+  "timestamp": "2026-06-12T02:58:54.625Z",
+  "retry_count": 3
+}

@@ -1,0 +1,209 @@
+<mvc:View controllerName="zcl33sdns.cl33sdproject0001.controller.cl3_3_sd_project_0001"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%">
+    <Page id="page" busy="{ui>/busy}" busyIndicatorDelay="0" backgroundDesign="List">
+        <customHeader>
+            <Toolbar id="headerBar" class="dashHeader">
+                <core:Icon id="headerIcon" src="sap-icon://bus-public-transport" class="dashHeaderIcon"/>
+                <Title id="pageTitle" text="배송 가시성 대시보드" level="H2" class="dashHeaderTitle"/>
+                <ToolbarSpacer id="headerSpacer"/>
+                <Label id="autoRefreshLabel" text="자동 새로고침 (30초)"/>
+                <Switch id="autoRefreshSwitch" state="{ui>/autoRefresh}" change=".onAutoRefreshToggle"
+                    tooltip="30초 간격 자동 재조회 (기본 OFF)"/>
+                <Button id="refreshButton" icon="sap-icon://refresh" tooltip="새로고침" press=".onRefresh"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <!-- ───────── 섹션 1: 검색 조건 ───────── -->
+            <VBox id="filterSection" class="sectionCard">
+                <HBox id="filterSectionHeader" alignItems="Center" class="sectionHeader">
+                    <core:Icon id="filterSectionIcon" src="sap-icon://filter" class="sectionIcon"/>
+                    <Title id="filterSectionTitle" text="검색 조건" level="H3" class="sectionTitle"/>
+                </HBox>
+                <HBox id="filterBox" wrap="Wrap" alignItems="End" class="filterRow">
+                    <VBox id="dateFilterBox">
+                        <Label id="dateLabel" text="배송일" labelFor="dateRange" class="filterLabel"/>
+                        <DateRangeSelection id="dateRange" width="16rem" displayFormat="yyyy.MM.dd"
+                            placeholder="전체 기간 (미입력 시 전체 조회)"/>
+                    </VBox>
+                    <VBox id="plantFilterBox">
+                        <Label id="plantLabel" text="플랜트" labelFor="plantSelect" class="filterLabel"/>
+                        <Select id="plantSelect" width="11rem">
+                            <core:Item id="plantAll" key="" text="전체"/>
+                            <core:Item id="plant1000" key="1000" text="1000 (서울/오산)"/>
+                            <core:Item id="plant2000" key="2000" text="2000 (경기/파주)"/>
+                        </Select>
+                    </VBox>
+                    <VBox id="kunnrFilterBox">
+                        <Label id="kunnrLabel" text="고객" labelFor="kunnrInput" class="filterLabel"/>
+                        <Input id="kunnrInput" width="10rem" placeholder="고객번호"/>
+                    </VBox>
+                    <VBox id="vhcnoFilterBox">
+                        <Label id="vhcnoLabel" text="차량" labelFor="vhcnoInput" class="filterLabel"/>
+                        <Input id="vhcnoInput" width="10rem" placeholder="차량코드"/>
+                    </VBox>
+                    <Button id="searchButton" text="조회" type="Emphasized" icon="sap-icon://search" press=".onSearch"/>
+                </HBox>
+            </VBox>
+
+            <!-- ───────── 섹션 2: KPI 카드 ───────── -->
+            <HBox id="kpiRow" wrap="Wrap" class="kpiRow">
+                <HBox id="kpiPrep" class="kpiCard kpiNeutral" justifyContent="SpaceBetween" alignItems="Start">
+                    <VBox id="kpiPrepBody">
+                        <Text id="kpiPrepTitle" text="상품준비" class="kpiTitle"/>
+                        <ObjectNumber id="kpiPrepNum" number="{ui>/kpi/s1}" unit="건" emphasized="true" class="kpiNum"/>
+                        <Text id="kpiPrepSub" text="" class="kpiSub"/>
+                    </VBox>
+                    <core:Icon id="kpiPrepIcon" src="sap-icon://product" class="kpiIcon kpiIconNeutral"/>
+                </HBox>
+                <HBox id="kpiReady" class="kpiCard kpiOrange" justifyContent="SpaceBetween" alignItems="Start">
+                    <VBox id="kpiReadyBody">
+                        <Text id="kpiReadyTitle" text="출하대기" class="kpiTitle"/>
+                        <ObjectNumber id="kpiReadyNum" number="{ui>/kpi/s2}" unit="건" state="Warning" emphasized="true" class="kpiNum"/>
+                        <Text id="kpiReadySub" text="{= '⚠ 미배차 ' + ${ui>/kpi/noVeh} + '건' }" class="kpiSub kpiSubWarn"/>
+                    </VBox>
+                    <core:Icon id="kpiReadyIcon" src="sap-icon://outbox" class="kpiIcon kpiIconOrange"/>
+                </HBox>
+                <HBox id="kpiWait" class="kpiCard kpiGold" justifyContent="SpaceBetween" alignItems="Start">
+                    <VBox id="kpiWaitBody">
+                        <Text id="kpiWaitTitle" text="출발대기" class="kpiTitle"/>
+                        <ObjectNumber id="kpiWaitNum" number="{ui>/kpi/s3}" unit="건" emphasized="true" class="kpiNum"/>
+                        <Text id="kpiWaitSub" text="" class="kpiSub"/>
+                    </VBox>
+                    <core:Icon id="kpiWaitIcon" src="sap-icon://pending" class="kpiIcon kpiIconGold"/>
+                </HBox>
+                <HBox id="kpiTransit" class="kpiCard kpiBlue" justifyContent="SpaceBetween" alignItems="Start">
+                    <VBox id="kpiTransitBody">
+                        <Text id="kpiTransitTitle" text="배송중" class="kpiTitle"/>
+                        <ObjectNumber id="kpiTransitNum" number="{ui>/kpi/transit}" unit="건" state="Information" emphasized="true" class="kpiNum"/>
+                        <Text id="kpiTransitSub" text="" class="kpiSub"/>
+                    </VBox>
+                    <core:Icon id="kpiTransitIcon" src="sap-icon://shipping-status" class="kpiIcon kpiIconBlue"/>
+                </HBox>
+                <HBox id="kpiDone" class="kpiCard kpiGreen" justifyContent="SpaceBetween" alignItems="Start">
+                    <VBox id="kpiDoneBody">
+                        <Text id="kpiDoneTitle" text="배송완료" class="kpiTitle"/>
+                        <ObjectNumber id="kpiDoneNum" number="{ui>/kpi/s5}" unit="건" state="Success" emphasized="true" class="kpiNum"/>
+                        <Text id="kpiDoneSub" text="" class="kpiSub"/>
+                    </VBox>
+                    <core:Icon id="kpiDoneIcon" src="sap-icon://sys-enter-2" class="kpiIcon kpiIconGreen"/>
+                </HBox>
+            </HBox>
+
+            <!-- ───────── 섹션 3: 납품오더 현황 (IconTabBar 카운트 필터 + 리스트) ───────── -->
+            <VBox id="listSection" class="sectionCard listSection">
+                <HBox id="listSectionHeader" alignItems="Center" class="sectionHeader">
+                    <core:Icon id="listSectionIcon" src="sap-icon://activity-items" class="sectionIcon"/>
+                    <Title id="listSectionTitle" text="납품오더 현황" level="H3" class="sectionTitle"/>
+                </HBox>
+                <IconTabBar id="statusTabBar" select=".onTabSelect" expandable="true"
+                    headerBackgroundDesign="Transparent" applyContentPadding="false" class="dashTabBar">
+                    <items>
+                        <IconTabFilter id="tabAll" key="all" text="전체" count="{ui>/kpi/total}"
+                            design="Vertical" icon="sap-icon://list" iconColor="Default"/>
+                        <IconTabFilter id="tabPrep" key="1" text="상품준비" count="{ui>/kpi/s1}"
+                            design="Vertical" icon="sap-icon://product" iconColor="Neutral"/>
+                        <IconTabFilter id="tabReady" key="2" text="출하대기" count="{ui>/kpi/s2}"
+                            design="Vertical" icon="sap-icon://outbox" iconColor="Critical"/>
+                        <IconTabFilter id="tabWait" key="3" text="출발대기" count="{ui>/kpi/s3}"
+                            design="Vertical" icon="sap-icon://pending" iconColor="Default"/>
+                        <IconTabFilter id="tabTransit" key="4" text="배송중" count="{ui>/kpi/s4}"
+                            design="Vertical" icon="sap-icon://shipping-status" iconColor="Default"/>
+                        <IconTabFilter id="tabDone" key="5" text="완료" count="{ui>/kpi/s5}"
+                            design="Vertical" icon="sap-icon://sys-enter-2" iconColor="Positive"/>
+                        <IconTabFilter id="tabException" key="exc" text="예외" count="{ui>/kpi/exception}"
+                            design="Vertical" icon="sap-icon://alert" iconColor="Negative"/>
+                    </items>
+                    <content>
+                        <Table id="deliveryTable" items="{ui>/deliveries}" sticky="ColumnHeaders"
+                            noDataText="조회 결과가 없습니다" growing="true" growingThreshold="50"
+                            alternateRowColors="true" fixedLayout="true">
+                            <columns>
+                                <Column id="colDlvno" width="9rem" hAlign="Center">
+                                    <header><Text id="colDlvnoText" text="납품오더" width="100%" textAlign="Center"/></header>
+                                </Column>
+                                <Column id="colShipto" minScreenWidth="Tablet" demandPopin="true" hAlign="Begin">
+                                    <header><Text id="colShiptoText" text="납품처" width="100%" textAlign="Center"/></header>
+                                </Column>
+                                <Column id="colVehicle" minScreenWidth="Tablet" demandPopin="true" hAlign="Begin">
+                                    <header><Text id="colVehicleText" text="차량 / 기사" width="100%" textAlign="Center"/></header>
+                                </Column>
+                                <Column id="colSteps" width="16rem" hAlign="Center">
+                                    <header><Text id="colStepsText" text="진행단계" width="100%" textAlign="Center"/></header>
+                                </Column>
+                                <Column id="colStatus" width="10rem" hAlign="Center">
+                                    <header><Text id="colStatusText" text="상태" width="100%" textAlign="Center"/></header>
+                                </Column>
+                                <Column id="colTime" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin">
+                                    <header><Text id="colTimeText" text="출발 / 도착예정(계획)" width="100%" textAlign="Center"/></header>
+                                </Column>
+                                <Column id="colAmount" hAlign="End" width="9rem">
+                                    <header><Text id="colAmountText" text="금액" width="100%" textAlign="Center"/></header>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem id="deliveryRow" type="Active" press=".onItemPress"
+                                    highlight="{parts: ['ui>NoVehicleFlg', 'ui>VhcIssueFlg', 'ui>DashStep'], formatter: '.formatter.rowHighlight'}">
+                                    <cells>
+                                        <ObjectIdentifier id="cellDlvno" title="{ui>Dlvno}" text="{path: 'ui>Plant', formatter: '.formatter.plantName'}"/>
+                                        <VBox id="cellShipto">
+                                            <Text id="cellShiptoName" text="{ui>Shipto}" class="cellMainText"/>
+                                            <Text id="cellShiptoAddr" text="{ui>Adrnr}" class="cellSubText"/>
+                                        </VBox>
+                                        <VBox id="cellVehicle">
+                                            <Text id="cellVehiclePlate" text="{path: 'ui>Vhcpl', formatter: '.formatter.dash'}" class="cellMainText"/>
+                                            <Text id="cellDriverName" text="{ui>Drvnm}" class="cellSubText" visible="{= !!${ui>Drvnm} }"/>
+                                            <Text id="cellDriverPhone" text="{ui>Drvph}" class="cellSubText" visible="{= !!${ui>Drvph} }"/>
+                                        </VBox>
+                                        <HBox id="cellSteps" alignItems="Start" justifyContent="Center">
+                                            <VBox id="step1Box" alignItems="Center">
+                                                <core:Icon id="step1Icon" src="{path: 'ui>DashStep', formatter: '.formatter.step1Icon'}"
+                                                    color="{path: 'ui>DashStep', formatter: '.formatter.step1Color'}" size="1.375rem" tooltip="상품준비"/>
+                                                <Text id="step1Label" text="준비" class="dashStepLabel"/>
+                                            </VBox>
+                                            <HBox id="stepLine1" class="dashStepLine"/>
+                                            <VBox id="step2Box" alignItems="Center">
+                                                <core:Icon id="step2Icon" src="{path: 'ui>DashStep', formatter: '.formatter.step2Icon'}"
+                                                    color="{path: 'ui>DashStep', formatter: '.formatter.step2Color'}" size="1.375rem" tooltip="출하"/>
+                                                <Text id="step2Label" text="출하" class="dashStepLabel"/>
+                                            </VBox>
+                                            <HBox id="stepLine2" class="dashStepLine"/>
+                                            <VBox id="step3Box" alignItems="Center">
+                                                <core:Icon id="step3Icon" src="{path: 'ui>DashStep', formatter: '.formatter.step3Icon'}"
+                                                    color="{path: 'ui>DashStep', formatter: '.formatter.step3Color'}" size="1.375rem" tooltip="배송"/>
+                                                <Text id="step3Label" text="배송" class="dashStepLabel"/>
+                                            </VBox>
+                                            <HBox id="stepLine3" class="dashStepLine"/>
+                                            <VBox id="step4Box" alignItems="Center">
+                                                <core:Icon id="step4Icon" src="{path: 'ui>DashStep', formatter: '.formatter.step4Icon'}"
+                                                    color="{path: 'ui>DashStep', formatter: '.formatter.step4Color'}" size="1.375rem" tooltip="도착"/>
+                                                <Text id="step4Label" text="도착" class="dashStepLabel"/>
+                                            </VBox>
+                                        </HBox>
+                                        <VBox id="cellStatus" alignItems="Center">
+                                            <ObjectStatus id="cellStatusBadge" inverted="true"
+                                                text="{parts: ['ui>DashStep', 'ui>Pkqt'], formatter: '.formatter.stepText'}"
+                                                state="{path: 'ui>DashStep', formatter: '.formatter.stepState'}"/>
+                                            <ObjectStatus id="cellNoVehicle" text="⚠ 미배차" state="Warning"
+                                                visible="{= ${ui>NoVehicleFlg} === 'X' }"/>
+                                            <ObjectStatus id="cellVhcIssue" text="⚠ 차량이상" state="Error"
+                                                visible="{= ${ui>VhcIssueFlg} === 'X' }"/>
+                                        </VBox>
+                                        <VBox id="cellTime">
+                                            <Text id="cellDepTime" text="{path: 'ui>Schtm', formatter: '.formatter.depTimeText'}" class="cellMainText"/>
+                                            <Text id="cellArrTime" text="{path: 'ui>Arrtm', formatter: '.formatter.arrTimeText'}" class="cellSubText"/>
+                                        </VBox>
+                                        <ObjectNumber id="cellAmount" number="{path: 'ui>Totpr', formatter: '.formatter.currency'}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </IconTabBar>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

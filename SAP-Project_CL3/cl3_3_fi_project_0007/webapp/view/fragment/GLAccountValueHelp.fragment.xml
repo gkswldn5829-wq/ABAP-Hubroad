@@ -1,0 +1,39 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<TableSelectDialog
+		id="glAccountDialog"
+		title="계정항목 선택"
+		noDataText="검색 결과가 없습니다"
+		search="onValueHelpSearch"
+		confirm="onValueHelpConfirm"
+		cancel="onValueHelpCancel"
+		items="{account>/Accounts}">
+		<columns>
+			<Column>
+				<header>
+					<Text text="계정번호" />
+				</header>
+			</Column>
+			<Column>
+				<header>
+					<Text text="계정명" />
+				</header>
+			</Column>
+			<Column>
+				<header>
+					<Text text="계정유형" />
+				</header>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem type="Active">
+				<cells>
+					<Text text="{account>Saknr}" />
+					<Text text="{account>AccountName}" />
+					<Text text="{account>AccountType}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</TableSelectDialog>
+</core:FragmentDefinition>

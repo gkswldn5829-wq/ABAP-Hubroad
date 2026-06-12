@@ -1,0 +1,317 @@
+/* ================================================================
+ * 고정자산 관리 — Custom CSS
+ * 프로그램 : cl3_3_fi_project_0007
+ * 화면     : 고정자산 목록 / 상세 / 등록
+ * 디자인   : 0001~0005 공통 디자인 시스템 동일 적용
+ * ================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [0] 공용 그라디언트 헤더 (0001~0005 공통 동일)
+ * ══════════════════════════════════════════════════════════════ */
+.fiPage > .sapMPageHeader { overflow: visible !important; }
+.fiPage .sapMIBar-CTX     { overflow: visible !important; }
+
+.fiAppHeader.sapMBar {
+    background: linear-gradient(135deg, #003d87 0%, #0064d9 100%) !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 12px rgba(0, 64, 139, 0.35);
+    height: 56px !important;
+    min-height: 56px !important;
+    overflow: visible !important;
+    box-sizing: border-box;
+}
+.fiAppHeader.sapMBar .sapMBarSection,
+.fiAppHeader.sapMBar .sapMBarPH {
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+}
+.fiAppHeader.sapMBar .sapMBarLeft.sapMBarSection  { max-width: 60% !important; }
+.fiAppHeader.sapMBar .sapMBarRight.sapMBarSection { max-width: 40% !important; }
+
+.headerAppIcon.sapUiIcon {
+    font-size: 1.25rem;
+    color: #7ec8ff;
+    margin: 0 8px 0 4px;
+    flex-shrink: 0;
+}
+.headerTitleBox.sapMHBox {
+    min-width: 0;
+    overflow: hidden;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: nowrap;
+    position: relative;
+    top: 6px;
+}
+.headerAppTitle.sapMTitle {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.headerAppTitle.sapMTitle .sapMTitleText { color: #ffffff; }
+.headerAppSub.sapMText {
+    font-size: 0.6875rem;
+    color: #93b8e0;
+    white-space: nowrap;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 헤더 우측 버튼 그룹 */
+.fiHeaderBtnGroup.sapMHBox {
+    gap: 6px;
+    align-items: center;
+    padding-right: 8px;
+}
+.fiHeaderBtnGroup .sapMBtn .sapMBtnInner {
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+}
+.fiHeaderBtnGroup .sapMBtn .sapMBtnIcon    { color: #ffffff !important; }
+.fiHeaderBtnGroup .sapMBtn .sapMBtnContent { color: #ffffff !important; }
+.fiHeaderBtnGroup .sapMBtn .sapMBtnInner:hover {
+    background: rgba(255,255,255,0.28);
+    border-color: rgba(255,255,255,0.75);
+}
+.fiHeaderBtnGroup .sapMBtnEmphasized .sapMBtnInner {
+    background: rgba(255,255,255,0.92) !important;
+    border-color: transparent !important;
+}
+.fiHeaderBtnGroup .sapMBtnEmphasized .sapMBtnContent { color: #003d87 !important; }
+.fiHeaderBtnGroup .sapMBtnEmphasized .sapMBtnIcon    { color: #003d87 !important; }
+
+/* Glass 버튼 (0001~0005 공통) */
+.btnGlass.sapMBtn .sapMBtnInner {
+    background: linear-gradient(135deg, rgba(0,64,139,0.88) 0%, rgba(0,100,217,0.90) 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,64,139,0.30);
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+}
+.btnGlass.sapMBtn .sapMBtnInner:hover {
+    background: linear-gradient(135deg, rgba(0,50,110,0.96) 0%, rgba(0,80,179,0.96) 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,64,139,0.42);
+}
+.btnGlass.sapMBtn .sapMBtnIcon,
+.btnGlass.sapMBtn .sapMBtnText { color: #ffffff !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [1] 페이지 레이아웃
+ * ══════════════════════════════════════════════════════════════ */
+.bsPage { background: #F7F7F7; padding: 16px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [2] 조회조건 영역 (bsHead + bsFilterBar 패턴 — Panel 미사용)
+ * ══════════════════════════════════════════════════════════════ */
+/* 카드 안 필터바: 테두리·여백 제거 */
+.bsTablePanel .bsFilterBarInner {
+    border: none !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [3] 필터 바 (0001~0005 공통)
+ * ══════════════════════════════════════════════════════════════ */
+.bsFilterBar {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 10px 14px;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.bsFi   { margin-right: 8px; }
+.bsFl,
+.bsFl.sapMLabel { font-size: 11px !important; color: #6A6D70 !important; margin-bottom: 3px; }
+.bsFiBtn.sapMBtn { margin-left: 4px; align-self: flex-end; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [4] 테이블 패널 카드 (bsWrap 동일 패턴)
+ * ══════════════════════════════════════════════════════════════ */
+.bsTablePanel {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+.bsTablePanel .sapMList  { border: none; }
+.bsTablePanel .sapMListTbl { border-top: none; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [5] 섹션 헤더 (bsHead — 0001~0005 공통)
+ * ══════════════════════════════════════════════════════════════ */
+.bsHead {
+    background: linear-gradient(135deg, #0050b3 0%, #0091ff 100%);
+    padding: 8px 14px;
+    box-shadow: 0 2px 6px rgba(0, 80, 179, 0.28);
+}
+.bsHeadText,
+.bsHeadText.sapMText {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+}
+.bsHeadAnnot,
+.bsHeadAnnot.sapMText {
+    font-size: 10px !important;
+    color: rgba(255,255,255,0.75) !important;
+    font-weight: 400 !important;
+    font-style: italic;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [6] 테이블 컬럼 헤더
+ * ══════════════════════════════════════════════════════════════ */
+.bsTablePanel .sapMListTblHeaderCell {
+    background: #F0F4F8 !important;
+    border-bottom: 2px solid #0070D2 !important;
+    padding: 7px 10px !important;
+}
+.bsTablePanel .sapMListTblHeaderCell .sapMLabel,
+.bsTablePanel .sapMListTblHeaderCell .sapMText,
+.bsTablePanel .sapMListTblHeaderCell span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #32363A !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [7] 테이블 행 스타일
+ * ══════════════════════════════════════════════════════════════ */
+/* 일반 텍스트 데이터 셀 (숫자/금액 제외) */
+.bsTablePanel .sapMListTblCell .sapMText:not(.mono) {
+    font-size: 0.75rem !important;
+}
+
+/* 모노스페이스 숫자 */
+.mono,
+.mono.sapMText,
+.mono span {
+    font-family: Consolas, "Lucida Console", "Courier New", monospace !important;
+    font-size: 0.8125rem !important;
+}
+
+/* 장부가액 강조 */
+.fiBookValueCell.sapMText,
+.fiBookValueCell span {
+    font-weight: 700 !important;
+    color: #107E3E !important;
+}
+
+/* 전체 행 흰색 고정 */
+.bsTablePanel .sapMListTblRow td { background: #FFFFFF; }
+
+/* 행 hover */
+.bsTablePanel .sapMLIB:hover td,
+.bsTablePanel .sapMLIB.sapMLIBHovered td {
+    background: #F0F6FF !important;
+    transition: background 0.12s;
+}
+
+/* 행 선택 */
+.sapMListTbl .sapMLIBFocused,
+.sapMListTbl .sapMLIBSelected {
+    background-color: #deeeff !important;
+}
+
+/* 마지막 행 하단 테두리 제거 */
+.bsTablePanel .sapMLIB:last-child td { border-bottom: none !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [8] 테이블 집계 행 (최하단 summary row)
+ * ══════════════════════════════════════════════════════════════ */
+.fiSummaryRow {
+    background: #F0F4F8;
+    border-top: 2px solid #0064d9;
+    padding: 8px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.fiSummaryLabel,
+.fiSummaryLabel.sapMText {
+    font-size: 0.75rem !important;
+    color: #6A6D70 !important;
+    font-weight: 600 !important;
+    align-self: center;
+}
+.fiSumValues.sapMHBox { gap: 24px; }
+.fiSumItem { min-width: 10.5rem; }
+.fiSumItem .sapMLabel { font-size: 10px !important; color: #6A6D70 !important; }
+.fiSumItem .sapMText  {
+    font-family: Consolas, "Lucida Console", monospace !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #00177C !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [9] Detail 화면 — KPI 영역 (uxap:ObjectPageHeaderContent)
+ * ══════════════════════════════════════════════════════════════ */
+.fiKpiItem {
+    min-width: 10rem;
+    padding: 0.25rem 1.5rem 0.25rem 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+    margin-right: 1.5rem;
+}
+.fiKpiItem:last-child { border-right: none; }
+.fiKpiItem .sapMObjNumberText { font-size: 1.875rem; font-weight: 700; }
+.fiKpiItem .sapMObjNumberUnit { font-size: 1rem; }
+.fiKpiItem .sapMLabelMedium   { font-size: 0.875rem; opacity: 0.85; margin-top: 0.25rem; }
+
+.fiHeaderKpiContainer {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+ * [10] Create 화면 — 3열 폼 그리드
+ * ══════════════════════════════════════════════════════════════ */
+.fiCreatePanel    { margin-bottom: 1rem; }
+.fiCreateGrid     { padding: 1rem 1.5rem 0.5rem; gap: 0; }
+.fiCreateCell {
+    flex: 1 1 30%;
+    min-width: 220px;
+    max-width: 400px;
+    padding: 0 1.5rem 1rem 0;
+    box-sizing: border-box;
+}
+.fiCreateCell .sapMLabel {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6A6D70;
+    margin-bottom: 4px;
+    display: block;
+}
+@media (max-width: 600px) {
+    .fiCreateCell { flex: 1 1 100%; max-width: 100%; padding-right: 0; }
+}
